@@ -1,0 +1,21 @@
+.descripcionProducto{
+    background-color: #F8F8F8;
+}
+
+.productCard{
+    display: grid;
+    grid-template-rows: minmax(35rem);
+    grid-template-columns:  20% 80%;
+}
+
+.datosProducto{
+
+}
+
+.descripcionProducto{
+    display: flex;
+    flex-flow: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

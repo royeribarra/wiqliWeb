@@ -1,0 +1,43 @@
+
+.navBar{
+    background-color: white;
+}
+
+.botonesPaginas{
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+    .tituloNav{
+        color: #191D74 !important;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        font-size: 1rem;
+    }
+
+    .navbar-toggler{
+        color: #191D74;
+        border: none !important;
+    }
+    
+    .navbar-toggler:focus {
+        color: #191D74;
+        border: none !important;
+    }
+
+    .navPrincipal{
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .botonPrincipal{
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .botonSecundario{
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
