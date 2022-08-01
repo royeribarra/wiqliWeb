@@ -1,0 +1,17 @@
+.botonAgregarMasProductos{
+    background: none;
+    color: #F23440;
+    font-weight: 500;
+    border: none;
+    
+}
+
+.tituloForm{
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+.inputForm{
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}

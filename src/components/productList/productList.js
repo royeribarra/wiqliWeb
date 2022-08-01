@@ -1,6 +1,7 @@
 import React from "react";
 import { Accordion, Form, Card } from "react-bootstrap";
-import fresa from "../../images/fresa.png"
+import fresa from "../../images/fresa.jpg"
+import AgregarOtro from "../agregarOtro/agregarOtro";
 import './productList.css';
 
 function ProductList() {
@@ -8,17 +9,19 @@ function ProductList() {
     <div>
     <Form>
       <Accordion  flush>
-                <Accordion.Item eventKey="4">
+
+                <Accordion.Item eventKey="0" className="acordeonCategoria">
                   <Accordion.Header>
                     <h2 className="tituloCategoria">Elige tus frutas</h2>
                   </Accordion.Header>
                     <Accordion.Body>
                     <div className="productCard">
+                      <div className="imagenProducto">
                         <img
                         src={fresa}
-                        className="imagenProducto"
-                        alt="wiqli"
+                        alt="fresa"
                         />
+                        </div>
                         <Card className="descripcionProducto">
                         <div className="datosProducto">
                         <h5>Fresas de estación</h5>
@@ -28,12 +31,13 @@ function ProductList() {
                         <Form.Check type="checkbox" label="" />
                         </Card>
                     </div>
+                    <AgregarOtro></AgregarOtro>
                     </Accordion.Body>
                 </Accordion.Item>
-            </Accordion>
 
-            <Accordion  flush>
-                <Accordion.Item eventKey="4">
+
+
+                <Accordion.Item eventKey="1"  className="acordeonCategoria">
                   <Accordion.Header>
                     <h2 className="tituloCategoria">Elige tus verduras</h2>
                   </Accordion.Header>
@@ -41,10 +45,10 @@ function ProductList() {
                     <p>Hola</p>
                     </Accordion.Body>
                 </Accordion.Item>
-            </Accordion>
 
-            <Accordion  flush>
-                <Accordion.Item eventKey="4">
+
+
+                <Accordion.Item eventKey="2" className="acordeonCategoria">
                   <Accordion.Header>
                     <h2 className="tituloCategoria">Elige tus carnes</h2>
                   </Accordion.Header>
@@ -52,10 +56,10 @@ function ProductList() {
                     <p>Hola</p>
                     </Accordion.Body>
                 </Accordion.Item>
-            </Accordion>
 
-            <Accordion  flush>
-                <Accordion.Item eventKey="4">
+
+
+                <Accordion.Item eventKey="3" className="acordeonCategoria">
                   <Accordion.Header>
                     <h2 className="tituloCategoria">Elige tus menestras</h2>
                   </Accordion.Header>
@@ -63,6 +67,8 @@ function ProductList() {
                     <p>Hola</p>
                     </Accordion.Body>
                 </Accordion.Item>
+
+
             </Accordion>
         </Form> 
     </div>

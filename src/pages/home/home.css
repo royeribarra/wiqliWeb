@@ -1,0 +1,18 @@
+.tituloPrincipal{
+    font-size: calc(4px + 1.4vw + 0.8rem);
+    font-weight: 700;
+    margin: 1rem;
+}
+
+.tituloEnunciativo{
+    font-size: calc(0px + 1.4vw + 0.8rem);
+    margin: 0.7rem;
+}
+
+.numeroDeContacto{
+    text-decoration: none;
+    font-size: calc(0px + 1.4vw + 0.8rem);
+    color: #A7C94E;
+    font-weight: 600;
+}
+

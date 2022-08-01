@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from 'react';
+import { Affix, Button } from 'antd';
 import { Container } from "react-bootstrap"
 import logo from "../../images/logo.png"
 import './home.css';
 import ProductList from "../../components/productList/productList";
+
 
 
 function Home() 
@@ -25,7 +27,12 @@ function Home()
             </div>
             <div>
             <ProductList></ProductList>
+            <button className="botonDeSiguiente">
+              <p>(27.50)</p>
+              <p>Siguiente</p>
+            </button>
             </div>
+
         </Container>
       </div>
     </div>
