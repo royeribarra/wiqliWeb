@@ -1,0 +1,33 @@
+.ant-form-item-label{
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+
+
+.cabeceraDatos{
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    align-items: center;
+    margin: 1rem;
+}
+
+.cabeceraDatos h4{
+    margin: 0;
+    font-weight: 700;
+}
+
+.itemForm{
+    color: #A7C94E;
+    font-weight: 700;
+    text-align: start;
+}
+
+.grupoForm{
+    margin: 1rem;
+}
+
+.form-control{
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
