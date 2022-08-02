@@ -1,0 +1,20 @@
+.tituloResaltante{
+    margin: 2rem;
+    color: #A7C94E;
+    font-weight: 700;
+}
+
+
+.textoDisclaimer{
+    margin: 1rem;
+    font-size: calc(0px + 0.8vw + 0.6rem);
+    color: #A7C94E;
+    font-weight: 600;
+}
+
+.mensajeFinalDestacado{
+ color: #F23440;
+ font-weight: 700;
+ margin: 2rem;
+}
+

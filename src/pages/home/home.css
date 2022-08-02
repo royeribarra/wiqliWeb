@@ -16,3 +16,32 @@
     font-weight: 600;
 }
 
+.botonDeSiguiente{
+    background-color: #A7C94E;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+
+  }
+
+  .botonOrdenado{
+    display: flex;
+  }
+
+  
+  .botonDeSiguiente p {
+    margin: 0.3rem
+  }
+  
+  .botonDeSiguiente p {
+    margin: 0.3rem;
+    font-weight: 600;
+  }
+
+
+
+  .clickASiguiente{
+    display: flex;
+    align-items: center;
+  }

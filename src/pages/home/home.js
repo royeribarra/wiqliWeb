@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Affix, Button } from 'antd';
 import { Container } from "react-bootstrap"
 import logo from "../../images/logo.png"
+import siguiente from "../../images/siguiente.png"
 import './home.css';
 import ProductList from "../../components/productList/productList";
 import { NavLink } from "react-router-dom";
@@ -10,12 +11,6 @@ import { NavLink } from "react-router-dom";
 
 function Home() 
 {
-
-  const [container, setContainer] = useState(null);
-
-  const goToDatos = () => {
-    
-  }
 
   return (
     <div className="gradienteMedio">
@@ -40,7 +35,18 @@ function Home()
           </div>
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
             <NavLink to="/datos">
-              <Button>120px to affix top</Button>
+              <Button className='botonDeSiguiente'>
+                <div className='botonOrdenado'>
+                <p className='textoDePrecio'>(S/27.75)</p>
+                <div className='clickASiguiente'>
+                  <p>Siguiente</p>
+                  <img 
+                  src={siguiente}
+                  alt="wiqli compras semanales"
+                  />
+                </div>
+                </div>
+              </Button>
             </NavLink>
           </Affix>
         </Container>
