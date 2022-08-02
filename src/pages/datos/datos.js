@@ -9,8 +9,8 @@ const { TextArea } = Input;
 function Datos() 
 {
   const [form] = Form.useForm();
-  const onFinish = () => {
-
+  const onFinish = (values) => {
+    console.log(values);
   }
 
   return (
@@ -120,9 +120,9 @@ function Datos()
             <h6>Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados</h6>
           </div>
           <NavLink to="/confirmacion">
-          <Button type="primary" htmlType="submit" className="botonDeSiguiente">
-            Enviar pedido
-          </Button>
+            <Button type="primary" htmlType="submit" className="botonDeSiguiente">
+              Enviar pedido
+            </Button>
           </NavLink>
         </Form>
       </Container>
