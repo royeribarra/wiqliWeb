@@ -3,6 +3,7 @@ import { Container, Nav, NavLink } from "react-bootstrap"
 import { Form, Input, Select, DatePicker, Button } from 'antd';
 import atras from "../../images/atras.png"
 import './datos.css';
+import axios from 'axios';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -11,6 +12,17 @@ function Datos()
   const [form] = Form.useForm();
   const onFinish = (values) => {
     console.log(values);
+    let data = {
+      productos: localStorage.getItem('productos'),
+      cliente: values
+     }
+    const productos = localStorage.getItem('productos');
+    axios
+    .post(`${process.env.REACT_APP_BASE_PATH}/crear-pedido`, data)
+    .then(({ data }) => {
+      console.log(data);
+    });
+    //history(`/datos`);
   }
 
   return (
@@ -51,7 +63,7 @@ function Datos()
             </div>
             <div className="itemForm">
               <Form.Item
-                name="celular"
+                name="telefono"
                 label="Número"
                 rules={[{ required: true, message: 'Por favor ingresa tu celular' }]}                
               >
@@ -60,7 +72,7 @@ function Datos()
             </div>
             <div className="itemForm">
               <Form.Item
-                name="email"
+                name="correo"
                 label="Correo de contacto"
                 rules={[{ required: true, message: 'Por favor ingresa tu correo' }]}                
               >
@@ -85,7 +97,7 @@ function Datos()
             </div>
             <div className="itemForm">
               <Form.Item 
-                name="fecha" 
+                name="fecha_recojo" 
                 label="Fecha de recojo" 
                 rules={[{ required: true, message: 'Selecciona una fecha' }]}
                 className="selector-fecha"
@@ -97,7 +109,10 @@ function Datos()
               </Form.Item>
             </div>
             <div className="itemForm">
-              <Form.Item label="Anotaciones adicionales">
+              <Form.Item 
+                label="Anotaciones adicionales"
+                name="observacion" 
+              >
                 <TextArea rows={4} placeholder="anotaciones adicionales" />
               </Form.Item>
             </div>
@@ -119,11 +134,16 @@ function Datos()
             </div>
             <h6>Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados</h6>
           </div>
-          <NavLink to="/confirmacion">
+          {/* <NavLink to="/confirmacion">
             <Button type="primary" htmlType="submit" className="botonDeSiguiente">
               Enviar pedido
             </Button>
-          </NavLink>
+          </NavLink> */}
+          <Form.Item>
+            <Button type="primary" htmlType="submit" className="botonDeSiguiente">
+              Enviar pedido
+            </Button>
+          </Form.Item>
         </Form>
       </Container>
     </div>

@@ -5,13 +5,14 @@ import logo from "../../images/logo.png"
 import siguiente from "../../images/siguiente.png"
 import './home.css';
 import ProductList from "../../components/productList/productList";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 function Home() 
 {
   const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
+  let history = useNavigate();
   const getProductos = () => {
     axios
     .get(`${process.env.REACT_APP_BASE_PATH}/productos/todos`)
@@ -48,6 +49,8 @@ function Home()
 
   const goToFormularioDatos = () => {
     console.log(productosCarrito);
+    localStorage.setItem('productos', JSON.stringify(productosCarrito));
+    history(`/datos`);
   }
 
   useEffect(() => {
