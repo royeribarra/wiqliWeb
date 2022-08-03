@@ -10,9 +10,11 @@ import axios from 'axios';
 
 function Home() 
 {
+  let history = useNavigate();
   const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
-  let history = useNavigate();
+  const[total, setTotal] = useState(0);
+
   const getProductos = () => {
     axios
     .get(`${process.env.REACT_APP_BASE_PATH}/productos/todos`)
@@ -23,7 +25,7 @@ function Home()
   }
 
   const agregarProducto = (producto) => {
-    console.log(producto)
+    producto.cantidad = 1;
     let new_productos = [...productosCarrito];
     let result = new_productos.find(
       (el) => el.id === producto.id
@@ -44,7 +46,21 @@ function Home()
   }
 
   const aumentarUnidades = (producto) => {
-    
+    let new_productos = [...productosCarrito];
+    const index = new_productos.findIndex(
+      (el) => el.id === producto.id
+    );
+    new_productos[index].cantidad += 1;
+    setProductosCarrito(new_productos);
+  }
+
+  const disminuirUnidades = (producto) => {
+    let new_productos = [...productosCarrito];
+    const index = new_productos.findIndex(
+      (el) => el.id === producto.id
+    );
+    new_productos[index].cantidad -= 1;
+    setProductosCarrito(new_productos);
   }
 
   const goToFormularioDatos = () => {
@@ -53,10 +69,21 @@ function Home()
     history(`/datos`);
   }
 
+  const calcularTotal = () => {
+    let total = 0;
+    productosCarrito.forEach((producto) => {
+      total += producto.cantidad * producto.precio_unitario
+    })
+    setTotal(total);
+  }
+
   useEffect(() => {
     getProductos();
-    
   }, [])
+
+  useEffect(() => {
+    calcularTotal();
+  }, [productosCarrito])
 
   return (
     <div className="gradienteMedio">
@@ -79,20 +106,22 @@ function Home()
               productos={productos} 
               agregarProducto={agregarProducto}
               quitarProducto={quitarProducto}
+              aumentarUnidades={aumentarUnidades}
+              disminuirUnidades={disminuirUnidades}
             />
           </div>
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
             {/* <NavLink to="/datos"> */}
               <Button className='botonDeSiguiente' onClick={goToFormularioDatos}>
                 <div className='botonOrdenado'>
-                <p className='textoDePrecio'>(S/27.75)</p>
-                <div className='clickASiguiente'>
-                  <p>Siguiente</p>
-                  <img 
-                  src={siguiente}
-                  alt="wiqli compras semanales"
-                  />
-                </div>
+                  <p className='textoDePrecio'>(S/ {parseFloat(total).toFixed(2)})</p>
+                  <div className='clickASiguiente'>
+                    <p>Siguiente</p>
+                    <img 
+                      src={siguiente}
+                      alt="wiqli compras semanales"
+                    />
+                  </div>
                 </div>
               </Button>
             {/* </NavLink> */}

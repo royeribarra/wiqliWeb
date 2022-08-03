@@ -7,9 +7,8 @@ import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
 
 
-function ProductList({ productos, agregarProducto, quitarProducto }) 
+function ProductList({ productos, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades }) 
 {
-  console.log()
   return (
     <div>
       <Form>
@@ -27,6 +26,8 @@ function ProductList({ productos, agregarProducto, quitarProducto })
                       key={producto.id} 
                       agregarProducto={agregarProducto}
                       quitarProducto={quitarProducto}
+                      disminuirUnidades={disminuirUnidades}
+                      aumentarUnidades={aumentarUnidades}
                     />
                   ))
                 }
