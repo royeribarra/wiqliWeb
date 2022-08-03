@@ -51,6 +51,12 @@ function Datos()
     calcularTotal();
   }, [])
 
+  useEffect(() => {
+    axios.get('https://repo.com.pe/distritos').then(({data}) => {
+      console.log(data);
+    }) 
+  }, []);
+
   return (
     <div className="baseWiqliForm">
       <Container className="contenedorDatos">
