@@ -3,6 +3,7 @@ import { Accordion, Form, Card } from "react-bootstrap";
 import fresa from "../../images/fresa.jpg"
 import AgregarOtro from "../agregarOtro/agregarOtro";
 import './productList.css';
+import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
 
 
@@ -45,6 +46,7 @@ function ProductList({ productos, agregarProducto, quitarProducto })
                     <Form.Check type="checkbox" label="" />
                   </Card>
                 </div>
+                <ProductoAdicional></ProductoAdicional>
               <AgregarOtro></AgregarOtro>
               </Accordion.Body>
           </Accordion.Item>
