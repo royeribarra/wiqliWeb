@@ -25,7 +25,7 @@ function Datos()
      }
     const productos = localStorage.getItem('productos');
     axios
-    .post(`${process.env.REACT_APP_BASE_PATH}/crear-pedido`, data)
+    .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
     .then(({ data }) => {
       console.log(data);
       if(data.state){
@@ -50,12 +50,6 @@ function Datos()
   useEffect(() => {
     calcularTotal();
   }, [])
-
-  useEffect(() => {
-    axios.get('https://repo.com.pe/distritos').then(({data}) => {
-      console.log(data);
-    }) 
-  }, []);
 
   return (
     <div className="baseWiqliForm">
