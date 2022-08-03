@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Nav } from "react-bootstrap"
 import { Form, Input, Select, DatePicker, Button } from 'antd';
 import atras from "../../images/atras.png"
@@ -14,6 +14,8 @@ function Datos()
   let history = useNavigate();
   const [form] = Form.useForm();
   const [messageError, setMessageError] = useState();
+  const[total, setTotal] = useState(0);
+
   const onFinish = (values) => {
     
     console.log(values);
@@ -35,6 +37,19 @@ function Datos()
     });
     
   }
+
+  const calcularTotal = () => {
+    let productos = JSON.parse(localStorage.getItem('productos'));
+    let total = 0;
+    productos.forEach((producto) => {
+      total += producto.cantidad * producto.precio_unitario
+    })
+    setTotal(total);
+  }
+
+  useEffect(() => {
+    calcularTotal();
+  }, [])
 
   return (
     <div className="baseWiqliForm">
@@ -134,7 +149,7 @@ function Datos()
                 <div className="desgloseTotal">
                   <div className="totalesAPagar">
                       <h6 className="tituloCampo">Productos</h6>
-                      <h6 className="datoCampo">S/27.75</h6>
+                      <h6 className="datoCampo">S/ {parseFloat(total).toFixed(2)}</h6>
                   </div>
                   <div className="totalesAPagar">
                       <h6 className="tituloCampo">Delivery</h6>
@@ -143,7 +158,7 @@ function Datos()
                   <hr></hr>
                   <div className="totalesAPagar">
                       <h6 className="tituloCampo">Total</h6>
-                      <h6 className="datoCampo">S/37.75</h6>
+                      <h6 className="datoCampo">S/ {parseFloat(total + 10).toFixed(2)}</h6>
                   </div>
                 </div>
             <h6 className="textoDisclaimer">Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados</h6>
