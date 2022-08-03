@@ -37,8 +37,8 @@ function Datos()
   }
 
   return (
-    <div className="baseMorada">
-      <Container className="contenedorSimple">
+    <div className="baseWiqliForm">
+      <Container className="contenedorDatos">
         <div className="cabeceraDatos">
             <NavLink to="/" >
                 <img 
@@ -93,7 +93,8 @@ function Datos()
             <div className="itemForm">
               <Form.Item
                 name="direccion"
-                label="Dirección de recojo"        
+                label="Dirección de recojo" 
+                rules={[{ required: true, message: 'Por favor ingresa tu Dirección' }]}
               >
                 <Input className="form-control" placeholder="Av. Aurelio Miroquesada 117" />
               </Form.Item>
@@ -124,26 +125,28 @@ function Datos()
                 label="Anotaciones adicionales"
                 name="observacion" 
               >
-                <TextArea rows={4} placeholder="anotaciones adicionales" />
+                <TextArea rows={3} placeholder="Anotaciones adicionales" />
               </Form.Item>
             </div>
-            <div>
-                <h3>Total de pedido:</h3>
-                <div>
-                    <h6>Productos</h6>
-                    <h6>S/27.75</h6>
-                </div>
-                <div>
-                    <h6>Delivery</h6>
-                    <h6>S/10.00</h6>
-                </div>
-                <br></br>
-                <div>
-                    <h6>Total</h6>
-                    <h6>S/37.75</h6>
-                </div>
             </div>
-            <h6>Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados</h6>
+            <div>
+                <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
+                <div className="desgloseTotal">
+                  <div className="totalesAPagar">
+                      <h6 className="tituloCampo">Productos</h6>
+                      <h6 className="datoCampo">S/27.75</h6>
+                  </div>
+                  <div className="totalesAPagar">
+                      <h6 className="tituloCampo">Delivery</h6>
+                      <h6 className="datoCampo">S/10.00</h6>
+                  </div>
+                  <hr></hr>
+                  <div className="totalesAPagar">
+                      <h6 className="tituloCampo">Total</h6>
+                      <h6 className="datoCampo">S/37.75</h6>
+                  </div>
+                </div>
+            <h6 className="textoDisclaimer">Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados</h6>
           </div>
           {/* <NavLink to="/confirmacion">
             <Button type="primary" htmlType="submit" className="botonDeSiguiente">
@@ -151,7 +154,7 @@ function Datos()
             </Button>
           </NavLink> */}
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="botonDeSiguiente">
+            <Button type="primary" htmlType="submit" className="botonFinal">
               Enviar pedido
             </Button>
           </Form.Item>

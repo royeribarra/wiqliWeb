@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Accordion, Form, Card, Button } from "react-bootstrap";
 
+import quitar from "../../images/quitar.png"
+import mas from "../../images/menos.png"
+import menos from "../../images/mas.png"
+
+
 function ProductoComponente({data, agregarProducto, quitarProducto}) 
 {
   const[tipoComponente, setTipoComponente] = useState(1);
@@ -36,16 +41,35 @@ function ProductoComponente({data, agregarProducto, quitarProducto})
       
       {
         tipoComponente === 2 &&
+        <div>
         <Card className="descripcionProducto" onClick={quitarCarrito}>
           <div className="datosProducto">
+            <div>
             <h5>{data.nombre}</h5>
+            <img
+            src={quitar}
+            />
+            </div>
             <p></p>
             <p>S/{data.precio_unitario} x {data.unidad.nombre}</p>
           </div>
+          </Card>
+          <div>
           <p>X</p>
-          <Button>Soy otro</Button>
-        </Card>
-        
+          </div>
+          <div>
+            <img 
+            src={mas}
+            alt="Comprar productos Wiqli"
+            />
+            <p>{data.cantidad}</p>
+            <img
+            src={menos}
+            alt="Comprar productos Wiqli"
+            />
+          </div>          
+
+        </div>
       }
     </div>
   );

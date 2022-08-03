@@ -21,13 +21,83 @@
     color: #A7C94E;
     font-weight: 700;
     text-align: start;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .grupoForm{
-    margin: 1rem;
+    display: grid;
+    grid-template-columns:  repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 0.3rem;
 }
 
 .form-control{
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.baseWiqliForm{
+    margin-left: 4vw;
+    margin-right: 4vw;
+}
+
+.contenedorDatos{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 2rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 1rem;
+    border-radius: 30px;
+}
+
+.ant-form-item-explain-error{
+    color: #F23440;
+    font-size: small;
+}
+
+
+.totalesAPagar{
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 3fr 1fr 1fr 3fr;
+    margin-bottom: 0.5rem;
+}
+
+.tituloCampo{
+    grid-column-start: 2;
+    text-align: start;
+}
+
+.datoCampo{
+    text-align: end;
+}
+
+.botonFinal{
+    background-color: #A7C94E;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0.3rem;
+    font-weight: 700;
+    color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+ 
+.ant-input{
     border-radius: 10px !important;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 100%;
+}
+
+.ant-picker-input{
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 100%;
 }
