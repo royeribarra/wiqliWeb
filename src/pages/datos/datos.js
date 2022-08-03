@@ -1,16 +1,21 @@
-import React from "react";
-import { Container, Nav, NavLink } from "react-bootstrap"
+import React, { useState } from "react";
+import { Container, Nav } from "react-bootstrap"
 import { Form, Input, Select, DatePicker, Button } from 'antd';
 import atras from "../../images/atras.png"
 import './datos.css';
 import axios from 'axios';
+import { NavLink, useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
+
 function Datos() 
 {
+  let history = useNavigate();
   const [form] = Form.useForm();
+  const [messageError, setMessageError] = useState();
   const onFinish = (values) => {
+    
     console.log(values);
     let data = {
       productos: localStorage.getItem('productos'),
@@ -21,8 +26,14 @@ function Datos()
     .post(`${process.env.REACT_APP_BASE_PATH}/crear-pedido`, data)
     .then(({ data }) => {
       console.log(data);
+      if(data.state){
+        localStorage.clear();
+        history(`/confirmacion`);
+      }
+    }).catch(error => {
+      setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
     });
-    //history(`/datos`);
+    
   }
 
   return (
