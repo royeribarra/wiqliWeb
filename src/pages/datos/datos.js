@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Container, Nav } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 import { Form, Input, Select, DatePicker, Button } from 'antd';
-import atras from "../../images/atras.png"
+import atras from "../../images/atras.png";
 import './datos.css';
 import axios from 'axios';
 import { NavLink, useNavigate } from "react-router-dom";

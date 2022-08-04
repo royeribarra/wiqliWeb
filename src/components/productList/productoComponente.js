@@ -4,6 +4,7 @@ import { Accordion, Form, Card, Button } from "react-bootstrap";
 import quitar from "../../images/quitar.png"
 import mas from "../../images/menos.png"
 import menos from "../../images/mas.png"
+import fresa from "../../images/fresa.jpg"
 
 
 function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades}) 
@@ -39,7 +40,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
     <div className="productCard">
       <div className="imagenProducto">
         <img
-          src=""
+          src={fresa}
           alt="fresa"
         />
       </div>
@@ -62,22 +63,23 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
       
       {
         tipoComponente === 2 &&
-        <div>
-        <Card className="descripcionProducto" onClick={quitarCarrito}>
+        <div className="estructuraProductoAgregado">
+        <Card className="descripcionProductoAgregado" onClick={quitarCarrito}>
           <div className="datosProducto">
-            <div>
+            <div className="primerSegmentoProducto">
             <h5>{data.nombre}</h5>
-            
+            <div className="contenedorEliminar">
             <img
             src={quitar}
             />
+            </div>
             </div>
             <p></p>
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}</p>
           </div>
           </Card>
           <div>
-            <p>X</p>
+            <p className="multiplicadorPrecio">x</p>
           </div>
           <div>
             <img

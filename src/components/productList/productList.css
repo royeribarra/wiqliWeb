@@ -50,6 +50,13 @@
     cursor: pointer;
 }
 
+.descripcionProductoAgregado{
+    background-color: #D9DDE6;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    
+}
+
+
 .acordeonCategoria{
     margin: 0.5rem;
     margin-bottom: 1rem;
@@ -86,3 +93,32 @@
     border-radius: 10px;
 
 }
+
+.primerSegmentoProducto{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-start;
+
+}
+
+.contenedorEliminar{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 0.2rem;
+    padding-top: 0.2rem;
+}
+
+.estructuraProductoAgregado p{
+    margin:0;
+
+}
+
+
+
+.estructuraProductoAgregado{
+    display: grid;
+    grid-template-columns: 6fr 1fr 1fr ;
+    align-items: center;
+}
+
