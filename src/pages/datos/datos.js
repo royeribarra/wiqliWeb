@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap"
-import { Form, Input, Select, DatePicker, Button } from 'antd';
+import { Form, Input, Select, Button } from 'antd';
 import atras from "../../images/atras.png";
 import './datos.css';
 import axios from 'axios';
 import { NavLink, useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 function Datos() 
 {
+
+
+  const [startDate, setStartDate] = useState(new Date());
+
+
   let history = useNavigate();
   const [form] = Form.useForm();
   const [messageError, setMessageError] = useState();
@@ -130,9 +137,13 @@ function Datos()
                 className="selector-fecha"
               >
                 <DatePicker
-                  placeholder="Seleccionar una fecha"
-                  format="YYYY-MM-DD"
-                />
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                filterDate={date => date.getDay() === 0}
+                placeholderText="Por ahora solo entregamos los domingos"
+                minDate={new Date()}
+                dateFormat='dd/MM/yyyy'
+              />
               </Form.Item>
             </div>
             <div className="itemForm">

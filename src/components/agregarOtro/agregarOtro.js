@@ -1,23 +1,36 @@
 import React from "react";
 import './agregarOtro.css';
-import { Form } from "react-bootstrap";
+import { Form } from 'antd';
 import agregar from "../../images/agregar.png"
+import TextArea from "antd/lib/input/TextArea";
 
 
 function AgregarOtro() {
   return (
     <div>
       <h5>Agregar otro producto (opcional)</h5>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label className="tituloForm">Nombre</Form.Label>
-        <Form.Control className="inputForm" type="text" placeholder="producto" />
-        <Form.Label className="tituloForm">Cantidad</Form.Label>
-        <Form.Control className="inputForm" type="text" placeholder="1 kilo" />
-      </Form.Group>
+      <Form>
+      <div className="itemForm">
+              <Form.Item 
+                label="Nombre de producto"
+                name="productoAdicionalNombre" 
+              >
+                <TextArea rows={1} placeholder="Kiwi" />
+              </Form.Item>
+      </div>
+      <div className="itemForm">
+              <Form.Item 
+                label="Peso o cantidad"
+                name="productoAdicionalCantidad" 
+              >
+                <TextArea rows={1} placeholder="1 Kilo" />
+              </Form.Item>
+      </div>
+      </Form>
       <div>
         <img 
           src={agregar}
-          alt="fresa"
+          alt="agregar más productos wiqli"
         />
         <button className="botonAgregarMasProductos" type="submit">
           Agregar más

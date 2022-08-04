@@ -1,6 +1,13 @@
 
 .navBar{
     background-color: white;
+    display: flex;
+    flex-flow: column;
+
+}
+
+.navBar a{
+ margin: 0;
 }
 
 .botonesPaginas{

@@ -31,22 +31,7 @@ function ProductList({ productos, agregarProducto, quitarProducto, disminuirUnid
                     />
                   ))
                 }
-                <div className="productCard">
-                  <div className="imagenProducto">
-                    <img
-                      src={fresa}
-                      alt="fresa"
-                      />
-                  </div>
-                  <Card className="descripcionProducto">
-                    <div className="datosProducto">
-                      <h5>Fresas de estación</h5>
-                      <p></p>
-                      <p>S/7.50 kg</p>
-                    </div>
-                    <Form.Check type="checkbox" label="" />
-                  </Card>
-                </div>
+                
                 <ProductoAdicional></ProductoAdicional>
               <AgregarOtro></AgregarOtro>
               </Accordion.Body>

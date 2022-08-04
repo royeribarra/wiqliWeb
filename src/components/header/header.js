@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import logo from "../../images/miniLogo.png"
+import whatsapp from "../../images/whatsapp.jpg"
 import './header.css';
 
 function Header() {
@@ -16,12 +17,14 @@ function Header() {
               alt="wiqli"
             />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="botonesPaginas">
-              <Nav.Link href="/contacto" className="tituloNav">Contáctanos</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
+          <Navbar.Brand href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
+            <img
+              src={whatsapp}
+              height="50"
+              className="logoNav"
+              alt="wiqli"
+            />
+          </Navbar.Brand>
         </Container>
       </Navbar>
     </div>
