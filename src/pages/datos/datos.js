@@ -25,7 +25,7 @@ function Datos()
      }
     const productos = localStorage.getItem('productos');
     axios
-    .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
+    .post(`https://repo.com.pe/wiqli/crear-pedido`, data)
     .then(({ data }) => {
       console.log(data);
       if(data.state){
