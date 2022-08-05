@@ -33,7 +33,7 @@ function AgregarOtro() {
           alt="agregar más productos wiqli"
         />
         <button className="botonAgregarMasProductos" type="submit">
-          Agregar más
+          Agregar
         </button>
       </div>
     </div>
