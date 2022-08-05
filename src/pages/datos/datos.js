@@ -109,7 +109,7 @@ function Datos()
                 label="Correo de contacto"
                 rules={[{ required: true, message: 'Por favor ingresa tu correo' }]}                
               >
-                <Input className="form-control" placeholder="Ej. wiqli@contacto.pe" />
+                <Input className="form-control" placeholder="Ej. nombre@mail.com" />
               </Form.Item>
             </div>
             <div className="itemForm">
@@ -118,7 +118,7 @@ function Datos()
                 label="Dirección de recojo" 
                 rules={[{ required: true, message: 'Por favor ingresa tu Dirección' }]}
               >
-                <Input className="form-control" placeholder="Av. Aurelio Miroquesada 117" />
+                <Input className="form-control" placeholder="Avenida/Calle" />
               </Form.Item>
             </div>
             <div className="itemForm">
