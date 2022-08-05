@@ -7,8 +7,19 @@ import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
 
 
-function ProductList({ productos, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades }) 
+function ProductList({ 
+  productos,
+  agregarProducto,
+  quitarProducto,
+  disminuirUnidades,
+  aumentarUnidades,
+  formOtrosFrutas,
+  formOtrosVerduras,
+  formOtrosCarnes,
+  formOtrosMenestras,
+})
 {
+
   return (
     <div>
       <Form>
@@ -31,9 +42,12 @@ function ProductList({ productos, agregarProducto, quitarProducto, disminuirUnid
                     />
                   ))
                 }
-                
-                <ProductoAdicional></ProductoAdicional>
-              <AgregarOtro></AgregarOtro>
+              <ProductoAdicional></ProductoAdicional>
+              <AgregarOtro 
+                form={formOtrosFrutas} 
+                nombre="otrasFrutas" 
+                title="Agregar otra fruta"
+              />
               </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1"  className="acordeonCategoria">
@@ -43,9 +57,21 @@ function ProductList({ productos, agregarProducto, quitarProducto, disminuirUnid
               <Accordion.Body>
                 { productos.filter((producto) => producto.categoria_id === 2)
                   .map( producto => (
-                    <ProductoComponente data={producto} key={producto.id} />
+                    <ProductoComponente 
+                      data={producto} 
+                      key={producto.id} 
+                      agregarProducto={agregarProducto}
+                      quitarProducto={quitarProducto}
+                      disminuirUnidades={disminuirUnidades}
+                      aumentarUnidades={aumentarUnidades}
+                    />
                   ))
                 }
+              <AgregarOtro 
+                form={formOtrosVerduras} 
+                nombre="otrasVerduras"
+                title="Agregar otra verdura"
+              />
               </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="2" className="acordeonCategoria">
@@ -55,9 +81,21 @@ function ProductList({ productos, agregarProducto, quitarProducto, disminuirUnid
               <Accordion.Body>
                 { productos.filter((producto) => producto.categoria_id === 3)
                   .map( producto => (
-                    <ProductoComponente data={producto} key={producto.id} />
+                    <ProductoComponente 
+                      data={producto} 
+                      key={producto.id} 
+                      agregarProducto={agregarProducto}
+                      quitarProducto={quitarProducto}
+                      disminuirUnidades={disminuirUnidades}
+                      aumentarUnidades={aumentarUnidades}
+                    />
                   ))
                 }
+              <AgregarOtro 
+                form={formOtrosCarnes} 
+                nombre="otrasCarnes"
+                title="Agregar otra carne"
+              />
               </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="3" className="acordeonCategoria">
@@ -67,9 +105,21 @@ function ProductList({ productos, agregarProducto, quitarProducto, disminuirUnid
               <Accordion.Body>
                 { productos.filter((producto) => producto.categoria_id === 4)
                   .map( producto => (
-                    <ProductoComponente data={producto} key={producto.id} />
+                    <ProductoComponente 
+                      data={producto} 
+                      key={producto.id} 
+                      agregarProducto={agregarProducto}
+                      quitarProducto={quitarProducto}
+                      disminuirUnidades={disminuirUnidades}
+                      aumentarUnidades={aumentarUnidades}
+                    />
                   ))
                 }
+              <AgregarOtro 
+                form={formOtrosMenestras} 
+                nombre="otrasMenestras"
+                title="Agregar otra menestra"
+              />
               </Accordion.Body>
           </Accordion.Item>
         </Accordion>

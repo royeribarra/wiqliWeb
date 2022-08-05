@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Affix, Button } from 'antd';
+import { Affix, Button, Form } from 'antd';
 import { Container } from "react-bootstrap"
 import logo from "../../images/logo.png"
 import siguiente from "../../images/siguiente.png"
@@ -14,6 +14,11 @@ function Home()
   const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
   const[total, setTotal] = useState(0);
+
+  const [formOtrosFrutas] = Form.useForm();
+  const [formOtrosVerduras] = Form.useForm();
+  const [formOtrosCarnes] = Form.useForm();
+  const [formOtrosMenestras] = Form.useForm();
 
   const getProductos = () => {
     axios
@@ -65,7 +70,15 @@ function Home()
 
   const goToFormularioDatos = () => {
     console.log(productosCarrito);
+    console.log(formOtrosFrutas.getFieldsValue())
+    console.log(formOtrosVerduras.getFieldsValue())
+    console.log(formOtrosCarnes.getFieldsValue())
+    console.log(formOtrosMenestras.getFieldsValue())
     localStorage.setItem('productos', JSON.stringify(productosCarrito));
+    localStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
+    localStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
+    localStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
+    localStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
     history(`/datos`);
   }
 
@@ -106,6 +119,10 @@ function Home()
               quitarProducto={quitarProducto}
               aumentarUnidades={aumentarUnidades}
               disminuirUnidades={disminuirUnidades}
+              formOtrosFrutas={formOtrosFrutas}
+              formOtrosVerduras={formOtrosVerduras}
+              formOtrosCarnes={formOtrosCarnes}
+              formOtrosMenestras={formOtrosMenestras}
             />
           </div>
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
