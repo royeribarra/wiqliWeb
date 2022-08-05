@@ -28,11 +28,14 @@ function Datos()
     console.log(values);
     let data = {
       productos: localStorage.getItem('productos'),
+      otrosFrutas: localStorage.getItem('otrosFrutas'),
+      otrosVerduras: localStorage.getItem('otrosVerduras'),
+      otrosCarnes: localStorage.getItem('otrosCarnes'),
+      otrosMenestras: localStorage.getItem('otrosMenestras'),
       cliente: values
      }
-    const productos = localStorage.getItem('productos');
     axios
-    .post(`https://repo.com.pe/wiqli/crear-pedido`, data)
+    .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
     .then(({ data }) => {
       console.log(data);
       if(data.state){

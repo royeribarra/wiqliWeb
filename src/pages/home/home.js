@@ -22,7 +22,7 @@ function Home()
 
   const getProductos = () => {
     axios
-    .get(`https://repo.com.pe/wiqli/productos/todos`)
+    .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
     .then(({ data }) => {
       console.log(data);
       setProductos(data);
