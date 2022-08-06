@@ -7,8 +7,8 @@ import './header.css';
 function Header() {
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" className="navBar">
-        <Container>
+      <Navbar collapseOnSelect expand="lg" className="navBar baseWiqli" >
+        <Container className="contenedorSimple">
           <Navbar.Brand href="/">
             <img
               src={logo}

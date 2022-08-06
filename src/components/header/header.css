@@ -10,12 +10,6 @@
  margin: 0;
 }
 
-.botonesPaginas{
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-
-}
 
     .tituloNav{
         color: #191D74 !important;
@@ -34,17 +28,5 @@
         border: none !important;
     }
 
-    .navPrincipal{
-        margin-top: 0.25rem;
-        margin-bottom: 0.25rem;
-    }
 
-    .botonPrincipal{
-        margin-top: 0.25rem;
-        margin-bottom: 0.25rem;
-    }
-
-    .botonSecundario{
-        margin-top: 0.25rem;
-        margin-bottom: 0.25rem;
-    }
+  

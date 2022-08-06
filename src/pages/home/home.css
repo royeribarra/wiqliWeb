@@ -7,6 +7,7 @@
 .tituloEnunciativo{
     font-size: calc(0px + 1.4vw + 0.8rem);
     margin: 0.7rem;
+    margin-bottom: 1rem;
 }
 
 .numeroDeContacto{
@@ -44,4 +45,13 @@
   .clickASiguiente{
     display: flex;
     align-items: center;
+  }
+
+  @media (min-width: 600px) {
+
+  .contenedorProductos{
+    background-color: white;
+    padding-left: 15vw;
+    padding-right: 15vw;
+  }
   }

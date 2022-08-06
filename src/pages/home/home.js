@@ -100,8 +100,8 @@ function Home()
 
   return (
     <div className="gradienteMedio">
-      <div className="baseMorada">
-        <Container className="contenedorSimple">
+      <div className="baseWiqli">
+        <Container className="contenedorSimple contenedorProductos">
           <div className="baseLanding">
             <img
               src={logo}

@@ -10,7 +10,6 @@ function App() {
   return (
     <div className="App">
       <Header></Header>
-      {/* <Home></Home> */}
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Home />} />
