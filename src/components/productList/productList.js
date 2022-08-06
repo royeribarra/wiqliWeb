@@ -42,7 +42,6 @@ function ProductList({
                     />
                   ))
                 }
-              <ProductoAdicional></ProductoAdicional>
               <AgregarOtro 
                 form={formOtrosFrutas} 
                 nombre="otrasFrutas" 

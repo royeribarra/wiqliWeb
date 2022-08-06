@@ -40,7 +40,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
     <div className="productCard">
       <div className="imagenProducto">
         <img
-          src={fresa}
+          src={data.imagen}
           alt="fresa"
         />
       </div>
