@@ -6,7 +6,7 @@ import './header.css';
 
 function Header() {
   return (
-    <div>
+    <div className="navBarContainer">
       <Navbar collapseOnSelect expand="lg" className="navBar baseWiqli" >
         <Container className="contenedorSimple">
           <Navbar.Brand href="/">

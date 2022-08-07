@@ -112,7 +112,7 @@ function Home()
             <h5 className="tituloEnunciativo">¡Solo llena el formulario de abajo y listo!</h5>
             <h5 className="tituloEnunciativo">Pagas cuando te entreguemos tus productos</h5>
           </div>
-          <div>
+          <div className='listaDeProductos'>
             <ProductList 
               productos={productos} 
               agregarProducto={agregarProducto}

@@ -29,4 +29,11 @@
     }
 
 
-  
+    @media (min-width: 600px) {
+
+        .navBarContainer{
+          background-color: white;
+          padding-left: 15vw;
+          padding-right: 15vw;
+        }
+        }
