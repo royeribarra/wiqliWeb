@@ -2,6 +2,7 @@ import React from "react";
 import './agregarOtro.css';
 import { Form, Select, Input, Button, Space  } from 'antd';
 import agregar from "../../images/agregar.png"
+import quitar from "../../images/quitar.png"
 import TextArea from "antd/lib/input/TextArea";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 const { Option } = Select;
@@ -29,7 +30,16 @@ function AgregarOtro({ form, title, nombre})
           {(fields, { add, remove }) => (
             <>
               {fields.map((field) => (
-                <Space key={field.key} align="baseline">
+                <Space key={field.key} align="baseline productoAdicionalAgregado">
+                  <div className="eliminarProductoAgregado">
+                  <div onClick={() => remove(field.name)} className="botonBorrarProductoAgregado" >
+                  <img
+                  src={quitar}
+                  />
+                  <p className="botonAgregarMasProductos">Quitar</p>
+                  </div>
+                  </div>
+                  <div className="detallesDeProductoAgregado">
                   <div className="itemForm">
                     <Form.Item 
                       label="Nombre de producto"
@@ -46,16 +56,23 @@ function AgregarOtro({ form, title, nombre})
                       <TextArea rows={1} placeholder="1 Kilo" />
                     </Form.Item>
                   </div>
-                  <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  </div>
                 </Space>
               ))}
               <Form.Item>
+                
                 <Button 
+
                   type="dashed" 
-                  onClick={() => add()} block icon={<PlusOutlined />}
+                  onClick={() => add()} block 
                   className="botonAgregarMasProductos"
                 >
-                  Agregar
+                  <div className="contenedorBotonAgregarNuevo">
+                  <img
+                  src={agregar}
+                  />
+                  <p className="botonAgregarMasProductos">Agregar otro producto</p>
+                  </div>
                 </Button>
               </Form.Item>
             </>
