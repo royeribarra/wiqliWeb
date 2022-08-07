@@ -54,6 +54,25 @@
     padding-left: 15vw;
     padding-right: 15vw;
   }
+
+
+  .imagenProducto{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-right: 0.3rem;
+   }
+
+  .imagenProducto img{
+    object-fit: cover;
+    overflow: hidden;
+    width: 100%;
+    height: 20rem;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+
   }
 
 
