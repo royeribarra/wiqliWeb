@@ -9,6 +9,7 @@ import fresa from "../../images/fresa.jpg"
 
 function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades}) 
 {
+  console.log(data);
   const[cantidad, setCantidad] = useState(1);
   const[tipoComponente, setTipoComponente] = useState(1);
 
@@ -49,7 +50,8 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
         <Card className="descripcionProducto" onClick={agregarCarrito}>
           <div className="datosProducto">
             <h5>{data.nombre}</h5>
-            <p></p>
+            <p>{data.cantidad_minima === 1 ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
+            
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}
             {
               data.cantidad_minima !== 1 &&
@@ -74,7 +76,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
             />
             </div>
             </div>
-            <p></p>
+            <p>{data.cantidad_minima === 1 ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}</p>
           </div>
           </Card>
