@@ -13,7 +13,7 @@ function Confirmacion()
     
         <Container className="contenedorSimple">
           
-            <h2 className="tituloResaltante">¡Muchas gracias por la confianza, Renzo!</h2>
+            <h2 className="tituloResaltante">¡Muchas gracias por la confianza!</h2>
             <h5 className="tituloEnunciativo">Te enviaremos un correo con la confirmación y el detalle de tu pedido.</h5>
             <p className="textoDisclaimer">Recuerda que podría haber una mínima variación final en el precio según el peso de los productos vendidos por unidad al peso.</p>
             <h3 className="mensajeFinalDestacado">Estaremos aquí para todas tus compras semanales</h3>
