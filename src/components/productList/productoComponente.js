@@ -9,7 +9,6 @@ import fresa from "../../images/fresa.jpg"
 
 function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades}) 
 {
-  console.log(data);
   const[cantidad, setCantidad] = useState(1);
   const[tipoComponente, setTipoComponente] = useState(1);
 
@@ -30,7 +29,6 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
 
   const disminuiCantidadProducto = () => {
     if(cantidad === 1){
-      console.log("La cantidad mínima a comprar es 1.")
     }else{
       setCantidad(cantidad - 1);
       disminuirUnidades(data);

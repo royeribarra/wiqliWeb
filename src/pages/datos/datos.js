@@ -25,7 +25,6 @@ function Datos()
 
   const onFinish = (values) => {
     
-    console.log(values);
     let data = {
       productos: localStorage.getItem('productos'),
       otrosFrutas: localStorage.getItem('otrosFrutas'),
@@ -37,7 +36,6 @@ function Datos()
     axios
     .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
     .then(({ data }) => {
-      console.log(data);
       if(data.state){
         localStorage.clear();
         history(`/confirmacion`);
@@ -152,7 +150,8 @@ function Datos()
             <div className="itemForm">
               <Form.Item 
                 label="Anotaciones adicionales"
-                name="observacion" 
+                name="observacion"
+                rules={[{ required: false }]}
               >
                 <TextArea rows={3} placeholder="Anotaciones adicionales" />
               </Form.Item>
