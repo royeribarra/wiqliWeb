@@ -42,7 +42,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
       <div className="imagenProducto">
         <img
           src={data.imagen}
-          alt="fresa"
+          alt={data.nombre}
         />
       </div>
       {
