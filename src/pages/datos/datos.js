@@ -28,29 +28,29 @@ function Datos()
   const onFinish = (values) => {
     console.log(values)
     setBlockPage(true);
-    // const fieldsValue = {
-    //   ...values,
-    //   'fecha_recojo': values['fecha_recojo'].toLocaleDateString()
-    // };
-    // let data = {
-    //   productos: productos,
-    //   otrosFrutas: localStorage.getItem('otrosFrutas'),
-    //   otrosVerduras: localStorage.getItem('otrosVerduras'),
-    //   otrosCarnes: localStorage.getItem('otrosCarnes'),
-    //   otrosMenestras: localStorage.getItem('otrosMenestras'),
-    //   cliente: fieldsValue
-    //  }
-    // axios
-    // .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
-    // .then(({ data }) => {
-    //   if(data.state){
-    //     setBlockPage(false);
-    //     localStorage.clear();
-    //     history(`/confirmacion`);
-    //   }
-    // }).catch(error => {
-    //   setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
-    // });
+    const fieldsValue = {
+      ...values,
+      'fecha_recojo': values['fecha_recojo'].toLocaleDateString()
+    };
+    let data = {
+      productos: productos,
+      otrosFrutas: localStorage.getItem('otrosFrutas'),
+      otrosVerduras: localStorage.getItem('otrosVerduras'),
+      otrosCarnes: localStorage.getItem('otrosCarnes'),
+      otrosMenestras: localStorage.getItem('otrosMenestras'),
+      cliente: fieldsValue
+     }
+    axios
+    .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
+    .then(({ data }) => {
+      if(data.state){
+        setBlockPage(false);
+        localStorage.clear();
+        history(`/confirmacion`);
+      }
+    }).catch(error => {
+      setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
+    });
     
   }
 
