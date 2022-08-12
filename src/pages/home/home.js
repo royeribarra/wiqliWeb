@@ -5,7 +5,7 @@ import logo from "../../images/logo.png"
 import siguiente from "../../images/siguiente.png"
 import './home.css';
 import ProductList from "../../components/productList/productList";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 function Home() 
