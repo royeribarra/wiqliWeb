@@ -24,7 +24,6 @@ function Home()
     axios
     .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
     .then(({ data }) => {
-      console.log(data);
       setProductos(data);
     });
   }
@@ -69,23 +68,27 @@ function Home()
   }
 
   const goToFormularioDatos = () => {
-    console.log(productosCarrito);
-    console.log(formOtrosFrutas.getFieldsValue())
-    console.log(formOtrosVerduras.getFieldsValue())
-    console.log(formOtrosCarnes.getFieldsValue())
-    console.log(formOtrosMenestras.getFieldsValue())
-    localStorage.setItem('productos', JSON.stringify(productosCarrito));
-    localStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
-    localStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
-    localStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
-    localStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
-    history(`/datos`);
+    if(total === 0){
+      return ;
+    }else{
+      localStorage.setItem('productos', JSON.stringify(productosCarrito));
+      localStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
+      localStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
+      localStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
+      localStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
+      history(`/datos`);
+    }
+    
   }
 
   const calcularTotal = () => {
     let total = 0;
     productosCarrito.forEach((producto) => {
-      total += producto.cantidad * producto.precio_unitario
+      if(producto.cantidad_minima === 1){
+        total += producto.cantidad * producto.precio_unitario
+      }else{
+        total += producto.cantidad * (producto.precio_unitario*producto.cantidad_minima)
+      }
     })
     setTotal(total);
   }
@@ -108,9 +111,9 @@ function Home()
               className="logoNav"
               alt="wiqli"
             />
-            <h2 className="tituloPrincipal">¡Haz las compras sin moverte de donde estás con la mejor calidad del mercado!</h2>
-            <h5 className="tituloEnunciativo">¡Solo llena el formulario de abajo y listo!</h5>
-            <h5 className="tituloEnunciativo">Pagas cuando te entreguemos tus productos</h5>
+            <h2 className="tituloPrincipal">¡Haz tus compras semanales sin moverte de casa!</h2>
+            <h5 className="tituloEnunciativo">¡Te ofrecemos la mejor calidad a un súper precio!</h5>
+            <h5 className="tituloEnunciativo">Realiza tu pedido y paga cuando lo recibas.</h5>
           </div>
           <div className='listaDeProductos'>
             <ProductList 

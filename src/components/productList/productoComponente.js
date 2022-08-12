@@ -29,7 +29,6 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
 
   const disminuiCantidadProducto = () => {
     if(cantidad === 1){
-      console.log("La cantidad mínima a comprar es 1.")
     }else{
       setCantidad(cantidad - 1);
       disminuirUnidades(data);
@@ -41,7 +40,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
       <div className="imagenProducto">
         <img
           src={data.imagen}
-          alt="fresa"
+          alt={data.nombre}
         />
       </div>
       {
@@ -49,7 +48,8 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
         <Card className="descripcionProducto" onClick={agregarCarrito}>
           <div className="datosProducto">
             <h5>{data.nombre}</h5>
-            <p></p>
+            <p>{data.cantidad_minima === 1 ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
+            
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}
             {
               data.cantidad_minima !== 1 &&
@@ -74,7 +74,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
             />
             </div>
             </div>
-            <p></p>
+            <p>{data.cantidad_minima === 1 ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}</p>
           </div>
           </Card>

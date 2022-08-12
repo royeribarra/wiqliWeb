@@ -14,9 +14,6 @@ function AgregarOtro({ form, title, nombre})
   };
 
   const onFinish = (e, values) => {
-    console.log(e)
-    console.log('Received values of form:', values);
-    console.log(form.getFieldsValue())
   };
 
   return (
