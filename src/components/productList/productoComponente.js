@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, Form, Card, Button } from "react-bootstrap";
 
 import quitar from "../../images/quitar.png"
@@ -35,6 +35,19 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
     }
   }
 
+  useEffect(() => {
+    if(localStorage.getItem('productos')){
+      let productosStorage = JSON.parse(localStorage.getItem('productos'));
+      productosStorage.forEach(producto => {
+        if(producto.id === data.id)
+        {
+          setTipoComponente(2);
+          setCantidad(producto.cantidad);
+        } 
+      });
+    }
+  }, [data]);
+
   return(
     <div className="productCard">
       <div className="imagenProducto">
@@ -49,13 +62,11 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
           <div className="datosProducto">
             <h5>{data.nombre}</h5>
             <p>{data.cantidad_minima === 1 ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
-            
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}
             {
               data.cantidad_minima !== 1 &&
               ` (Aprox S/ ${parseFloat(data.cantidad_minima*data.precio_unitario).toFixed(2)})`
             }</p>
-            
           </div>
           <Form.Check type="checkbox" label="" />
         </Card>

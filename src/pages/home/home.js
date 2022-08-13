@@ -20,6 +20,13 @@ function Home()
   const [formOtrosCarnes] = Form.useForm();
   const [formOtrosMenestras] = Form.useForm();
 
+  const getProductoStorage = () => {
+    if(localStorage.getItem('productos')){
+      let productosStorage = JSON.parse(localStorage.getItem('productos'));
+      setProductosCarrito(productosStorage);
+    }
+  }
+
   const getProductos = () => {
     axios
     .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
@@ -78,7 +85,6 @@ function Home()
       localStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
       history(`/datos`);
     }
-    
   }
 
   const calcularTotal = () => {
@@ -95,6 +101,7 @@ function Home()
 
   useEffect(() => {
     getProductos();
+    getProductoStorage();
   }, [])
 
   useEffect(() => {

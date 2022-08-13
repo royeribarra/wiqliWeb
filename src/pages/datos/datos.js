@@ -57,8 +57,12 @@ function Datos()
   const calcularTotal = () => {
     let total = 0;
     productos.forEach((producto) => {
-      total += producto.cantidad * producto.precio_unitario
-    })
+      if(producto.cantidad_minima === 1){
+        total += producto.cantidad * producto.precio_unitario
+      }else{
+        total += producto.cantidad * (producto.precio_unitario*producto.cantidad_minima)
+      }
+    });
     setTotal(total);
   }
 
