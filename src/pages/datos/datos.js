@@ -28,7 +28,7 @@ function Datos()
     apellidos: '', correo: '', direccion: '', fecha_recojo: '', nombres: '',
     observacion: '', referencia: '', telefono: ''
   });
-  const [blockPage, setBlockPage] = useState(true);
+  const [blockPage, setBlockPage] = useState(false);
 
   const onFinish = (values) => {
     console.log(values)
@@ -106,6 +106,9 @@ function Datos()
     <Spin spinning={blockPage}>
       <div className="baseWiqliForm">
         <Container>
+          <div className={ blockPage ? "" : "loaderInvisible"}>
+            <Loader></Loader>
+          </div>
           <div className="cabeceraDatos">
               <NavLink to="/" >
                   <img 
@@ -173,7 +176,7 @@ function Datos()
               <div className="itemForm">
                 <Form.Item
                   name="direccion"
-                  label="Dirección de recojo" 
+                  label="Dirección de entrega" 
                   rules={[{ required: true, message: 'Por favor ingresa tu Dirección' }]}
                 >
                   <Input className="form-control" placeholder="Avenida/Calle" />
@@ -190,7 +193,7 @@ function Datos()
               <div className="itemForm">
                 <Form.Item 
                   name="fecha_recojo" 
-                  label="Fecha de recojo" 
+                  label="Fecha de entrega" 
                   rules={[{ required: true, message: 'Selecciona una fecha' }]}
                   className="selector-fecha"
                 >
