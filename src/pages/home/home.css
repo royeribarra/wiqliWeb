@@ -110,3 +110,8 @@
   
   
     }
+
+
+    .loaderInvisible{
+      display: none;
+  }
