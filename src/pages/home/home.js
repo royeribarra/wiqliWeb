@@ -21,8 +21,8 @@ function Home()
   const [formOtrosMenestras] = Form.useForm();
 
   const getProductoStorage = () => {
-    if(localStorage.getItem('productos')){
-      let productosStorage = JSON.parse(localStorage.getItem('productos'));
+    if(sessionStorage.getItem('productos')){
+      let productosStorage = JSON.parse(sessionStorage.getItem('productos'));
       setProductosCarrito(productosStorage);
     }
   }
@@ -78,11 +78,11 @@ function Home()
     if(total === 0){
       return ;
     }else{
-      localStorage.setItem('productos', JSON.stringify(productosCarrito));
-      localStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
-      localStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
-      localStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
-      localStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
+      sessionStorage.setItem('productos', JSON.stringify(productosCarrito));
+      sessionStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
+      sessionStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
+      sessionStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
+      sessionStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
       history(`/datos`);
     }
   }
