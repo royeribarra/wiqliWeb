@@ -7,6 +7,7 @@ import axios from 'axios';
 import { NavLink, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../../components/loader/loader";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -23,29 +24,33 @@ function Datos()
   const [messageError, setMessageError] = useState();
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState([]);
-  const [blockPage, setBlockPage] = useState(false);
+  const [cliente, setCliente] = useState({
+    apellidos: '', correo: '', direccion: '', fecha_recojo: '', nombres: '',
+    observacion: '', referencia: '', telefono: ''
+  });
+  const [blockPage, setBlockPage] = useState(true);
 
   const onFinish = (values) => {
     console.log(values)
     setBlockPage(true);
-    const fieldsValue = {
-      ...values,
-      'fecha_recojo': values['fecha_recojo'].toLocaleDateString()
-    };
+    // const fieldsValue = {
+    //   ...values,
+    //   'fecha_recojo': values['fecha_recojo'].toLocaleDateString()
+    // };
     let data = {
       productos: productos,
-      otrosFrutas: localStorage.getItem('otrosFrutas'),
-      otrosVerduras: localStorage.getItem('otrosVerduras'),
-      otrosCarnes: localStorage.getItem('otrosCarnes'),
-      otrosMenestras: localStorage.getItem('otrosMenestras'),
-      cliente: fieldsValue
+      otrosFrutas: sessionStorage.getItem('otrosFrutas'),
+      otrosVerduras: sessionStorage.getItem('otrosVerduras'),
+      otrosCarnes: sessionStorage.getItem('otrosCarnes'),
+      otrosMenestras: sessionStorage.getItem('otrosMenestras'),
+      cliente: cliente
      }
     axios
     .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
     .then(({ data }) => {
       if(data.state){
         setBlockPage(false);
-        localStorage.clear();
+        sessionStorage.clear();
         history(`/confirmacion`);
       }
     }).catch(error => {
@@ -66,22 +71,41 @@ function Datos()
     setTotal(total);
   }
 
+  const guardarFormInStorage = (changedValues, allValues) => {
+    let newVallues = allValues;
+    if(newVallues.fecha_recojo){
+      allValues.fecha_recojo = newVallues.fecha_recojo.toLocaleDateString();
+    }
+    sessionStorage.setItem('cliente', JSON.stringify(allValues));
+    setCliente(allValues);
+  }
+
   useEffect(() => {
     calcularTotal();
   }, [productos]);
 
   useEffect(() => {
-    if(localStorage.getItem('productos')){
-      setProductos(JSON.parse(localStorage.getItem('productos')));
+    if(sessionStorage.getItem('productos')){
+      setProductos(JSON.parse(sessionStorage.getItem('productos')));
     }else{
       history(`/`);
+    }
+  }, []);
+
+  useEffect(() => {
+    if(sessionStorage.getItem('cliente')){
+      let clienteStorage = JSON.parse(sessionStorage.getItem('cliente'));
+      // let newDate = new Date(clienteStorage.fecha_recojo);
+      // clienteStorage.fecha_recojo = newDate.toLocaleDateString();
+      form.setFieldsValue(clienteStorage);
+      setCliente(JSON.parse(sessionStorage.getItem('cliente')));
     }
   }, []);
 
   return (
     <Spin spinning={blockPage}>
       <div className="baseWiqliForm">
-        <Container className="contenedorDatos">
+        <Container>
           <div className="cabeceraDatos">
               <NavLink to="/" >
                   <img 
@@ -95,6 +119,19 @@ function Datos()
             layout="vertical"
             onFinish={onFinish}
             form={form}
+            onValuesChange={guardarFormInStorage}
+            initialValues={
+              {
+                apellidos: cliente.apellidos,
+                correo: cliente.correo,
+                direccion: cliente.direccion,
+                fecha_recojo: cliente.fecha_recojo,
+                nombres: cliente.nombres,
+                observacion: cliente.observacion,
+                referencia: cliente.referencia,
+                telefono: cliente.telefono 
+              }
+            }
           >
             <div className="grupoForm">
               <div className="itemForm">
@@ -207,6 +244,7 @@ function Datos()
               </Button>
             </Form.Item>
           </Form>
+        
         </Container>
       </div>
     </Spin>

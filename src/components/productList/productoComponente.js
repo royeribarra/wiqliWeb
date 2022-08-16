@@ -36,8 +36,8 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
   }
 
   useEffect(() => {
-    if(localStorage.getItem('productos')){
-      let productosStorage = JSON.parse(localStorage.getItem('productos'));
+    if(sessionStorage.getItem('productos')){
+      let productosStorage = JSON.parse(sessionStorage.getItem('productos'));
       productosStorage.forEach(producto => {
         if(producto.id === data.id)
         {
