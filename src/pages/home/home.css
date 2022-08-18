@@ -2,23 +2,25 @@
     font-size: calc(4px + 1.4vw + 0.8rem);
     font-weight: 700;
     margin: 1rem;
+    color: #3681B8;
 }
 
 .tituloEnunciativo{
     font-size: calc(0px + 1.4vw + 0.8rem);
     margin: 0.7rem;
     margin-bottom: 1rem;
+    color: #5FAD57;
 }
 
 .numeroDeContacto{
     text-decoration: none;
     font-size: calc(0px + 1.4vw + 0.8rem);
-    color: #A7C94E;
+    color: #5FAD57;
     font-weight: 600;
 }
 
 .botonDeSiguiente{
-    background-color: #A7C94E;
+    background-color: #5FAD57;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
     border: none;
     border-radius: 5px;
@@ -114,4 +116,8 @@
 
     .loaderInvisible{
       display: none;
+  }
+
+  .logoLanding{
+    width: calc(50% + 2rem);
   }

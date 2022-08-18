@@ -1,6 +1,6 @@
 .tituloResaltante{
     margin: 2rem;
-    color: #A7C94E;
+    color: #BA3B46;
     font-weight: 700;
 }
 
@@ -8,13 +8,16 @@
 .textoDisclaimer{
     margin: 1rem;
     font-size: calc(0px + 0.8vw + 0.6rem);
-    color: #A7C94E;
+    color: #3681B8;
     font-weight: 600;
 }
 
 .mensajeFinalDestacado{
- color: #F23440;
+ color: #BA3B46;
  font-weight: 700;
  margin: 2rem;
 }
 
+.logoDestacado{
+    width: calc(30% + 8vh) ;
+}

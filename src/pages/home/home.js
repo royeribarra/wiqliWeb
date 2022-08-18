@@ -115,10 +115,10 @@ function Home()
           <div className="baseLanding">
             <img
               src={logo}
-              className="logoNav"
+              className="logoLanding"
               alt="wiqli"
             />
-            <h2 className="tituloPrincipal">¡Haz tus compras semanales sin moverte de casa!</h2>
+            <h2 className="tituloPrincipal">¡Haz tus compras semanales sin moverte de casa con Wiqli!</h2>
             <h5 className="tituloEnunciativo">¡Te ofrecemos la mejor calidad a un súper precio!</h5>
             <h5 className="tituloEnunciativo">Realiza tu pedido y paga cuando lo recibas.</h5>
           </div>
