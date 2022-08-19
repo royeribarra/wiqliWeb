@@ -32,6 +32,7 @@ function Datos()
 
   const onFinish = (values) => {
     console.log(values)
+    //console.log(values.fecha_recojo.getDate())
     setBlockPage(true);
     // const fieldsValue = {
     //   ...values,
@@ -74,7 +75,7 @@ function Datos()
   const guardarFormInStorage = (changedValues, allValues) => {
     let newVallues = allValues;
     if(newVallues.fecha_recojo){
-      allValues.fecha_recojo = newVallues.fecha_recojo.toLocaleDateString();
+      allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
     }
     sessionStorage.setItem('cliente', JSON.stringify(allValues));
     setCliente(allValues);
