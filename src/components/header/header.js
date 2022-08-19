@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import logo from "../../images/miniLogo.png"
 import whatsapp from "../../images/whatsapp.jpg"
+import { useLocation } from 'react-router-dom';
 import './header.css';
 
 function Header() {
-
+  const location = useLocation()
   const[isHome, setIsHome] = useState(false);
 
   const getHome = () => {
@@ -16,10 +17,9 @@ function Header() {
     setIsHome(home)
   }
 
-
   useEffect(() => {
-    getHome(setIsHome);
-  }, [])
+    getHome();
+  }, [location])
 
   return (
     <div className="navBarContainer">
