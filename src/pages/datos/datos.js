@@ -203,7 +203,7 @@ function Datos()
                   filterDate={date => date.getDay() === 0}
                   placeholderText="Por ahora solo entregamos los domingos"
                   minDate={new Date()}
-                  dateFormat='dd/MM/yyyy'
+                  dateFormat='dd-MM-yyyy'
                 />
                 </Form.Item>
               </div>
