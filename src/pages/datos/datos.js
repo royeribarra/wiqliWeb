@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap"
-import { Form, Input, Select, Button, Spin } from 'antd';
+import { Form, Input, Button, Spin } from 'antd';
 import atras from "../../images/atras.png";
 import './datos.css';
 import axios from 'axios';
@@ -9,7 +9,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../components/loader/loader";
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 function Datos() 

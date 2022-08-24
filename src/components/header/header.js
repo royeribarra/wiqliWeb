@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Container } from "react-bootstrap";
 import logo from "../../images/miniLogo.png"
 import whatsapp from "../../images/whatsapp.jpg"
 import { useLocation } from 'react-router-dom';

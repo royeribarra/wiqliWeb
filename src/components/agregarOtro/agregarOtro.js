@@ -1,18 +1,11 @@
 import React from "react";
 import './agregarOtro.css';
-import { Form, Select, Input, Button, Space  } from 'antd';
+import { Form, Button, Space  } from 'antd';
 import agregar from "../../images/agregar.png"
 import quitar from "../../images/quitar.png"
 import TextArea from "antd/lib/input/TextArea";
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-const { Option } = Select;
 function AgregarOtro({ form, title, nombre}) 
 {
-  const sights = {
-    Beijing: ['Tiananmen', 'Great Wall'],
-    Shanghai: ['Oriental Pearl', 'The Bund'],
-  };
-
   const onFinish = (e, values) => {
   };
 
@@ -31,7 +24,8 @@ function AgregarOtro({ form, title, nombre})
                   <div className="eliminarProductoAgregado">
                   <div onClick={() => remove(field.name)} className="botonBorrarProductoAgregado" >
                   <img
-                  src={quitar}
+                    src={quitar}
+                    alt="eliminar producto carrito otro"
                   />
                   <p className="botonAgregarMasProductos">Quitar</p>
                   </div>
@@ -66,7 +60,8 @@ function AgregarOtro({ form, title, nombre})
                 >
                   <div className="contenedorBotonAgregarNuevo">
                   <img
-                  src={agregar}
+                    src={agregar}
+                    alt="agregar producto carrito otro"
                   />
                   <p className="botonAgregarMasProductos">Agregar otro producto</p>
                   </div>

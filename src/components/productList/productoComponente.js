@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, Form, Card, Button } from "react-bootstrap";
+import { Form, Card } from "react-bootstrap";
 
 import quitar from "../../images/quitar.png"
 import mas from "../../images/menos.png"
 import menos from "../../images/mas.png"
-import fresa from "../../images/fresa.jpg"
 
 
 function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades}) 
@@ -81,7 +80,8 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
             <h5>{data.nombre}</h5>
             <div className="contenedorEliminar">
             <img
-            src={quitar}
+              src={quitar}
+              alt="eliminar producto carrito"
             />
             </div>
             </div>

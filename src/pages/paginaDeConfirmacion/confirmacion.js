@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Container } from "react-bootstrap";
 import './confirmacion.css';
 import logo from "../../images/logo.png"
@@ -6,8 +6,6 @@ import logo from "../../images/logo.png"
 
 function Confirmacion() 
 {
-
-
   return (
     <div className="gradienteMedio">
     

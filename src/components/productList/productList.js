@@ -1,9 +1,7 @@
 import React from "react";
-import { Accordion, Form, Card } from "react-bootstrap";
-import fresa from "../../images/fresa.jpg"
+import { Accordion, Form } from "react-bootstrap";
 import AgregarOtro from "../agregarOtro/agregarOtro";
 import './productList.css';
-import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
 
 

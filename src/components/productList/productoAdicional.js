@@ -1,6 +1,5 @@
 import Card from 'antd/lib/card/Card';
-import Form from 'antd/lib/form/Form';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Container } from "react-bootstrap"
 import './productList';
 
