@@ -61,10 +61,10 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
         <Card className="descripcionProducto" onClick={agregarCarrito}>
           <div className="datosProducto">
             <h5>{data.nombre}</h5>
-            <p>{data.cantidad_minima === 1 ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
+            <p>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}
             {
-              data.cantidad_minima !== 1 &&
+              data.cantidad_minima !== "1.00" &&
               ` (Aprox S/ ${parseFloat(data.cantidad_minima*data.precio_unitario).toFixed(2)})`
             }</p>
           </div>
@@ -85,7 +85,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
             />
             </div>
             </div>
-            <p>{data.cantidad_minima === 1 ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
+            <p>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
             <p>S/{data.precio_unitario} x {data.unidad.abreviatura}</p>
           </div>
           </Card>
