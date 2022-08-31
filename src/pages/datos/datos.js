@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../components/loader/loader";
+import subDays from "date-fns/subDays";
 
 const { TextArea } = Input;
 
@@ -21,6 +22,8 @@ function Datos()
   let history = useNavigate();
   const [form] = Form.useForm();
   const [messageError, setMessageError] = useState();
+  const [minDate, setMinDate] = useState(subDays(new Date(), 0));
+  const [hour, setHour] = useState(10);
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState([]);
   const [cliente, setCliente] = useState({
@@ -101,6 +104,28 @@ function Datos()
       setCliente(JSON.parse(sessionStorage.getItem('cliente')));
     }
   }, []);
+
+  const filterDate = (date) => {
+    return date.getDay() === 0;
+  }
+
+  const handleMinDate = () => {
+    const d = new Date();
+    let hour = d.getHours();
+    
+    if(hour>19)
+    {
+      setMinDate(subDays(new Date(), -1));
+    }
+    setMinDate(subDays(new Date(), 0));
+  }
+
+  useEffect(() => {
+    const d = new Date();
+    let hour = d.getHours();
+    console.log(hour)
+    setHour(hour);
+  },[])
 
   return (
     <Spin spinning={blockPage}>
@@ -199,10 +224,10 @@ function Datos()
                 >
                   <DatePicker
                   selected={startDate}
+                  filterDate={filterDate}
                   onChange={(date) => setStartDate(date)}
-                  filterDate={date => date.getDay() === 0}
                   placeholderText="Por ahora solo entregamos los domingos"
-                  minDate={new Date()}
+                  minDate={hour > 18 ? subDays(new Date(), -1) : subDays(new Date(), 0)}
                   dateFormat='dd-MM-yyyy'
                 />
                 </Form.Item>
