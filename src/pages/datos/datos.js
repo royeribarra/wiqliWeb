@@ -24,6 +24,7 @@ function Datos()
   const [messageError, setMessageError] = useState();
   const [minDate, setMinDate] = useState(subDays(new Date(), 0));
   const [hour, setHour] = useState(10);
+  const [day, setDay] = useState();
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState([]);
   const [cliente, setCliente] = useState({
@@ -106,7 +107,7 @@ function Datos()
   }, []);
 
   const filterDate = (date) => {
-    return date.getDay() === 0;
+    return date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5 && date.getDay() !== 6;
   }
 
   const handleMinDate = () => {
@@ -121,6 +122,9 @@ function Datos()
   }
 
   useEffect(() => {
+    const dayOfWeekDigit = new Date().getDay();
+    console.log(dayOfWeekDigit)
+    setDay(dayOfWeekDigit);
     const d = new Date();
     let hour = d.getHours();
     console.log(hour)
@@ -223,13 +227,22 @@ function Datos()
                   className="selector-fecha"
                 >
                   <DatePicker
-                  selected={startDate}
-                  filterDate={filterDate}
-                  onChange={(date) => setStartDate(date)}
-                  placeholderText="Por ahora solo entregamos los domingos"
-                  minDate={hour > 18 ? subDays(new Date(), -1) : subDays(new Date(), 0)}
-                  dateFormat='dd-MM-yyyy'
-                />
+                    selected={startDate}
+                    filterDate={filterDate}
+                    onChange={(date) => setStartDate(date)}
+                    placeholderText="Por ahora solo entregamos los domingos"
+                    // minDate={hour > 18 ? subDays(new Date(), -1) : subDays(new Date(), 0)}
+                    // minDate={(day && hour > 18 ) ? subDays(new Date(), -1) : subDays(new Date(), 0)}
+                    minDate={
+                      hour > 18 ? 
+                      ( 
+                        day === 6 ? subDays(new Date(), -2) : 
+                        subDays(new Date(), 0) 
+                      ) : 
+                      subDays(new Date(), 0)
+                    }
+                    dateFormat='dd-MM-yyyy'
+                  />
                 </Form.Item>
               </div>
               <div className="itemForm">
