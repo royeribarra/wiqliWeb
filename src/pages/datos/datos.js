@@ -233,13 +233,21 @@ function Datos()
                     placeholderText="Por ahora solo entregamos los domingos"
                     // minDate={hour > 18 ? subDays(new Date(), -1) : subDays(new Date(), 0)}
                     // minDate={(day && hour > 18 ) ? subDays(new Date(), -1) : subDays(new Date(), 0)}
+                    // minDate={
+                    //   hour > 20 ? 
+                    //   ( 
+                    //     (day !== 6 && day !== 0) ? subDays(new Date(), -2) : 
+                    //     subDays(new Date(), -1) 
+                    //   ) : 
+                    //   subDays(new Date(), 0)
+                    // }
                     minDate={
-                      hour > 18 ? 
+                      (day === 6 || day === 0 ) ? 
                       ( 
-                        day === 6 ? subDays(new Date(), -2) : 
+                        hour > 18 ? subDays(new Date(), -2) : 
                         subDays(new Date(), 0) 
                       ) : 
-                      subDays(new Date(), 0)
+                      subDays(new Date(), -1)
                     }
                     dateFormat='dd-MM-yyyy'
                   />
