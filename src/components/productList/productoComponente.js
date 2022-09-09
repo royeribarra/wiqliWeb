@@ -52,7 +52,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
       <div className="imagenProducto">
         <img
           src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+data.imagen}
-          alt={data.nombre}
+          alt={`comprar ` + data.nombre}
         />
       </div>
       {
