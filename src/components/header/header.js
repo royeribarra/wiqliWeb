@@ -28,7 +28,7 @@ function Header() {
           <Navbar.Brand href="/">
             <div>
             {isHome
-            ? <p className="tituloEnunciativo">Inicio</p> 
+            ? <p className="tituloInicio"></p> 
             : <img
             src={logo}
             height="50"

@@ -2,14 +2,14 @@
     font-size: calc(4px + 1.4vw + 0.8rem);
     font-weight: 700;
     margin: 1rem;
-    color: #3681B8;
+    color: #5FAD57;
 }
 
 .tituloEnunciativo{
     font-size: calc(0px + 1.4vw + 0.8rem);
     margin: 0.7rem;
     margin-bottom: 1rem;
-    color: #5FAD57;
+    color:black;
 }
 
 .numeroDeContacto{
@@ -47,6 +47,8 @@
   .clickASiguiente{
     display: flex;
     align-items: center;
+    color: white;
+    font-weight: 600;
   }
 
   @media (min-width: 600px) {
@@ -121,3 +123,8 @@
   .logoLanding{
     width: calc(50% + 2rem);
   }
+
+  .textoDePrecio{
+    color: white;
+  }
+

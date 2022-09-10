@@ -58,7 +58,7 @@
 }
 
 .accordion-button:not(.collapsed) h2{
-    color: #BA3B46;
+    color: #3681B8;
 }
 
 .acordeonCategoria{
@@ -85,7 +85,7 @@
     text-align: center;
     background-color: #F3F8F2;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    color: #BA3B46;
+    color: #3681B8;
     padding: 10px;
     border-radius: 10px !important;
 
