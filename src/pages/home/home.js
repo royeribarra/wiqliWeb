@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Affix, Button, Form } from 'antd';
-import { Container } from "react-bootstrap"
-import logo from "../../images/logo.png"
-import siguiente from "../../images/siguiente.png"
+import { Container } from "react-bootstrap";
+import logo from "../../images/logo.png";
+import visa from "../../images/visa.png";
+import plin from "../../images/plin.png";
+import yape from "../../images/yape.png";
+import sol from "../../images/sol.png";
+import siguiente from "../../images/siguiente.png";
 import './home.css';
 import ProductList from "../../components/productList/productList";
 import { useNavigate } from "react-router-dom";
@@ -120,7 +124,16 @@ function Home()
             />
             <h2 className="tituloPrincipal">¡Haz tus compras semanales sin moverte de casa con Wiqli!</h2>
             <h5 className="tituloEnunciativo">¡Te ofrecemos la mejor calidad a un súper precio!</h5>
-            <h5 className="tituloEnunciativo">Realiza tu pedido y paga cuando lo recibas.</h5>
+            <h5 className="textoDisclaimer">Realiza tu pedido semanal hasta el sábado a las 7:00pm y paga cuando lo recibas.</h5>
+            <div className='disclaimerPago'>
+            <h5 className="textoDisclaimer">Aceptamos todos los medios de pago</h5>
+            <div className='mediosDePago'>
+              <img className='medioDePago' src={visa}></img>
+              <img className='medioDePago' src={yape}></img>
+              <img className='medioDePago' src={plin}></img>
+              <img className='medioDePago' src={sol}></img> 
+            </div>
+            </div>
           </div>
           <div className='listaDeProductos'>
             <ProductList 

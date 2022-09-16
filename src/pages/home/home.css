@@ -128,3 +128,27 @@
     color: white;
   }
 
+  .disclaimerPago{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .mediosDePago{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
+    justify-items: center;
+    width: 300px;
+    
+
+  }
+
+  .medioDePago{
+    max-width: 100%;
+    width: 40px;
+    height: 40px;
+    border-radius: 28px;
+    
+  }
