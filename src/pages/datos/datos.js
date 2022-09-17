@@ -25,6 +25,7 @@ function Datos()
   const [minDate, setMinDate] = useState(subDays(new Date(), 0));
   const [hour, setHour] = useState(10);
   const [day, setDay] = useState();
+  const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState([]);
   const [cliente, setCliente] = useState({
@@ -131,6 +132,11 @@ function Datos()
     setHour(hour);
   },[])
 
+  const onChangeDate = (date) => {
+    setStartDate(date);
+    setDateOfWeekSelected(date.getDay());
+  }
+
   return (
     <Spin spinning={blockPage}>
       <div className="baseWiqliForm">
@@ -229,7 +235,7 @@ function Datos()
                   <DatePicker
                     selected={startDate}
                     filterDate={filterDate}
-                    onChange={(date) => setStartDate(date)}
+                    onChange={onChangeDate}
                     placeholderText="Por ahora solo entregamos los domingos"
                     // minDate={hour > 18 ? subDays(new Date(), -1) : subDays(new Date(), 0)}
                     // minDate={(day && hour > 18 ) ? subDays(new Date(), -1) : subDays(new Date(), 0)}
@@ -242,12 +248,7 @@ function Datos()
                     //   subDays(new Date(), 0)
                     // }
                     minDate={
-                      (day === 6 || day === 0 ) ? 
-                      ( 
-                        hour > 18 ? subDays(new Date(), -2) : 
-                        subDays(new Date(), 0) 
-                      ) : 
-                      subDays(new Date(), -1)
+                      (day === 6 && hour > 18) || day === 0 ? subDays(new Date(), -4) : subDays(new Date(), -1)
                     }
                     dateFormat='dd-MM-yyyy'
                   />
@@ -264,23 +265,33 @@ function Datos()
               </div>
               </div>
               <div>
-                  <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
-                  <div className="desgloseTotal">
-                    <div className="totalesAPagar">
-                        <h6 className="tituloCampo">Productos</h6>
-                        <h6 className="datoCampo">S/ {parseFloat(total).toFixed(2)}</h6>
-                    </div>
-                    <div className="totalesAPagar">
-                        <h6 className="tituloCampo">Delivery</h6>
-                        <h6 className="datoCampo">S/10.00</h6>
-                    </div>
-                    <hr></hr>
-                    <div className="totalesAPagar">
-                        <h6 className="tituloCampo">Total</h6>
-                        <h6 className="datoCampo">S/ {parseFloat(total + 10).toFixed(2)}</h6>
-                    </div>
-                  </div>
-              <h6 className="textoDisclaimer">Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados</h6>
+              <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
+              <div className="desgloseTotal">
+                <div className="totalesAPagar">
+                  <h6 className="tituloCampo">Productos</h6>
+                  <h6 className="datoCampo">S/ {parseFloat(total).toFixed(2)}</h6>
+                </div>
+                <div className="totalesAPagar">
+                  <h6 className="tituloCampo">Delivery</h6>
+                  <h6 className="datoCampo">S/10.00</h6>
+                </div>
+                <hr></hr>
+                <div className="totalesAPagar">
+                  <h6 className="tituloCampo">Total</h6>
+                  <h6 className="datoCampo">S/ {parseFloat(total + 10).toFixed(2)}</h6>
+                </div>
+              </div>
+              {
+                dateOfWeekSelected === 0 &&
+                <p className="mensajeFinalDestacado">Entregaremos tu pedido entre las 6pm y 10pm.</p>
+              }
+              {
+                dateOfWeekSelected === 1 &&
+                <p className="mensajeFinalDestacado">Entregaremos tu pedido entre las 9am y 12pm.</p>
+              }
+              <h6 className="textoDisclaimer">
+                Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados
+              </h6>
             </div>
             {/* <NavLink to="/confirmacion">
               <Button type="primary" htmlType="submit" className="botonDeSiguiente">
@@ -293,7 +304,6 @@ function Datos()
               </Button>
             </Form.Item>
           </Form>
-        
         </Container>
       </div>
     </Spin>
