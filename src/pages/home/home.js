@@ -3,6 +3,8 @@ import { Affix, Button, Form } from 'antd';
 import { Container } from "react-bootstrap";
 import logo from "../../images/logo.png";
 import visa from "../../images/visa.png";
+import mastercard from "../../images/mastercard.jpg";
+import amex from "../../images/amex.jpg";
 import plin from "../../images/plin.png";
 import yape from "../../images/yape.png";
 import sol from "../../images/sol.png";
@@ -130,6 +132,8 @@ function Home()
             <div className='mediosDePago'>
               <img className='medioDePago' src={visa}></img>
               <img className='medioDePago' src={yape}></img>
+              <img className='medioDePago' src={mastercard}></img>
+              <img className='medioDePago' src={amex}></img>
               <img className='medioDePago' src={plin}></img>
               <img className='medioDePago' src={sol}></img> 
             </div>

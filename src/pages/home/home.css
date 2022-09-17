@@ -138,7 +138,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
     justify-items: center;
     width: 300px;
     
