@@ -14,11 +14,7 @@ const { TextArea } = Input;
 
 function Datos() 
 {
-
-
   const [startDate, setStartDate] = useState(new Date());
-
-
   let history = useNavigate();
   const [form] = Form.useForm();
   const [messageError, setMessageError] = useState();
@@ -35,13 +31,7 @@ function Datos()
   const [blockPage, setBlockPage] = useState(false);
 
   const onFinish = (values) => {
-    console.log(values)
-    //console.log(values.fecha_recojo.getDate())
     setBlockPage(true);
-    // const fieldsValue = {
-    //   ...values,
-    //   'fecha_recojo': values['fecha_recojo'].toLocaleDateString()
-    // };
     let data = {
       productos: productos,
       otrosFrutas: sessionStorage.getItem('otrosFrutas'),
@@ -61,7 +51,6 @@ function Datos()
     }).catch(error => {
       setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
     });
-    
   }
 
   const calcularTotal = () => {
@@ -85,6 +74,15 @@ function Datos()
     setCliente(allValues);
   }
 
+  const filterDate = (date) => {
+    return date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5 && date.getDay() !== 6;
+  }
+
+  const onChangeDate = (date) => {
+    setStartDate(date);
+    setDateOfWeekSelected(date.getDay());
+  }
+
   useEffect(() => {
     calcularTotal();
   }, [productos]);
@@ -100,42 +98,18 @@ function Datos()
   useEffect(() => {
     if(sessionStorage.getItem('cliente')){
       let clienteStorage = JSON.parse(sessionStorage.getItem('cliente'));
-      // let newDate = new Date(clienteStorage.fecha_recojo);
-      // clienteStorage.fecha_recojo = newDate.toLocaleDateString();
       form.setFieldsValue(clienteStorage);
       setCliente(JSON.parse(sessionStorage.getItem('cliente')));
     }
   }, []);
 
-  const filterDate = (date) => {
-    return date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5 && date.getDay() !== 6;
-  }
-
-  const handleMinDate = () => {
-    const d = new Date();
-    let hour = d.getHours();
-    
-    if(hour>19)
-    {
-      setMinDate(subDays(new Date(), -1));
-    }
-    setMinDate(subDays(new Date(), 0));
-  }
-
   useEffect(() => {
     const dayOfWeekDigit = new Date().getDay();
-    console.log(dayOfWeekDigit)
     setDay(dayOfWeekDigit);
     const d = new Date();
     let hour = d.getHours();
-    console.log(hour)
     setHour(hour);
   },[])
-
-  const onChangeDate = (date) => {
-    setStartDate(date);
-    setDateOfWeekSelected(date.getDay());
-  }
 
   return (
     <Spin spinning={blockPage}>
@@ -145,13 +119,13 @@ function Datos()
             <Loader></Loader>
           </div>
           <div className="cabeceraDatos">
-              <NavLink to="/" >
-                  <img 
-                  src={atras}
-                  alt="compra en Wiqli con la mejor calidad y precio"
-                  />
-              </NavLink>
-              <h4>Datos de entrega</h4>
+            <NavLink to="/" >
+                <img 
+                src={atras}
+                alt="compra en Wiqli con la mejor calidad y precio"
+                />
+            </NavLink>
+            <h4>Datos de entrega</h4>
           </div>
           <Form
             layout="vertical"
@@ -237,16 +211,6 @@ function Datos()
                     filterDate={filterDate}
                     onChange={onChangeDate}
                     placeholderText="Por ahora solo entregamos los domingos"
-                    // minDate={hour > 18 ? subDays(new Date(), -1) : subDays(new Date(), 0)}
-                    // minDate={(day && hour > 18 ) ? subDays(new Date(), -1) : subDays(new Date(), 0)}
-                    // minDate={
-                    //   hour > 20 ? 
-                    //   ( 
-                    //     (day !== 6 && day !== 0) ? subDays(new Date(), -2) : 
-                    //     subDays(new Date(), -1) 
-                    //   ) : 
-                    //   subDays(new Date(), 0)
-                    // }
                     minDate={
                       (day === 6 && hour > 18) || day === 0 ? subDays(new Date(), -4) : subDays(new Date(), -1)
                     }
@@ -293,11 +257,6 @@ function Datos()
                 Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados
               </h6>
             </div>
-            {/* <NavLink to="/confirmacion">
-              <Button type="primary" htmlType="submit" className="botonDeSiguiente">
-                Enviar pedido
-              </Button>
-            </NavLink> */}
             <Form.Item>
               <Button type="primary" htmlType="submit" className="botonFinal">
                 Enviar pedido

@@ -131,9 +131,9 @@ function Home()
             <h5 className="textoDisclaimer">Aceptamos todos los medios de pago</h5>
             <div className='mediosDePago'>
               <img className='medioDePago' src={visa}></img>
-              <img className='medioDePago' src={yape}></img>
               <img className='medioDePago' src={mastercard}></img>
               <img className='medioDePago' src={amex}></img>
+              <img className='medioDePago' src={yape}></img>
               <img className='medioDePago' src={plin}></img>
               <img className='medioDePago' src={sol}></img> 
             </div>
