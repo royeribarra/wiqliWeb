@@ -6,6 +6,23 @@
     
 }
 
+.productoAdicionalAAgregar .botonAgregarMasProductos{
+    background: none;
+    color: #3681B8;
+    font-weight: 500;
+    border: none;
+    
+}
+
+.productoAdicionalAAgregar .botonAgregarMasProductos p{
+    background: none;
+    color: #3681B8;
+    font-weight: 500;
+    border: none;
+    margin: 0;
+    
+}
+
 .tituloForm{
     display: flex;
     margin-top: 0.5rem;
@@ -23,6 +40,18 @@
     border: grey solid 2px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
     padding-left: 0.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.productoAdicionalAAgregar{
+    display: grid;
+    grid-template-columns: 10fr 2fr ;
+    align-items: center;
+    border: grey solid 2px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+    padding-right: 0.5rem;
     border-radius: 10px;
     margin-bottom: 1rem;
     margin-top: 1rem;

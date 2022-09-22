@@ -1,7 +1,9 @@
 import React from "react";
 import { Accordion, Form } from "react-bootstrap";
 import AgregarOtro from "../agregarOtro/agregarOtro";
+import AgregarOtroProducto from "../agregarOtro/agregarOtroProducto";
 import './productList.css';
+import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
 
 
@@ -40,11 +42,19 @@ function ProductList({
                     />
                   ))
                 }
+                <ProductoAdicional></ProductoAdicional>
               <AgregarOtro 
                 form={formOtrosFrutas} 
                 nombre="otrasFrutas" 
                 title="Agregar otra fruta"
               />
+
+              <AgregarOtroProducto
+                form={formOtrosFrutas} 
+                nombre="otrasFrutas" 
+                title="Agregar otra fruta"
+              />
+
               </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1"  className="acordeonCategoria">
@@ -64,11 +74,13 @@ function ProductList({
                     />
                   ))
                 }
+              
               <AgregarOtro 
                 form={formOtrosVerduras} 
                 nombre="otrasVerduras"
                 title="Agregar otra verdura"
               />
+              
               </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="2" className="acordeonCategoria">
