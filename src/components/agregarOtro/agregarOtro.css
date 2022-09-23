@@ -74,3 +74,7 @@
 .contenedorBotonAgregarNuevo p{
     margin: 0;
 }
+
+.agregarProductoAdicional{
+    cursor: pointer;
+}

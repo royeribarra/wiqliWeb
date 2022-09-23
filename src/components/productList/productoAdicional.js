@@ -4,23 +4,26 @@ import quitar from "../../images/quitar.png"
 import './productList';
 
 
-function ProductoAdicional() 
+function ProductoAdicional({ id, nombre, cantidad, tipo, eliminarProductoStorage} ) 
 {
+  const quitarProducto = () => {
+    eliminarProductoStorage(id, tipo);
+  }
+  
   return (
     <div>
-        <h3>Productos adicionales</h3>
-        <Card className="descripcionProducto descripcionProductoAdicional">
+        <Card className="descripcionProductoAdicional descripcionProductoAgregadoAdicional">
           <div className="datosProducto nuevoProductoAdicional">
-            <h5>Kiwi</h5>
-            <p>1kg</p>
-            <div className="eliminarProductoAgregado">
-                  <div className="botonBorrarProductoAgregado" >
-                  <img
-                    src={quitar}
-                    alt="eliminar producto carrito otro"
-                  />
-                  <p className="botonAgregarMasProductos">Quitar</p>
-                  </div>
+            <h5>{nombre}</h5>
+            <p>{cantidad}</p>
+            <div className="eliminarProductoAgregado" onClick={quitarProducto}>
+              <div className="botonBorrarProductoAgregado" >
+              <img
+                src={quitar}
+                alt="eliminar producto carrito otro"
+              />
+              <p className="botonAgregarMasProductos">Quitar</p>
+              </div>
             </div>
           </div>
           </Card>

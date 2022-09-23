@@ -57,6 +57,21 @@
     
 }
 
+.descripcionProductoAdicional{
+    display: flex;
+    flex-flow: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.descripcionProductoAgregadoAdicional{
+    background-color: #F3F8F2;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    
+}
+
 .accordion-button:not(.collapsed) h2{
     color: #3681B8;
 }
@@ -172,3 +187,6 @@
   
     }
 
+.eliminarProductoAgregado{
+    cursor: pointer;
+}

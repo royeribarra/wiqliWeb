@@ -34,10 +34,10 @@ function Datos()
     setBlockPage(true);
     let data = {
       productos: productos,
-      otrosFrutas: sessionStorage.getItem('otrosFrutas'),
-      otrosVerduras: sessionStorage.getItem('otrosVerduras'),
-      otrosCarnes: sessionStorage.getItem('otrosCarnes'),
-      otrosMenestras: sessionStorage.getItem('otrosMenestras'),
+      otrosFrutas: sessionStorage.getItem('otrasFrutas'),
+      otrosVerduras: sessionStorage.getItem('otrasVerduras'),
+      otrosCarnes: sessionStorage.getItem('otrasCarnes'),
+      otrosMenestras: sessionStorage.getItem('otrasMenestras'),
       cliente: cliente
      }
     axios
