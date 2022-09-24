@@ -84,7 +84,7 @@ function AgregarOtroProducto({ title, nombre, agregarProductoStorage})
             </div>
           </div>
         </Space>
-      <Form.Item>
+      {/* <Form.Item>
         <Button 
           type="dashed" 
           onClick={() => add()} block 
@@ -98,7 +98,7 @@ function AgregarOtroProducto({ title, nombre, agregarProductoStorage})
           <p className="botonAgregarMasProductos">Agregar otro producto</p>
           </div>
         </Button>
-      </Form.Item>
+      </Form.Item> */}
       </Form>
     </div>
   );
