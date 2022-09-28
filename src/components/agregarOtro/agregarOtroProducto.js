@@ -4,6 +4,8 @@ import { Form, Button, Space  } from 'antd';
 import agregar from "../../images/agregar.png"
 import check from "../../images/check.png"
 import TextArea from "antd/lib/input/TextArea";
+import { toastr } from "react-redux-toastr";
+
 function AgregarOtroProducto({ title, nombre, agregarProductoStorage}) 
 {
   const [form] = Form.useForm();
@@ -14,6 +16,7 @@ function AgregarOtroProducto({ title, nombre, agregarProductoStorage})
     let values = form.getFieldsValue();
     let producto = {nombre: values.productoAdicionalNombre, cantidad: values.productoAdicionalCantidad, id: Math.floor(Math.random() * 1000)};
     if(!values.productoAdicionalCantidad || !values.productoAdicionalNombre){
+      toastr.error("Por favor ingresa un nombre y cantidad.");
       return;
     }
     agregarProductoStorage(producto, nombre);

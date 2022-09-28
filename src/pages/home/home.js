@@ -13,6 +13,7 @@ import './home.css';
 import ProductList from "../../components/productList/productList";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { toastr } from "react-redux-toastr";
 
 function Home() 
 {
@@ -82,7 +83,8 @@ function Home()
 
   const goToFormularioDatos = () => {
     if(total === 0){
-      return ;
+      toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
+      
     }else{
       sessionStorage.setItem('productos', JSON.stringify(productosCarrito));
       sessionStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));

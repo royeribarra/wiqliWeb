@@ -5,7 +5,7 @@ import AgregarOtroProducto from "../agregarOtro/agregarOtroProducto";
 import './productList.css';
 import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
-
+import { toastr } from "react-redux-toastr";
 
 function ProductList({ 
   productos,
@@ -30,15 +30,19 @@ function ProductList({
     sessionStorage.setItem(nombre, JSON.stringify(productos));
     if(nombre === 'otrasFrutas'){
       setOtrasFrutas(productos);
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
     }
     if(nombre === 'otrasVerduras'){
       setOtrasVerduras(productos);
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
     }
     if(nombre === 'otrasCarnes'){
       setOtrasCarnes(productos);
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
     }
     if(nombre === 'otrasMenestras'){
       setOtrasMenestras(productos);
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
     }
   }
 
@@ -49,6 +53,7 @@ function ProductList({
       copiaArray.splice(index,1);
       setOtrasFrutas(copiaArray);
       sessionStorage.setItem('otrasFrutas', JSON.stringify(copiaArray));
+      
     }
     if(tipo === 2){
       const copiaArray = [...otrasVerduras];
