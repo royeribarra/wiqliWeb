@@ -60,11 +60,16 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
         <Card className="descripcionProducto" onClick={agregarCarrito}>
           <div className="datosProducto">
             <h5>{data.nombre}</h5>
-            <p>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
-            <p>S/{data.precio_unitario} x {data.unidad.abreviatura}
+            <p style={{ color: "#BA3B46", fontSize: "12px" }}>{data.disponibilidad_limitada ? 'Sujeto a disponiblidad' : ''}</p>
+            <p style={{ fontSize: "0.9rem" }}>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
+            <p><span style={{ color: "#3681B8", fontWeight: "500" }}>S/{data.precio_unitario} x {data.unidad.abreviatura}</span>
             {
               data.cantidad_minima !== "1.00" &&
-              ` (Aprox S/ ${parseFloat(data.cantidad_minima*data.precio_unitario).toFixed(2)})`
+              <span style={{ color: "#3681B8", fontWeight: "500" }}>
+                {
+                  ` (Aprox S/ ${parseFloat(data.cantidad_minima*data.precio_unitario).toFixed(2)})`
+                }
+              </span>
             }</p>
           </div>
           <Form.Check type="checkbox" label="" />
@@ -85,8 +90,8 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
             />
             </div>
             </div>
-            <p>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
-            <p>S/{data.precio_unitario} x {data.unidad.abreviatura}</p>
+            <p style={{ fontSize: "0.9rem" }}>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
+            <p><span style={{ color: "#3681B8", fontWeight: "500" }}>S/{data.precio_unitario} x {data.unidad.abreviatura}</span></p>
           </div>
           </Card>
           <div>
