@@ -30,19 +30,19 @@ function ProductList({
     sessionStorage.setItem(nombre, JSON.stringify(productos));
     if(nombre === 'otrasFrutas'){
       setOtrasFrutas(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
     }
     if(nombre === 'otrasVerduras'){
       setOtrasVerduras(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
     }
     if(nombre === 'otrasCarnes'){
       setOtrasCarnes(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
     }
     if(nombre === 'otrasMenestras'){
       setOtrasMenestras(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos. Recuerda que Wiqli siempre es calidad al mejor precio.");
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
     }
   }
 

@@ -75,7 +75,7 @@ function Datos()
   }
 
   const filterDate = (date) => {
-    return date.getDay() !== 0 && date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5;
+    return date.getDay() !== 0 && date.getDay() !== 1 && date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5;
   }
 
   const onChangeDate = (date) => {
