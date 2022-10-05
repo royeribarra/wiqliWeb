@@ -75,7 +75,7 @@ function Datos()
   }
 
   const filterDate = (date) => {
-    return date.getDay() !== 0 && date.getDay() !== 1 && date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5;
+    return date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5 && date.getDay() !== 6;
   }
 
   const onChangeDate = (date) => {
@@ -210,9 +210,9 @@ function Datos()
                     selected={startDate}
                     filterDate={filterDate}
                     onChange={onChangeDate}
-                    placeholderText="Por elecciones solo entregaremos el día sabado."
+                    placeholderText="Entrega: domingo o lunes."
                     minDate={
-                      (day === 5 && hour > 18) || day === 6 ? subDays(new Date(), -4) : subDays(new Date(), -1)
+                      (day === 6 && hour > 18) || day === 6 ? subDays(new Date(), -4) : subDays(new Date(), -1)
                     }
                     dateFormat='dd-MM-yyyy'
                   />
