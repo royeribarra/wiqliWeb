@@ -9,16 +9,18 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../components/loader/loader";
 import subDays from "date-fns/subDays";
+import { toastr } from "react-redux-toastr";
 
 const { TextArea } = Input;
 
 function Datos() 
 {
+
   const [startDate, setStartDate] = useState(new Date());
   let history = useNavigate();
   const [form] = Form.useForm();
   const [messageError, setMessageError] = useState();
-  const [minDate, setMinDate] = useState(subDays(new Date(), 0));
+  const [aplicaCupon, setAplicaCupon] = useState(false);
   const [hour, setHour] = useState(10);
   const [day, setDay] = useState();
   const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
@@ -82,6 +84,25 @@ function Datos()
     setStartDate(date);
     setDateOfWeekSelected(date.getDay());
   }
+
+  const validarCupon = () => {
+    let url = `${process.env.REACT_APP_BASE_PATH}/wiqli/verificar-cupon`;
+    let params = form.getFieldValue('descuento');
+    console.log(url);
+    axios.get(`${url}/${params}`).then(({data}) => {
+      if(data.state)
+      {
+        setAplicaCupon(true);
+        setTotal(total - 10);
+        toastr.success("Cupón agregado correctamente.");
+      }
+      else{
+        toastr.error("El cupón no existe o ya fue usado.")
+        ;
+      }
+    });
+  }
+
 
   useEffect(() => {
     calcularTotal();
@@ -227,8 +248,20 @@ function Datos()
                   <TextArea rows={3} placeholder="Anotaciones adicionales" />
                 </Form.Item>
               </div>
+            </div>
+            <div>
+              <div className="cupon-descuento">
+                <Form.Item 
+                  label="Agregar cupón de descuento"
+                  name="descuento"
+                  rules={[{ required: false }]}
+                >
+                  <Input className="form-control" style={{ margin: "0 5px 0 5px"}} placeholder="Ingresa tu cupón de referido." />
+                </Form.Item>
+                <Button type="primary" className="botonFinal" onClick={validarCupon}>
+                  Agregar
+                </Button>
               </div>
-              <div>
               <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
               <div className="desgloseTotal">
                 <div className="totalesAPagar">
@@ -239,6 +272,13 @@ function Datos()
                   <h6 className="tituloCampo">Delivery</h6>
                   <h6 className="datoCampo">S/10.00</h6>
                 </div>
+                {
+                  aplicaCupon && 
+                    <div className="totalesAPagar" style={{ color: "#BA3B46" }}>
+                      <h6 className="tituloCampo">Descuento</h6>
+                      <h6 className="datoCampo">- S/10.00</h6>
+                    </div>
+                }
                 <hr></hr>
                 <div className="totalesAPagar">
                   <h6 className="tituloCampo">Total</h6>
