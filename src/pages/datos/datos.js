@@ -15,16 +15,27 @@ const { TextArea } = Input;
 
 function Datos() 
 {
-
   const [startDate, setStartDate] = useState(new Date());
   let history = useNavigate();
+  const [configuracion, setConfiguracion] = useState(
+    {
+      id: 1,
+      monto_descuento: 0.00,
+      monto_minimo_compra_referido: 100.00,
+      monto_minimo_envio_codigo: 0.00,
+      tipo_descuento: 1
+    }
+  );
   const [form] = Form.useForm();
   const [messageError, setMessageError] = useState();
   const [aplicaCupon, setAplicaCupon] = useState(false);
   const [hour, setHour] = useState(10);
   const [day, setDay] = useState();
   const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
+  const [totalProductos, setTotalProductos] = useState(0);
   const [total, setTotal] = useState(0);
+  const [delivery, setDelivery] = useState(10);
+  const [descuento, setDescuento] = useState(0);
   const [productos, setProductos] = useState([]);
   const [cliente, setCliente] = useState({
     apellidos: '', correo: '', direccion: '', fecha_recojo: '', nombres: '',
@@ -40,7 +51,9 @@ function Datos()
       otrosVerduras: sessionStorage.getItem('otrasVerduras'),
       otrosCarnes: sessionStorage.getItem('otrasCarnes'),
       otrosMenestras: sessionStorage.getItem('otrasMenestras'),
-      cliente: cliente
+      cliente: cliente,
+      cupon: aplicaCupon,
+      codigoCupon: values.descuento
      }
     axios
     .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
@@ -64,6 +77,7 @@ function Datos()
         total += producto.cantidad * (producto.precio_unitario*producto.cantidad_minima)
       }
     });
+    setTotalProductos(total);
     setTotal(total);
   }
 
@@ -88,21 +102,33 @@ function Datos()
   const validarCupon = () => {
     let url = `${process.env.REACT_APP_BASE_PATH}/wiqli/verificar-cupon`;
     let params = form.getFieldValue('descuento');
-    console.log(url);
     axios.get(`${url}/${params}`).then(({data}) => {
-      if(data.state)
+      if(data.state && totalProductos >= configuracion.monto_minimo_compra_referido)
       {
         setAplicaCupon(true);
-        setTotal(total - 10);
+        if(data.tipo === 1){
+          setDescuento(totalProductos*parseFloat(data.monto)/100);
+          setTotal(totalProductos - (totalProductos*parseFloat(data.monto)/100));
+        }else if(data.tipo === 2)
+        {
+          setTotal(totalProductos - parseFloat(data.monto));
+          setDescuento(parseFloat(data.monto));
+        }
         toastr.success("Cupón agregado correctamente.");
       }
-      else{
-        toastr.error("El cupón no existe o ya fue usado.")
-        ;
+      else if(!(totalProductos >= configuracion.monto_minimo_compra_referido)){
+        setAplicaCupon(false);
+        toastr.error(`Los cupones solo son válidos para una compra mayor a ${configuracion.monto_minimo_compra_referido}.`);
+      } else{
+        setAplicaCupon(false);
+        toastr.error("El cupón no existe o ya fue usado.");
       }
     });
   }
 
+  const modificarCupon = () => {
+    setAplicaCupon(false);
+  }
 
   useEffect(() => {
     calcularTotal();
@@ -130,6 +156,12 @@ function Datos()
     const d = new Date();
     let hour = d.getHours();
     setHour(hour);
+  },[])
+
+  useEffect(()=> {
+    axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/configuracion`).then(({data})=> {
+      setConfiguracion(data);
+    });
   },[])
 
   return (
@@ -251,38 +283,57 @@ function Datos()
             </div>
             <div>
               <div className="cupon-descuento">
-                <Form.Item 
-                  label="Agregar cupón de descuento"
-                  name="descuento"
-                  rules={[{ required: false }]}
-                >
-                  <Input className="form-control" style={{ margin: "0 5px 0 5px"}} placeholder="Ingresa tu cupón de referido." />
-                </Form.Item>
-                <Button type="primary" className="botonFinal" onClick={validarCupon}>
-                  Agregar
-                </Button>
+                {
+                  !aplicaCupon && 
+                  <>
+                    <Form.Item 
+                      label="Agregar cupón de descuento"
+                      name="descuento"
+                      rules={[{ required: false }]}
+                    >
+                      <Input className="form-control" style={{ margin: "0 5px 0 5px"}} placeholder="Ingresa tu cupón de referido." />
+                    </Form.Item>
+                    <Button type="primary" className="botonFinal" onClick={validarCupon}>
+                      Agregar
+                    </Button>
+                  </>
+                }
+                {
+                  aplicaCupon && 
+                  <>
+                    <Form.Item 
+                      label="Cupón agregado con éxito."
+                      name="descuento"
+                      rules={[{ required: false }]}
+                    >
+                    </Form.Item>
+                    <Button type="primary" className="botonFinal" onClick={modificarCupon}>
+                      Modificar
+                    </Button>
+                  </>
+                }
               </div>
               <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
               <div className="desgloseTotal">
                 <div className="totalesAPagar">
                   <h6 className="tituloCampo">Productos</h6>
-                  <h6 className="datoCampo">S/ {parseFloat(total).toFixed(2)}</h6>
+                  <h6 className="datoCampo">S/ {parseFloat(totalProductos).toFixed(2)}</h6>
                 </div>
                 <div className="totalesAPagar">
                   <h6 className="tituloCampo">Delivery</h6>
-                  <h6 className="datoCampo">S/10.00</h6>
+                  <h6 className="datoCampo">S/ {parseFloat(delivery).toFixed(2)}</h6>
                 </div>
                 {
                   aplicaCupon && 
                     <div className="totalesAPagar" style={{ color: "#BA3B46" }}>
                       <h6 className="tituloCampo">Descuento</h6>
-                      <h6 className="datoCampo">- S/10.00</h6>
+                      <h6 className="datoCampo">- S/ {parseFloat(descuento).toFixed(2)}</h6>
                     </div>
                 }
                 <hr></hr>
                 <div className="totalesAPagar">
                   <h6 className="tituloCampo">Total</h6>
-                  <h6 className="datoCampo">S/ {parseFloat(total + 10).toFixed(2)}</h6>
+                  <h6 className="datoCampo">S/ {parseFloat(total + delivery).toFixed(2)}</h6>
                 </div>
               </div>
               {
