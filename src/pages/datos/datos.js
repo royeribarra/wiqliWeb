@@ -265,7 +265,7 @@ function Datos()
                     onChange={onChangeDate}
                     placeholderText="Entrega: domingo o lunes."
                     minDate={
-                      (day === 6 && hour > 18) || day === 6 ? subDays(new Date(), -4) : subDays(new Date(), -1)
+                      (day === 6 && hour > 18) || day === 0 ? subDays(new Date(), -4) : subDays(new Date(), -1)
                     }
                     dateFormat='dd-MM-yyyy'
                   />
