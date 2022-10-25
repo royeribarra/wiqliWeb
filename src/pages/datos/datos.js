@@ -53,7 +53,8 @@ function Datos()
       otrosMenestras: sessionStorage.getItem('otrasMenestras'),
       cliente: cliente,
       cupon: aplicaCupon,
-      codigoCupon: values.descuento
+      codigoCupon: values.descuento,
+      descuento: descuento
      }
     axios
     .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
@@ -82,6 +83,14 @@ function Datos()
   }
 
   const guardarFormInStorage = (changedValues, allValues) => {
+    console.log(changedValues.correo)
+    if(changedValues.correo){
+      setAplicaCupon(false);
+      setDescuento(0);
+      form.setFieldsValue({
+        descuento: ''
+      });
+    }
     let newVallues = allValues;
     if(newVallues.fecha_recojo){
       allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
@@ -101,29 +110,41 @@ function Datos()
 
   const validarCupon = () => {
     let url = `${process.env.REACT_APP_BASE_PATH}/wiqli/verificar-cupon`;
-    let params = form.getFieldValue('descuento');
-    axios.get(`${url}/${params}`).then(({data}) => {
-      if(data.state && totalProductos >= configuracion.monto_minimo_compra_referido)
-      {
-        setAplicaCupon(true);
-        if(data.tipo === 1){
-          setDescuento(totalProductos*parseFloat(data.monto)/100);
-          setTotal(totalProductos - (totalProductos*parseFloat(data.monto)/100));
-        }else if(data.tipo === 2)
+    let cupon = form.getFieldValue('descuento');
+    let correo = form.getFieldValue('correo');
+    if(cupon && correo)
+    {
+      axios.get(`${url}/${cupon}/${correo}`).then(({data}) => {
+        if(data.state && totalProductos >= configuracion.monto_minimo_compra_referido)
         {
-          setTotal(totalProductos - parseFloat(data.monto));
-          setDescuento(parseFloat(data.monto));
+          setAplicaCupon(true);
+          if(data.tipo === 1){
+            setDescuento(totalProductos*parseFloat(data.monto)/100);
+            setTotal(totalProductos - (totalProductos*parseFloat(data.monto)/100));
+          }else if(data.tipo === 2)
+          {
+            setTotal(totalProductos - parseFloat(data.monto));
+            setDescuento(parseFloat(data.monto));
+          }
+          toastr.success("Cupón agregado correctamente.");
         }
-        toastr.success("Cupón agregado correctamente.");
-      }
-      else if(!(totalProductos >= configuracion.monto_minimo_compra_referido)){
-        setAplicaCupon(false);
-        toastr.error(`Los cupones solo son válidos para una compra mayor a ${configuracion.monto_minimo_compra_referido}.`);
-      } else{
-        setAplicaCupon(false);
-        toastr.error("El cupón no existe o ya fue usado.");
-      }
-    });
+        else if(!data.state){
+          setAplicaCupon(false);
+          toastr.error(data.message);
+        }
+        else if(!(totalProductos >= configuracion.monto_minimo_compra_referido)){
+          setAplicaCupon(false);
+          toastr.error(`Los cupones solo son válidos para una compra mayor o igual a ${configuracion.monto_minimo_compra_referido}.`);
+        } else{
+          setAplicaCupon(false);
+          toastr.error("El cupón no existe o ya fue usado.");
+        }
+      });
+    }else if(!cupon){
+      toastr.error("Por favor ingrese un código de descuento.");
+    }else if(!correo){
+      toastr.error("Por favor ingrese un correo electrónico.");
+    }
   }
 
   const modificarCupon = () => {
