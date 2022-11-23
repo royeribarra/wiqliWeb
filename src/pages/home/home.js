@@ -87,10 +87,10 @@ function Home()
       
     }else{
       sessionStorage.setItem('productos', JSON.stringify(productosCarrito));
-      sessionStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
-      sessionStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
-      sessionStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
-      sessionStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
+      // sessionStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
+      // sessionStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
+      // sessionStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
+      // sessionStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
       history(`/datos`);
     }
   }
@@ -148,14 +148,9 @@ function Home()
               quitarProducto={quitarProducto}
               aumentarUnidades={aumentarUnidades}
               disminuirUnidades={disminuirUnidades}
-              formOtrosFrutas={formOtrosFrutas}
-              formOtrosVerduras={formOtrosVerduras}
-              formOtrosCarnes={formOtrosCarnes}
-              formOtrosMenestras={formOtrosMenestras}
             />
           </div>
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
-            {/* <NavLink to="/datos"> */}
               <Button className='botonDeSiguiente' onClick={goToFormularioDatos}>
                 <div className='botonOrdenado'>
                   <p className='textoDePrecio'>(S/ {parseFloat(total).toFixed(2)})</p>
@@ -168,7 +163,6 @@ function Home()
                   </div>
                 </div>
               </Button>
-            {/* </NavLink> */}
           </Affix>
         </Container>
       </div>

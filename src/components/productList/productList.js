@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Accordion, Form } from "react-bootstrap";
-import AgregarOtro from "../agregarOtro/agregarOtro";
 import AgregarOtroProducto from "../agregarOtro/agregarOtroProducto";
 import './productList.css';
 import ProductoAdicional from "./productoAdicional";
@@ -12,11 +11,7 @@ function ProductList({
   agregarProducto,
   quitarProducto,
   disminuirUnidades,
-  aumentarUnidades,
-  formOtrosFrutas,
-  formOtrosVerduras,
-  formOtrosCarnes,
-  formOtrosMenestras,
+  aumentarUnidades
 })
 {
   const[otrasFrutas, setOtrasFrutas] = useState([]);

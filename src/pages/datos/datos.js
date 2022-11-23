@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../components/loader/loader";
 import subDays from "date-fns/subDays";
 import { toastr } from "react-redux-toastr";
+import FormDatos from "./formDatos";
 
 const { TextArea } = Input;
 
@@ -83,7 +84,6 @@ function Datos()
   }
 
   const guardarFormInStorage = (changedValues, allValues) => {
-    console.log(changedValues.correo)
     if(changedValues.correo){
       setAplicaCupon(false);
       setDescuento(0);
@@ -201,7 +201,7 @@ function Datos()
             </NavLink>
             <h4>Datos de entrega</h4>
           </div>
-          <Form
+          {/* <Form
             layout="vertical"
             onFinish={onFinish}
             form={form}
@@ -374,7 +374,8 @@ function Datos()
                 Enviar pedido
               </Button>
             </Form.Item>
-          </Form>
+          </Form> */}
+          <FormDatos />
         </Container>
       </div>
     </Spin>

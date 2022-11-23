@@ -87,21 +87,6 @@ function AgregarOtroProducto({ title, nombre, agregarProductoStorage})
             </div>
           </div>
         </Space>
-      {/* <Form.Item>
-        <Button 
-          type="dashed" 
-          onClick={() => add()} block 
-          className="botonAgregarMasProductos"
-        >
-          <div className="contenedorBotonAgregarNuevo">
-          <img
-            src={agregar}
-            alt="agregar producto carrito otro"
-          />
-          <p className="botonAgregarMasProductos">Agregar otro producto</p>
-          </div>
-        </Button>
-      </Form.Item> */}
       </Form>
     </div>
   );
