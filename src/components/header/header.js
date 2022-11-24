@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Form, Nav, Offcanvas, NavDropdown, Button } from "react-bootstrap";
 import logo from "../../images/miniLogo.png"
 import whatsapp from "../../images/whatsapp.jpg"
 import { useLocation } from 'react-router-dom';
 import './header.css';
+
+
+
 
 function Header() {
   const location = useLocation()
@@ -23,31 +26,90 @@ function Header() {
 
   return (
     <div className="navBarContainer">
-      <Navbar collapseOnSelect expand="lg" className="navBar baseWiqli" >
-        <Container className="contenedorSimple">
-          <Navbar.Brand href="/">
+ {[false].map((expand) => (
+        <Navbar key={expand} bg="white" expand={expand} className="mb-3">
+          <Container fluid>
             <div>
             {isHome
-            ? <p className="tituloInicio"></p> 
-            : <img
-            src={logo}
-            height="50"
-            className="logoNav"
-            alt="wiqli"
-              /> 
-            }
-            </div>
-          </Navbar.Brand>
-          <Navbar.Brand href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
+            ? <Navbar.Brand href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
             <img
               src={whatsapp}
               height="50"
               className="logoNav"
-              alt="wiqli"
+              alt="Ayuda Wiqli"
             />
-          </Navbar.Brand>
-        </Container>
-      </Navbar>
+            </Navbar.Brand>
+            
+            : <Navbar.Brand href="/">
+            <img
+              src={logo}
+              height="50"
+              className="logoNav"
+              alt="wiqli"
+              /> 
+            </Navbar.Brand> 
+            }
+            </div>
+
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+            <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-${expand}`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
+              placement="end"
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                <div>
+
+                </div>
+                    <img
+                src={logo}
+                height="50"
+                className="logoNav"
+                alt="wiqli"
+                  /> 
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="cuerpoToggle">
+                  <div>
+                  <Nav.Link  href="/login"><div><p className="tituloHeaderFondo">Iniciar Sesión</p></div></Nav.Link>
+                  <Nav.Link  href="/registro"><p className="tituloHeader">Registrarme</p></Nav.Link>
+                  <Nav.Link  href="/registro"><p className="tituloHeaderDestacado">Quiero crear un cupón de referidos</p></Nav.Link>
+                  </div>
+                  <div>
+                    <div>
+                      <h2 className="tituloHeader">Renzo Anaya</h2>
+                      <div className="infoDestacadaHeader">
+                        <h2 className="tituloHeaderDestacado">Cupón de referido</h2>
+                        <h4 className="textoInfoDestacadaHeader" >XKDJFF</h4>
+                        <Button type="primary" htmlType="submit" className="botonCopiado">
+                        Copiar
+                        </Button>
+                      <p className="textoDisclaimer">Comparte este cupón y obtén S/5 de dscto. por cada persona que realice su primera compra con tu cupón</p>
+                      </div>
+                    </div>
+                    <div className="infoDestacadaHeader">
+                      <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
+                        <h4 className="textoInfoDestacadaHeader">S/45.00</h4>
+                    </div>
+                  </div>
+                </Nav>
+                <div className="logoNavToggle">
+                <Navbar.Brand href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
+                <img
+                  src={whatsapp}
+                  height="50"
+                  alt="wiqli"
+                />
+                </Navbar.Brand>
+                </div>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
+      ))}
+
     </div>
   );
 }

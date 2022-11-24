@@ -37,3 +37,81 @@
           padding-right: 15vw;
         }
         }
+
+.cuerpoToggle{
+    display: block;
+    text-align: end;
+    align-items: flex-end;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+
+
+.tituloHeader{
+    font-size: calc(2px + 1vw + 0.8rem);
+    font-weight: 700;
+    margin: 0.2rem;
+    color: #5FAD57;
+}
+
+.tituloHeaderFondo{
+    font-size: calc(2px + 1vw + 0.8rem);
+    font-weight: 700;
+    margin: 0.2rem;
+    color: #5FAD57;
+    
+}
+
+.tituloHeaderDestacado{
+    font-size: calc(2px + 1vw + 0.8rem);
+    font-weight: 700;
+    margin: 0.2rem;
+    color: #BA3B46;
+}
+
+.infoDestacadaHeader{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.textoInfoDestacadaHeader{
+    font-size: calc(2px + 1vw + 0.8rem);
+    font-weight: 700;
+    margin: 0.2rem;
+    color: #5FAD57;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-radius: 28px;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+
+
+.botonCopiado{
+    background-color: #5FAD57 !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    border: none;
+    border-radius: 28px;
+    padding: 5px;
+    margin: 0.3rem;
+    font-weight: 700;
+    color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
+.logoNavToggle{
+    display: flex;
+    margin-top: 1rem;
+    justify-content: flex-end;
+}
