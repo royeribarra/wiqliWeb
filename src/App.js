@@ -9,6 +9,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import ReduxToastr from "react-redux-toastr";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
+import Registro from './pages/registro/registro';
+import Login from './pages/login/login';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/datos" element={<Datos />} />
             <Route exact path="/confirmacion" element={<Confirmacion />} />
+            <Route exact path="/registro" element= {<Registro/> } />
+            <Route exact path="/login" element= {<Login/> } />
           </Routes>
         </BrowserRouter>
         <ReduxToastr
