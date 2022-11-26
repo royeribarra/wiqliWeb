@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Affix, Button, Form } from 'antd';
+import { Affix, Button } from 'antd';
 import { Container } from "react-bootstrap";
 import logo from "../../images/logo.png";
 import visa from "../../images/visa.png";
@@ -21,11 +21,6 @@ function Home()
   const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
   const[total, setTotal] = useState(0);
-
-  const [formOtrosFrutas] = Form.useForm();
-  const [formOtrosVerduras] = Form.useForm();
-  const [formOtrosCarnes] = Form.useForm();
-  const [formOtrosMenestras] = Form.useForm();
 
   const getProductoStorage = () => {
     if(sessionStorage.getItem('productos')){
@@ -87,10 +82,6 @@ function Home()
       
     }else{
       sessionStorage.setItem('productos', JSON.stringify(productosCarrito));
-      // sessionStorage.setItem('otrosFrutas', JSON.stringify(formOtrosFrutas.getFieldsValue()));
-      // sessionStorage.setItem('otrosVerduras', JSON.stringify(formOtrosVerduras.getFieldsValue()));
-      // sessionStorage.setItem('otrosCarnes', JSON.stringify(formOtrosCarnes.getFieldsValue()));
-      // sessionStorage.setItem('otrosMenestras', JSON.stringify(formOtrosMenestras.getFieldsValue()));
       history(`/datos`);
     }
   }
@@ -132,12 +123,12 @@ function Home()
             <div className='disclaimerPago'>
             <h5 className="textoDisclaimer">Aceptamos todos los medios de pago</h5>
             <div className='mediosDePago'>
-              <img className='medioDePago' src={visa}></img>
-              <img className='medioDePago' src={mastercard}></img>
-              <img className='medioDePago' src={amex}></img>
-              <img className='medioDePago' src={yape}></img>
-              <img className='medioDePago' src={plin}></img>
-              <img className='medioDePago' src={sol}></img> 
+              <img className='medioDePago' alt='visa' src={visa}></img>
+              <img className='medioDePago' alt='mastercard' src={mastercard}></img>
+              <img className='medioDePago' alt='amex' src={amex}></img>
+              <img className='medioDePago' alt='yape' src={yape}></img>
+              <img className='medioDePago' alt='plin' src={plin}></img>
+              <img className='medioDePago' alt='efectivo' src={sol}></img> 
             </div>
             </div>
           </div>

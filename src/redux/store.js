@@ -6,9 +6,11 @@ import promise from "redux-promise-middleware";
 // ***** REFUCERS *****
 import spinner from "./reducers/spinnerReducer";
 import routeReducer from "./reducers/routeReducer";
+import user from "./reducers/userLogedReducer";
 
 const reducer = combineReducers({   
     spinner,
+    user,
     routeReducer,
     toastr: toastrReducer 
 

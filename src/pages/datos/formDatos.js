@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Spin } from 'antd';
+import { Form, Input, Button } from 'antd';
 import subDays from "date-fns/subDays";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
 import axios from 'axios';
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 
-function FormDatos()
+function FormDatos({ setBlockPage })
 {
   let history = useNavigate();
   const [form] = Form.useForm();
@@ -36,7 +36,6 @@ function FormDatos()
       tipo_descuento: 1
     }
   );
-  const [blockPage, setBlockPage] = useState(false);
 
   const onFinish = (values) => {
     setBlockPage(true);
