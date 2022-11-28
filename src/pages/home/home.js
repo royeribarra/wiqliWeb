@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Affix, Button } from 'antd';
+import { Affix, Button, Modal } from 'antd';
 import { Container } from "react-bootstrap";
 import logo from "../../images/logo.png";
 import visa from "../../images/visa.png";
@@ -14,6 +14,7 @@ import ProductList from "../../components/productList/productList";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toastr } from "react-redux-toastr";
+import ModalTarea from './modalTarea';
 
 function Home() 
 {
@@ -21,6 +22,8 @@ function Home()
   const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
   const[total, setTotal] = useState(0);
+  const[showModal, setShowModal] = useState(true);
+  const[tareaSeleccionada, setTareaSeleccionada] = useState(false);
 
   const getProductoStorage = () => {
     if(sessionStorage.getItem('productos')){
@@ -98,9 +101,14 @@ function Home()
     setTotal(total);
   }
 
+  const seleccionarTareaModal = () => {
+
+  };
+
   useEffect(() => {
     getProductos();
     getProductoStorage();
+    seleccionarTareaModal();
   }, [])
 
   useEffect(() => {
@@ -110,6 +118,7 @@ function Home()
   return (
     <div className="gradienteMedio">
       <div className="baseWiqli">
+        <ModalTarea />
         <Container className="contenedorSimple contenedorProductos">
           <div className="baseLanding">
             <img
