@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Container, Form, Nav, Offcanvas, NavDropdown, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Offcanvas, Button } from "react-bootstrap";
 import logo from "../../images/miniLogo.png"
 import whatsapp from "../../images/whatsapp.jpg"
 import { useLocation } from 'react-router-dom';
@@ -16,11 +16,6 @@ function Header() {
   const location = useLocation()
   const [isLoged, setIsLoged] = useState(false);
   const [isHome, setIsHome] = useState(false);
-
-  const closeSession = () => {
-    const { access_token } = storageService.getItemObject('tknData');
-    logService.logout(access_token);
-  }
 
   const getHome = () => {
     let home = false
