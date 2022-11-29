@@ -118,7 +118,7 @@ function Header() {
                       </Button>
                     </div>) :
                     (<div>
-                      <Nav.Link  href="/login"><div><p className="tituloHeaderFondo">Iniciar Sesión</p></div></Nav.Link>
+                      <Nav.Link  href="/login"><div><p className="tituloHeaderFondo">Iniciar sesión</p></div></Nav.Link>
                       <Nav.Link  href="/registro"><p className="tituloHeader">Registrarme</p></Nav.Link>
                       <Nav.Link  href="/registro"><p className="tituloHeaderDestacado">Quiero crear un cupón de referidos</p></Nav.Link>
                     </div>)

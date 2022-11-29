@@ -51,7 +51,7 @@ const Login = ({loginCliente}) =>
               </Form.Item>
             </Form>
           </div>
-          <p className='signoO'>ó</p>
+          {/* <p className='signoO'>ó</p>
           <div className='opcionesDeSesion'>
             <div className='cardOpcionDeSesion'>
               <img className='logoSesion' src={google}></img>
@@ -65,7 +65,7 @@ const Login = ({loginCliente}) =>
               <img className='logoSesion' src={facebook}></img>
               <p>Inicia sesión con Facebook</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </Container>
     </div>

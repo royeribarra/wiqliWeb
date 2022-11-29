@@ -43,7 +43,7 @@ function Registro()
               label="Ingresa una contraseña"
               rules={[{ required: true, message: 'Por favor ingresa tu contraseña' }]}                
             >
-              <Input className="form-control" placeholder="**********" />
+              <Input.Password className="form-control" />
             </Form.Item>
           </div>
           <div className="itemForm">
@@ -52,7 +52,7 @@ function Registro()
               label="Ingresa tu contraseña nuevamente"
               rules={[{ required: true, message: 'Las contraseñas deben coincidir'}]}                
             >
-              <Input className="form-control" placeholder="**********" />
+              <Input.Password className="form-control" />
             </Form.Item>
           </div>
           <Form.Item>
@@ -61,7 +61,7 @@ function Registro()
             </Button>
           </Form.Item>
         </Form>
-        <p className='signoO'>ó</p>
+        {/* <p className='signoO'>ó</p>
         <div className='opcionesDeSesion'>
           <div className='cardOpcionDeSesion'>
             <img className='logoSesion' src={google} alt="google"></img>
@@ -75,7 +75,7 @@ function Registro()
             <img className='logoSesion' src={facebook} alt="facebook"></img>
             <p>Registrarme con Facebook</p>
           </div>
-        </div>
+        </div> */}
       </Container>
     </div>
   );
