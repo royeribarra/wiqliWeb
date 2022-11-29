@@ -1,6 +1,7 @@
 import axios from "axios";
 import LogService from "./logService";
 import StorageService from "./storageService";
+import {Buffer} from 'buffer';
 
 export class MainService {
     headers = {};
@@ -13,7 +14,7 @@ export class MainService {
 
     getAuthInfo() {
         const storageService = new StorageService();
-        const {access_token} = storageService.getItemObject('tknData');
+        const {access_token} = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
         this.accessToken = access_token;
         const options = this.addOptions(access_token);
         return options;

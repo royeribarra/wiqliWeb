@@ -10,11 +10,12 @@ export class UsuarioService extends MainService {
     return axios.get(`${this.url}/profiles`, this.options);
   }
 
-  realizarPedido() {
-    return axios.post(`${this.url}/sedes`, this.options);
+  realizarPedido(data) {
+    console.log(this.options)
+    return axios.post(`${this.url}/crear-pedido`, data, this.options);
   }
 
-  actualizarInformacionPersonal()
+  actualizarInformacionPersonal(id)
   {
     return axios.get(`${this.url}/update-state/${id}`, this.options);
   }

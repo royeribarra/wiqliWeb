@@ -1,13 +1,12 @@
 import React from 'react';
 import { Container } from "react-bootstrap";
 import './registro.css';
-import { Form, Input, Button, Spin } from 'antd';
+import { Form, Input, Button } from 'antd';
 import facebook from "../../images/logoFacebook.png";
 import google from "../../images/logoGmail.png";
 import apple from "../../images/logoApple.png";
-import logo from "../../images/logo.png"
 import { RegistroService } from '../../servicios/registerService';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function Registro() 
@@ -65,15 +64,15 @@ function Registro()
         <p className='signoO'>ó</p>
         <div className='opcionesDeSesion'>
           <div className='cardOpcionDeSesion'>
-            <img className='logoSesion' src={google}></img>
+            <img className='logoSesion' src={google} alt="google"></img>
             <p>Registrarme con Google</p>
           </div>
           <div className='cardOpcionDeSesion'>
-            <img className='logoSesion' src={apple}></img>
+            <img className='logoSesion' src={apple} alt="apple"></img>
             <p>Registrarme con Apple</p>
           </div>
           <div className='cardOpcionDeSesion'>
-            <img className='logoSesion' src={facebook}></img>
+            <img className='logoSesion' src={facebook} alt="facebook"></img>
             <p>Registrarme con Facebook</p>
           </div>
         </div>

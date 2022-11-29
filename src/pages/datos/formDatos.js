@@ -5,13 +5,19 @@ import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { UsuarioService } from "../../servicios/usuarioService";
+import StorageService from "../../servicios/storageService";
+import {Buffer} from 'buffer';
 
 const { TextArea } = Input;
 
 function FormDatos({ setBlockPage })
 {
   let history = useNavigate();
+  
+  const storageService = new StorageService();
   const [form] = Form.useForm();
+  const [isLoged, setIsLoged] = useState(false);
   const [messageError, setMessageError] = useState();
   const [descuento, setDescuento] = useState(0);
   const [total, setTotal] = useState(0);
@@ -49,18 +55,33 @@ function FormDatos({ setBlockPage })
       cupon: aplicaCupon,
       codigoCupon: values.descuento,
       descuento: descuento
-     }
-    axios
-    .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
-    .then(({ data }) => {
-      if(data.state){
-        setBlockPage(false);
-        sessionStorage.clear();
-        history(`/confirmacion`);
-      }
-    }).catch(error => {
-      setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
-    });
+    }
+    
+    if(isLoged){
+      const userService = new UsuarioService("usuario");
+      userService.realizarPedido(data)
+      .then(({ data }) => {
+        if(data.state){
+          setBlockPage(false);
+          sessionStorage.clear();
+          history(`/confirmacion`);
+        }
+      }).catch(error => {
+        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
+      });
+     }else if(!isLoged){
+      axios
+      .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
+      .then(({ data }) => {
+        if(data.state){
+          setBlockPage(false);
+          sessionStorage.clear();
+          history(`/confirmacion`);
+        }
+      }).catch(error => {
+        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
+      });
+    }
   }
 
   const calcularTotal = () => {
@@ -170,13 +191,25 @@ function FormDatos({ setBlockPage })
     const d = new Date();
     let hour = d.getHours();
     setHour(hour);
-  },[])
+  },[]);
 
   useEffect(()=> {
     axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/configuracion`).then(({data})=> {
       setConfiguracion(data);
     });
-  },[])
+  },[]);
+
+  useEffect(()=>{
+    const token = localStorage.getItem("tknData");
+    if(token){
+      const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
+      if(tknData.status){
+        setIsLoged(true);
+      }else{
+        setIsLoged(false);
+      }
+    }
+  }, []);
 
   return(
     <Form

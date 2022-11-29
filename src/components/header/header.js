@@ -38,8 +38,10 @@ function Header() {
     const token = localStorage.getItem("tknData");
     if(token){
       const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
+      
       if(tknData.status){
         setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
+        console.log(userLocal)
         setIsLoged(true);
       }
     }
