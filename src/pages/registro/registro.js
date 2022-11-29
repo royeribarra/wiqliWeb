@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from "react-bootstrap";
 import './registro.css';
 import { Form, Input, Button } from 'antd';
@@ -7,32 +7,75 @@ import google from "../../images/logoGmail.png";
 import apple from "../../images/logoApple.png";
 import { RegistroService } from '../../servicios/registerService';
 import { useNavigate } from 'react-router-dom';
-
+import Loader from "../../components/loader/loader";
+import { toastr } from 'react-redux-toastr';
 
 function Registro() 
 {
   let history = useNavigate();
   const registroService = new RegistroService();
+  const [blockPage, setBlockPage] = useState(false);
+
   const onFinish = (values) => {
+    setBlockPage(true);
     registroService.registro(values).then(({data})=> {
-      console.log(data);
       if(data.state){
+        setBlockPage(false);
         history(`/registro-completo`);
+      }else if(!data.state){
+        setBlockPage(false);
+        toastr.error(data.message);
       }
     });
   };
+
   return (
     <div className="gradienteMedio">
       <Container className="contenedorSimple">
+        <div className={ blockPage ? "" : "loaderInvisible"}>
+          <Loader></Loader>
+        </div>
         <h2 className="tituloPrincipal">Regístrate y obtén más beneficios</h2>
         <Form
           onFinish={onFinish}
         >
           <div className="itemForm">
             <Form.Item
+              label="Nombres"
+              name="nombres"
+              rules={[{ required: true, message: 'Por favor ingresa tu nombre' }]}                
+            >
+              <Input className="form-control" placeholder="Nombres"  />
+            </Form.Item>
+          </div>
+          <div className="itemForm">
+            <Form.Item
+              label="Apellidos"
+              name="apellidos"
+              rules={[{ required: true, message: 'Por favor ingresa tus apellidos' }]}                
+            >
+              <Input className="form-control" placeholder="Apellidos"  />
+            </Form.Item>
+          </div>
+          <div className="itemForm">
+            <Form.Item
+              name="telefono"
+              label="Número"
+              rules={[{ required: true, message: 'Por favor ingresa tu celular' }]}                
+            >
+              <Input className="form-control" placeholder="Ej. 939784580" />
+            </Form.Item>
+          </div>
+          <div className="itemForm">
+            <Form.Item
               name="email"
               label="Correo electrónico"
-              rules={[{ required: true, message: 'Por favor ingresa tu correo' }]}                
+              rules={[
+                {
+                  type: 'email', message: 'No es un correo válido.'
+                },
+                { required: true, message: 'Por favor ingresa tu correo.' }
+              ]}                
             >
               <Input className="form-control" placeholder="Ej. nombre@mail.com" />
             </Form.Item>
@@ -41,6 +84,7 @@ function Registro()
             <Form.Item
               name="password"
               label="Ingresa una contraseña"
+              hasFeedback
               rules={[{ required: true, message: 'Por favor ingresa tu contraseña' }]}                
             >
               <Input.Password className="form-control" />
@@ -50,7 +94,22 @@ function Registro()
             <Form.Item
               name="password_confirmation"
               label="Ingresa tu contraseña nuevamente"
-              rules={[{ required: true, message: 'Las contraseñas deben coincidir'}]}                
+              dependencies={['password']}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: 'Por favor confirma tu contraseña.',
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('Las contraseñas deben coincidir.'));
+                  },
+                }),
+              ]}
             >
               <Input.Password className="form-control" />
             </Form.Item>

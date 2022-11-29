@@ -124,7 +124,7 @@ function Header() {
                     </div>)
                   }
                 </Nav>
-                <div className="logoNavToggle">
+                {/* <div className="logoNavToggle">
                 <Navbar.Brand href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
                 <img
                   src={whatsapp}
@@ -132,7 +132,7 @@ function Header() {
                   alt="wiqli"
                 />
                 </Navbar.Brand>
-                </div>
+                </div> */}
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>

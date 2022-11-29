@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
+import { Button } from 'antd';
 import './confirmacion.css';
 import logo from "../../images/logo.png"
 import { useParams, useNavigate } from 'react-router-dom';
@@ -36,6 +37,13 @@ function ConfirmacionCorreo()
           className="logoDestacado"
           alt="logo wiqli"
         />
+        <div style={{ marginTop: "15px" }}>
+          <Button type="primary" className="botonFinal botonLogin">
+            <Nav.Link  href="/login">
+              Iniciar sesión
+            </Nav.Link>
+          </Button>
+        </div>
       </Container>
     </div>
   );
