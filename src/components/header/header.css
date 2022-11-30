@@ -63,6 +63,15 @@
     
 }
 
+.tituloHeaderWhatsapp{
+    font-size: calc(2px + 1vw + 0.8rem);
+    font-weight: 500;
+    margin: 0;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    color: #5FAD57;
+}
+
 .tituloHeaderDestacado{
     font-size: calc(2px + 1vw + 0.8rem);
     font-weight: 700;
@@ -115,3 +124,15 @@
     margin-top: 1rem;
     justify-content: flex-end;
 }
+
+.navbar-toggler:focus{
+   color: #5FAD57 ;  
+}
+
+.whatsappIcon{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+

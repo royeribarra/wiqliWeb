@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Container, Nav, Offcanvas, Button } from "react-bootstrap";
 import logo from "../../images/miniLogo.png"
-import whatsapp from "../../images/whatsapp.jpg"
+import whatsapp from "../../images/whatsapp.png"
 import { useLocation } from 'react-router-dom';
 import StorageService from '../../servicios/storageService';
 import LogService from '../../servicios/logService';
@@ -54,13 +54,15 @@ function Header() {
           <Container fluid>
             <div>
             {isHome
-            ? <Navbar.Brand href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
+            ? <Navbar.Brand className="whatsappIcon" href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
+            
             <img
               src={whatsapp}
               height="50"
               className="logoNav"
               alt="Ayuda Wiqli"
             />
+            <h6 className="tituloHeaderWhatsapp">Escríbenos</h6>
             </Navbar.Brand>
             
             : <Navbar.Brand href="/">
@@ -70,7 +72,10 @@ function Header() {
               className="logoNav"
               alt="wiqli"
               /> 
+              
             </Navbar.Brand> 
+            
+            
             }
             </div>
 

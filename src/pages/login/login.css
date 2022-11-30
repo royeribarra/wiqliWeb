@@ -44,3 +44,40 @@
       padding-right: 18vw;
     }
 }
+
+
+.ant-form-item-control-input{
+    background: none;
+}
+
+.ant-input-affix-wrapper{
+    display: flex;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+#password{
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+   border: 1px solid #ced4da;
+}
+
+#password:focus-visible{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border: 1px solid #ced4da !important;
+ }
+
+.ant-input-suffix{
+    padding-left: 3px;
+}
+
+.form-control{
+    color: #5FAD57;
+}
+
+.ant-input{
+    padding: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
