@@ -2,39 +2,13 @@ import React, { useEffect, useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-function ModalTarea({showModal})
+
+function ModalTarea({showModal, seleccionarNuevo, seleccionarUltimaCompra})
 {
-  const [productosLogin, setProductosLogin] = useState([]);
   const [fullscreen, setFullscreen] = useState('md-down');
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const seleccionarNuevo = () => {
-    sessionStorage.setItem('seleccionTarea', true);
-    handleClose();
-  };
-
-  const seleccionarUltimaCompra = () => {
-    sessionStorage.setItem('productos', []);
-    sessionStorage.setItem('seleccionTarea', true);
-    handleClose();
-  };
-
-  useEffect(()=> {
-    let tarea = sessionStorage.getItem('seleccionTarea');
-    let token = localStorage.getItem('tknData');
-    if(token){
-      if(tarea){
-        setShow(false);
-      }else{
-        setShow(true);
-      }
-    }
-  }, []);
 
   return(
-    <Modal show={show} onHide={handleClose} fullscreen={fullscreen}>
+    <Modal show={showModal} fullscreen={fullscreen}>
       <Modal.Header>
         <Modal.Title>Bienvenido Renzo</Modal.Title>
       </Modal.Header>

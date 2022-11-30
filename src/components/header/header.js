@@ -38,10 +38,8 @@ function Header() {
     const token = localStorage.getItem("tknData");
     if(token){
       const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
-      
       if(tknData.status){
         setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
-        console.log(userLocal)
         setIsLoged(true);
       }
     }
@@ -53,32 +51,29 @@ function Header() {
         <Navbar key={expand} bg="white" expand={expand} className="mb-3">
           <Container fluid>
             <div>
-            {isHome
-            ? <Navbar.Brand className="whatsappIcon" href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
-            
-            <img
-              src={whatsapp}
-              height="50"
-              className="logoNav"
-              alt="Ayuda Wiqli"
-            />
-            <h6 className="tituloHeaderWhatsapp">Escríbenos</h6>
-            </Navbar.Brand>
-            
-            : <Navbar.Brand href="/">
-            <img
-              src={logo}
-              height="50"
-              className="logoNav"
-              alt="wiqli"
-              /> 
+              {isHome
+              ? (<Navbar.Brand className="whatsappIcon" href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
               
-            </Navbar.Brand> 
-            
-            
-            }
+              <img
+                src={whatsapp}
+                height="50"
+                className="logoNav"
+                alt="Ayuda Wiqli"
+              />
+              <h6 className="tituloHeaderWhatsapp">Escríbenos</h6>
+              </Navbar.Brand>)
+              
+              : (<Navbar.Brand href="/">
+              <img
+                src={logo}
+                height="50"
+                className="logoNav"
+                alt="wiqli"
+                /> 
+                
+              </Navbar.Brand>)
+              }
             </div>
-
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -129,15 +124,6 @@ function Header() {
                     </div>)
                   }
                 </Nav>
-                {/* <div className="logoNavToggle">
-                <Navbar.Brand href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
-                <img
-                  src={whatsapp}
-                  height="50"
-                  alt="wiqli"
-                />
-                </Navbar.Brand>
-                </div> */}
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>

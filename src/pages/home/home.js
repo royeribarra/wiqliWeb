@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toastr } from "react-redux-toastr";
 import ModalTarea from './modalTarea';
+import { UsuarioService } from "../../servicios/usuarioService";
 
 function Home() 
 {
@@ -23,9 +24,10 @@ function Home()
   const[productosCarrito, setProductosCarrito] = useState([]);
   const[total, setTotal] = useState(0);
   const[showModal, setShowModal] = useState(true);
-  const[tareaSeleccionada, setTareaSeleccionada] = useState(false);
+  const[renderizarNuevamente, setRenderizarNuevamente] = useState(false);
 
   const getProductoStorage = () => {
+    console.log("volviendo a calcular");
     if(sessionStorage.getItem('productos')){
       let productosStorage = JSON.parse(sessionStorage.getItem('productos'));
       setProductosCarrito(productosStorage);
@@ -101,24 +103,55 @@ function Home()
     setTotal(total);
   }
 
-  const seleccionarTareaModal = () => {
+  const seleccionarNuevo = () => {
+    sessionStorage.setItem('seleccionTarea', true);
+    setShowModal(false);
+  };
 
+  const seleccionarUltimaCompra = () => {
+    const userService = new UsuarioService("pedido/ultimo");
+    userService.obtenerProductosUltimoPedido()
+    .then(({data})=> {
+      sessionStorage.setItem('productos', JSON.stringify(data));
+      sessionStorage.setItem('seleccionTarea', true);
+      setShowModal(false);
+      setProductosCarrito(data);
+    }).then(()=>{
+      setRenderizarNuevamente(true);
+    });
   };
 
   useEffect(() => {
     getProductos();
     getProductoStorage();
-    seleccionarTareaModal();
-  }, [])
+  }, []);
 
   useEffect(() => {
     calcularTotal();
-  }, [productosCarrito])
+  }, [productosCarrito]);
+
+  useEffect(()=> {
+    let tarea = sessionStorage.getItem('seleccionTarea');
+    let token = localStorage.getItem('tknData');
+    if(token){
+      if(tarea){
+        setShowModal(false);
+      }else{
+        setShowModal(true);
+      }
+    }else{
+      setShowModal(false);
+    }
+  }, []);
 
   return (
     <div className="gradienteMedio">
       <div className="baseWiqli">
-        <ModalTarea />
+        <ModalTarea 
+          showModal={showModal}
+          seleccionarNuevo={seleccionarNuevo}
+          seleccionarUltimaCompra={seleccionarUltimaCompra}
+        />
         <Container className="contenedorSimple contenedorProductos">
           <div className="baseLanding">
             <img
@@ -148,6 +181,7 @@ function Home()
               quitarProducto={quitarProducto}
               aumentarUnidades={aumentarUnidades}
               disminuirUnidades={disminuirUnidades}
+              renderizarNuevamente={renderizarNuevamente}
             />
           </div>
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>

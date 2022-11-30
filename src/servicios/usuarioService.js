@@ -11,8 +11,11 @@ export class UsuarioService extends MainService {
   }
 
   realizarPedido(data) {
-    console.log(this.options)
     return axios.post(`${this.url}/crear-pedido`, data, this.options);
+  }
+
+  obtenerProductosUltimoPedido() {
+    return axios.get(`${this.url}`, this.options);
   }
 
   actualizarInformacionPersonal(id)
