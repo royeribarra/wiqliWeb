@@ -103,8 +103,28 @@ function Home()
     setTotal(total);
   }
 
+  const obtenerCodigoCuponDescuento = () => {
+    const userService = new UsuarioService("cliente/cupon-descuento");
+    userService.obtenerCodigoCuponDescuento()
+    .then(({data})=> {
+      if(data.state){
+        localStorage.setItem('codigoCupon', data.cupon);
+      }
+    });
+  };
+
+  const obtenerTotalReferidos = () => {
+    const userService = new UsuarioService("pedidos/descuento-referidos");
+    userService.obtenerTotalReferidos()
+    .then(({data})=> {
+      localStorage.setItem('descuentoTotal', data);
+    });
+  };
+
   const seleccionarNuevo = () => {
     sessionStorage.setItem('seleccionTarea', true);
+    obtenerTotalReferidos();
+    obtenerCodigoCuponDescuento();
     setShowModal(false);
   };
 
@@ -119,6 +139,8 @@ function Home()
     }).then(()=>{
       setRenderizarNuevamente(true);
     });
+    obtenerTotalReferidos();
+    obtenerCodigoCuponDescuento();
   };
 
   useEffect(() => {

@@ -5,17 +5,27 @@ import whatsapp from "../../images/whatsapp.png"
 import { useLocation } from 'react-router-dom';
 import StorageService from '../../servicios/storageService';
 import LogService from '../../servicios/logService';
-import {Buffer} from 'buffer';
+
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { Alert } from 'antd';
 import './header.css';
 
-function Header() {
+function Header({ userLocal, isLoged}) {
   
   const storageService = new StorageService();
   const logService = new LogService();
-  const [userLocal, setUserLocal] = useState();
-  const location = useLocation()
-  const [isLoged, setIsLoged] = useState(false);
+  const location = useLocation();
   const [isHome, setIsHome] = useState(false);
+  const [descuento, setDescuento] = useState(0);
+  const [cupon, setCupon] = useState("None");
+  const [showAlert, setShowAlert] = useState(false);
+
+  const copiarCodigoReferido = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 5000);
+  }
 
   const getHome = () => {
     let home = false
@@ -34,16 +44,29 @@ function Header() {
     getHome();
   }, [location])
 
-  useEffect(()=>{
-    const token = localStorage.getItem("tknData");
-    if(token){
-      const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
-      if(tknData.status){
-        setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
-        setIsLoged(true);
-      }
+  // useEffect(()=>{
+  //   const token = localStorage.getItem("tknData");
+  //   if(token){
+  //     const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
+      
+  //     if(tknData.status){
+  //       setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
+  //       setIsLoged(true);
+        
+  //     }
+  //   }
+  // }, []);
+
+  useEffect(()=> {
+    const descuentoSto = storageService.getItemObject('descuentoTotal');
+    if(descuentoSto){
+      setDescuento(descuentoSto);
     }
-  }, []);
+    const cuponSto = storageService.getItemObject('codigoCupon');
+    if(descuentoSto){
+      setCupon(cuponSto);
+    }
+  }, [isLoged]);
 
   return (
     <div className="navBarContainer">
@@ -102,16 +125,27 @@ function Header() {
                         <h2 className="tituloHeader">{ userLocal.name }</h2>
                         <div className="infoDestacadaHeader">
                           <h2 className="tituloHeaderDestacado">Cupón de referido</h2>
-                          <h4 className="textoInfoDestacadaHeader" >XKDJFF</h4>
-                          <Button type="primary" htmlType="submit" className="botonCopiado">
-                          Copiar
-                          </Button>
+                          <h4 className="textoInfoDestacadaHeader">{ cupon }</h4>
+                          <CopyToClipboard text={cupon}>
+                            <Button type="primary" className="botonCopiado" onClick={copiarCodigoReferido}>
+                              Copiar
+                            </Button>
+                          </CopyToClipboard>
+                          {
+                            showAlert && 
+                            <Alert 
+                              message="Texto copiado!" 
+                              type="success"
+                              style={{ backgroundColor: "aqua"}}
+                            />
+                          }
+                          
                         <p className="textoDisclaimer">Comparte este cupón y obtén S/5 de dscto. por cada persona que realice su primera compra con tu cupón</p>
                         </div>
                       </div>
                       <div className="infoDestacadaHeader">
                         <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
-                          <h4 className="textoInfoDestacadaHeader">S/45.00</h4>
+                          <h4 className="textoInfoDestacadaHeader">S/ { parseFloat(descuento).toFixed(2) }</h4>
                       </div>
                       <Button type="primary" className="botonCopiado" onClick={cerrarSesion}>
                         Cerrar sesión

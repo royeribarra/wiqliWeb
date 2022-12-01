@@ -18,6 +18,14 @@ export class UsuarioService extends MainService {
     return axios.get(`${this.url}`, this.options);
   }
 
+  obtenerTotalReferidos() {
+    return axios.get(`${this.url}`, this.options);
+  }
+
+  obtenerCodigoCuponDescuento() {
+    return axios.get(`${this.url}`, this.options);
+  }
+  
   actualizarInformacionPersonal(id)
   {
     return axios.get(`${this.url}/update-state/${id}`, this.options);
