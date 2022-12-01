@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 function ModalTarea({showModal})
 {
   const [productosLogin, setProductosLogin] = useState([]);
-  const [fullscreen, setFullscreen] = useState('md-down');
+  const [fullscreen, setFullscreen] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -34,22 +34,22 @@ function ModalTarea({showModal})
   }, []);
 
   return(
-    <Modal show={show} onHide={handleClose} fullscreen={fullscreen}>
+    <Modal size="md" aria-labelledby="contained-modal-tittle-vcenter" centered show={show} onHide={handleClose} fullscreen={fullscreen} className="modalOpciones"> 
       <Modal.Header>
-        <Modal.Title>Bienvenido Renzo</Modal.Title>
+        <Modal.Title className="tituloPrincipal">Bienvenido Renzo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div style={{ marginBottom: "15px" }}>
+        <div className="textoCuerpoModal">
           Ahorra tiempo e inicia con la lista de tu compra pasada o vuelve a elegir tus productos desde cero.
         </div>
-        <div className="row">
-          <div className="col-md-6" style={{ marginBottom: "10px" }}>
-            <Button variant="secondary" onClick={seleccionarUltimaCompra} style={{ width: "100%" }}>
+        <div className="modalTareasBotones">
+          <div className="contenedorBotonModal">
+            <Button className="botonDeSiguiente" onClick={seleccionarUltimaCompra} style={{ width: "100%" }}>
               Seguir con mi última compra
             </Button>
           </div>
-          <div className="col-md-6" style={{ marginBottom: "10px" }}>
-            <Button variant="secondary" onClick={seleccionarNuevo} style={{ width: "100%" }}>
+          <div className="contenedorBotonModal">
+            <Button className="botonSecundario" onClick={seleccionarNuevo} style={{ width: "100%" }}>
               Elegir desde cero
             </Button>
           </div>
