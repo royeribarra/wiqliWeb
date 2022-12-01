@@ -1,42 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import StorageService from '../../servicios/storageService';
+import {Buffer} from 'buffer';
 
-function ModalTarea({showModal})
+function ModalTarea({showModal, seleccionarNuevo, seleccionarUltimaCompra})
 {
-  const [productosLogin, setProductosLogin] = useState([]);
   const [fullscreen, setFullscreen] = useState(false);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const storageService = new StorageService();
+  const [isLoged, setIsLoged] = useState(false);
+  const [userLocal, setUserLocal] = useState();
 
-  const seleccionarNuevo = () => {
-    sessionStorage.setItem('seleccionTarea', true);
-    handleClose();
-  };
-
-  const seleccionarUltimaCompra = () => {
-    sessionStorage.setItem('productos', []);
-    sessionStorage.setItem('seleccionTarea', true);
-    handleClose();
-  };
-
-  useEffect(()=> {
-    let tarea = sessionStorage.getItem('seleccionTarea');
-    let token = localStorage.getItem('tknData');
+  useEffect(()=>{
+    const token = localStorage.getItem("tknData");
     if(token){
-      if(tarea){
-        setShow(false);
-      }else{
-        setShow(true);
+      const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
+      if(tknData.status){
+        setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
+        setIsLoged(true);
       }
     }
   }, []);
 
   return(
-    <Modal size="md" aria-labelledby="contained-modal-tittle-vcenter" centered show={show} onHide={handleClose} fullscreen={fullscreen} className="modalOpciones"> 
+    <Modal size="md" aria-labelledby="contained-modal-tittle-vcenter" centered show={showModal} fullscreen={fullscreen} className="modalOpciones"> 
       <Modal.Header>
-        <Modal.Title className="tituloPrincipal">Bienvenido Renzo</Modal.Title>
+        <Modal.Title className="tituloPrincipal" >¡Hola { isLoged ? userLocal.name: '' }!</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="textoCuerpoModal">

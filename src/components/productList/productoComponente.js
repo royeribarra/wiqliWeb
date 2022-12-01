@@ -6,7 +6,7 @@ import mas from "../../images/menos.png"
 import menos from "../../images/mas.png"
 
 
-function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades}) 
+function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades, renderizarNuevamente}) 
 {
   const[cantidad, setCantidad] = useState(1);
   const[tipoComponente, setTipoComponente] = useState(1);
@@ -45,7 +45,7 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
         } 
       });
     }
-  }, [data]);
+  }, [data, renderizarNuevamente]);
 
   return(
     <div className="productCard">

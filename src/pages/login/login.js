@@ -5,14 +5,12 @@ import './login.css';
 import facebook from "../../images/logoFacebook.png";
 import google from "../../images/logoGmail.png";
 import apple from "../../images/logoApple.png";
-import LogService from '../../servicios/logService';
 import { login } from '../../redux/actions/clienteLogAction';
 import { toogleSpinner } from '../../redux/actions/spinnerActions';
 import { connect } from 'react-redux';
 
 const Login = ({loginCliente}) =>
 {
-  const logService = new LogService();
   const onFinish = (values) => {
     loginCliente(values);
   };

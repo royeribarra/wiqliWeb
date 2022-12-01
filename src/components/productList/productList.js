@@ -11,7 +11,8 @@ function ProductList({
   agregarProducto,
   quitarProducto,
   disminuirUnidades,
-  aumentarUnidades
+  aumentarUnidades,
+  renderizarNuevamente
 })
 {
   const[otrasFrutas, setOtrasFrutas] = useState([]);
@@ -99,6 +100,7 @@ function ProductList({
                       quitarProducto={quitarProducto}
                       disminuirUnidades={disminuirUnidades}
                       aumentarUnidades={aumentarUnidades}
+                      renderizarNuevamente={renderizarNuevamente}
                     />
                   ))
                 }
@@ -136,6 +138,7 @@ function ProductList({
                       quitarProducto={quitarProducto}
                       disminuirUnidades={disminuirUnidades}
                       aumentarUnidades={aumentarUnidades}
+                      renderizarNuevamente={renderizarNuevamente}
                     />
                   ))
                 }
@@ -174,6 +177,7 @@ function ProductList({
                       quitarProducto={quitarProducto}
                       disminuirUnidades={disminuirUnidades}
                       aumentarUnidades={aumentarUnidades}
+                      renderizarNuevamente={renderizarNuevamente}
                     />
                   ))
                 }
@@ -211,6 +215,7 @@ function ProductList({
                       quitarProducto={quitarProducto}
                       disminuirUnidades={disminuirUnidades}
                       aumentarUnidades={aumentarUnidades}
+                      renderizarNuevamente={renderizarNuevamente}
                     />
                   ))
                 }
