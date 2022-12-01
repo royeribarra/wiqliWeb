@@ -10,14 +10,12 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { Alert } from 'antd';
 import './header.css';
 
-function Header({ userLocal, isLoged}) {
+function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) {
   
   const storageService = new StorageService();
   const logService = new LogService();
   const location = useLocation();
   const [isHome, setIsHome] = useState(false);
-  const [descuento, setDescuento] = useState(0);
-  const [cupon, setCupon] = useState("None");
   const [showAlert, setShowAlert] = useState(false);
 
   const copiarCodigoReferido = () => {
@@ -43,30 +41,6 @@ function Header({ userLocal, isLoged}) {
   useEffect(() => {
     getHome();
   }, [location])
-
-  // useEffect(()=>{
-  //   const token = localStorage.getItem("tknData");
-  //   if(token){
-  //     const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
-      
-  //     if(tknData.status){
-  //       setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
-  //       setIsLoged(true);
-        
-  //     }
-  //   }
-  // }, []);
-
-  useEffect(()=> {
-    const descuentoSto = storageService.getItemObject('descuentoTotal');
-    if(descuentoSto){
-      setDescuento(descuentoSto);
-    }
-    const cuponSto = storageService.getItemObject('codigoCupon');
-    if(descuentoSto){
-      setCupon(cuponSto);
-    }
-  }, [isLoged]);
 
   return (
     <div className="navBarContainer">
@@ -125,8 +99,8 @@ function Header({ userLocal, isLoged}) {
                         <h2 className="tituloHeader">{ userLocal.name }</h2>
                         <div className="infoDestacadaHeader">
                           <h2 className="tituloHeaderDestacado">Cupón de referido</h2>
-                          <h4 className="textoInfoDestacadaHeader">{ cupon }</h4>
-                          <CopyToClipboard text={cupon}>
+                          <h4 className="textoInfoDestacadaHeader">{ codigoCliente }</h4>
+                          <CopyToClipboard text={codigoCliente}>
                             <Button type="primary" className="botonCopiado" onClick={copiarCodigoReferido}>
                               Copiar
                             </Button>
@@ -145,7 +119,7 @@ function Header({ userLocal, isLoged}) {
                       </div>
                       <div className="infoDestacadaHeader">
                         <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
-                          <h4 className="textoInfoDestacadaHeader">S/ { parseFloat(descuento).toFixed(2) }</h4>
+                          <h4 className="textoInfoDestacadaHeader">S/ { parseFloat(descuentoReferidoCliente).toFixed(2) }</h4>
                       </div>
                       <Button type="primary" className="botonCopiado" onClick={cerrarSesion}>
                         Cerrar sesión

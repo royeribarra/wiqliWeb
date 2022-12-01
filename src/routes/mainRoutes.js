@@ -16,6 +16,19 @@ function MainRoutes()
   const storageService = new StorageService();
   const [userLocal, setUserLocal] = useState();
   const [isLoged, setIsLoged] = useState(false);
+  const [codigoCliente, setCodigoCliente] = useState("None");
+  const [descuentoReferidoCliente, setDescuentoReferidoCliente] = useState(0);
+
+  const obtenerDataCliente = () => {
+    const descuentoSto = storageService.getItemObject('descuentoTotal');
+    if(descuentoSto){
+      setDescuentoReferidoCliente(descuentoSto);
+    }
+    const cuponSto = storageService.getItemObject('codigoCupon');
+    if(descuentoSto){
+      setCodigoCliente(cuponSto);
+    }
+  };
 
   useEffect(()=>{
     const token = localStorage.getItem("tknData");
@@ -30,9 +43,14 @@ function MainRoutes()
 
   return(
     <BrowserRouter>
-      <Header userLocal={userLocal} isLoged={isLoged} />
+      <Header 
+        userLocal={userLocal} 
+        isLoged={isLoged} 
+        codigoCliente={codigoCliente} 
+        descuentoReferidoCliente={descuentoReferidoCliente} 
+      />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/" element={<Home obtenerDataCliente={obtenerDataCliente} />} />
         <Route exact path="/datos" element={<Datos />} />
         <Route exact path="/confirmacion" element={<Confirmacion />} />
         <Route exact path="/registro-completo" element={<PreConfirmacion />} />

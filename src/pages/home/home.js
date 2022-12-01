@@ -17,7 +17,7 @@ import { toastr } from "react-redux-toastr";
 import ModalTarea from './modalTarea';
 import { UsuarioService } from "../../servicios/usuarioService";
 
-function Home() 
+function Home({obtenerDataCliente}) 
 {
   let history = useNavigate();
   const[productos, setProductos] = useState([]);
@@ -109,6 +109,7 @@ function Home()
     .then(({data})=> {
       if(data.state){
         localStorage.setItem('codigoCupon', data.cupon);
+        obtenerDataCliente();
       }
     });
   };
@@ -118,6 +119,7 @@ function Home()
     userService.obtenerTotalReferidos()
     .then(({data})=> {
       localStorage.setItem('descuentoTotal', data);
+      obtenerDataCliente();
     });
   };
 
