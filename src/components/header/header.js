@@ -120,7 +120,7 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
                         <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
                           <h4 className="textoInfoDestacadaHeader">S/ { parseFloat(descuentoReferidoCliente).toFixed(2) }</h4>
                       </div>
-                      <Button type="primary" className="botonCopiado" onClick={cerrarSesion}>
+                      <Button type="primary" className="botonCerrarSesion" onClick={cerrarSesion}>
                         Cerrar sesión
                       </Button>
                     </div>) :
