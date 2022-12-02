@@ -204,6 +204,17 @@ function FormDatos({ setBlockPage })
     if(token){
       const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
       if(tknData.status){
+        const userService = new UsuarioService("usuario/informacion");
+        userService.getInfoUser().then(({data})=> {
+          form.setFieldsValue({
+            'nombres': data.name,
+            'apellidos': data.father_lastname,
+            'telefono': data.phone,
+            'correo': data.email,
+            'direccion': data.address,
+            'referencia': data.referencia
+          })
+        });
         setIsLoged(true);
       }else{
         setIsLoged(false);
@@ -264,7 +275,7 @@ function FormDatos({ setBlockPage })
             label="Correo de contacto"
             rules={[{ required: true, message: 'Por favor ingresa tu correo' }]}                
           >
-            <Input className="form-control" placeholder="Ej. nombre@mail.com" />
+            <Input className="form-control" placeholder="Ej. nombre@mail.com" disabled={isLoged} />
           </Form.Item>
         </div>
         <div className="itemForm">

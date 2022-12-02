@@ -25,6 +25,10 @@ export class UsuarioService extends MainService {
   obtenerCodigoCuponDescuento() {
     return axios.get(`${this.url}`, this.options);
   }
+
+  getInfoUser() {
+    return axios.get(`${this.url}`, this.options);
+  }
   
   actualizarInformacionPersonal(id)
   {
