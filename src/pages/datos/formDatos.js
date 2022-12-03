@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 import subDays from "date-fns/subDays";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
@@ -8,6 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { UsuarioService } from "../../servicios/usuarioService";
 import StorageService from "../../servicios/storageService";
 import {Buffer} from 'buffer';
+import Cleave from 'cleave.js/react';
+import Jcb from '../../assets/images/jcb.svg';
+import DinnersClub from '../../assets/images/dinners-club.svg';
+import MasterCard from '../../assets/images/master-card.svg';
+import Visa from '../../assets/images/visa.svg';
+import AmericanExpress from '../../assets/images/symbol.svg';
+import Discover from '../../assets/images/symbols.svg';
 
 const { TextArea } = Input;
 
@@ -19,6 +26,7 @@ function FormDatos({ setBlockPage })
   const [form] = Form.useForm();
   const [isLoged, setIsLoged] = useState(false);
   const [messageError, setMessageError] = useState();
+  const [tipoBanco, setTipoBanco] = useState();
   const [descuento, setDescuento] = useState(0);
   const [total, setTotal] = useState(0);
   const [totalProductos, setTotalProductos] = useState(0);
@@ -27,6 +35,7 @@ function FormDatos({ setBlockPage })
   const [hour, setHour] = useState(10);
   const [day, setDay] = useState();
   const [startDate, setStartDate] = useState(new Date());
+  const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
   const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
   const [productos, setProductos] = useState([]);
   const [cliente, setCliente] = useState({
@@ -54,7 +63,15 @@ function FormDatos({ setBlockPage })
       cliente: cliente,
       cupon: aplicaCupon,
       codigoCupon: values.descuento,
-      descuento: descuento
+      descuento: descuento,
+      total: total,
+      datosTarjeta: {
+        numeroTarjeta: values.numeroTarjeta,
+        fechaVencimiento: values.fechaVencimiento,
+        cvv: values.cvv,
+        nombreTarjeta: values.nombreTarjeta,
+        tipoBanco: values.tipoBanco
+      }
     }
     
     if(isLoged){
@@ -150,19 +167,31 @@ function FormDatos({ setBlockPage })
   }
 
   const guardarFormInStorage = (changedValues, allValues) => {
-    if(changedValues.correo){
-      setAplicaCupon(false);
-      setDescuento(0);
-      form.setFieldsValue({
-        descuento: ''
-      });
+    if(changedValues.cvv || changedValues.fechaVencimiento || changedValues.nombreTarjeta || changedValues.numeroTarjeta){
+
+    }else{
+      if(changedValues.correo){
+        setAplicaCupon(false);
+        setDescuento(0);
+        form.setFieldsValue({
+          descuento: ''
+        });
+      }
+      let newVallues = allValues;
+      if(newVallues.fecha_recojo){
+        allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
+      }
+      sessionStorage.setItem('cliente', JSON.stringify(allValues));
+      setCliente(allValues);
     }
-    let newVallues = allValues;
-    if(newVallues.fecha_recojo){
-      allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
-    }
-    sessionStorage.setItem('cliente', JSON.stringify(allValues));
-    setCliente(allValues);
+    
+  }
+
+  const onChangeBank = (type) => {
+    setTipoBanco(type.toUpperCase());
+    form.setFieldsValue({
+      tipoBanco: type.toUpperCase()
+    });
   }
 
   useEffect(() => {
@@ -237,7 +266,7 @@ function FormDatos({ setBlockPage })
           nombres: cliente.nombres,
           observacion: cliente.observacion,
           referencia: cliente.referencia,
-          telefono: cliente.telefono 
+          telefono: cliente.telefono,
         }
       }
     >
@@ -377,6 +406,110 @@ function FormDatos({ setBlockPage })
           <div className="totalesAPagar">
             <h6 className="tituloCampo">Total</h6>
             <h6 className="datoCampo">S/ {parseFloat(total + delivery).toFixed(2)}</h6>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <Form.Item 
+              label="Número de tarjeta" 
+              name="numeroTarjeta"
+              rules={[{ required: true, message: 'Por favor ingresa el número de tarjeta' }]}
+              style={{ marginBottom: "10px"}} 
+            >
+              <Cleave
+                className='ant-input'
+                placeholder="4111 1111 1111 1111"
+                options={{creditCard: true, onCreditCardTypeChanged: (type) => onChangeBank(type) }}
+              />
+            </Form.Item>
+            <Form.Item 
+              label="Banco" 
+              name="tipoBanco"
+              hidden={true}
+            >
+            </Form.Item>
+          </div>
+          <div>
+          <div className="row contenedor-tarjetas">
+            <div className="col-md-4 contenedor-tarjeta">
+              <img 
+                src={Jcb} 
+                className={tipoBanco === "JCB" ? "opacidad-normal" : "opacidad-aplicada"} 
+                alt="JCB"
+              />
+            </div>
+            <div className="col-md-4 contenedor-tarjeta">
+              <img 
+                src={DinnersClub} 
+                className={tipoBanco === "DINERS" ? "opacidad-normal" : "opacidad-aplicada"} 
+                alt='DINERS'
+              />
+            </div>
+            <div className="col-md-4 contenedor-tarjeta">
+              <img 
+                src={MasterCard} 
+                className={tipoBanco === "MASTERCARD" ? "opacidad-normal" : "opacidad-aplicada"} 
+                alt="MASTERCARD"
+              />
+            </div>
+            <div className="col-md-4 contenedor-tarjeta">
+              <img 
+                src={Visa} 
+                className={tipoBanco === "VISA" ? "opacidad-normal" : "opacidad-aplicada"} 
+                alt="VISA"  
+              />
+            </div>
+            <div className="col-md-4 contenedor-tarjeta">
+              <img 
+                src={Discover} 
+                className={tipoBanco === "DISCOVER" ? "opacidad-normal" : "opacidad-aplicada"} 
+                alt="DISCOVER"
+              />
+            </div>
+            <div className="col-md-4 contenedor-tarjeta">
+              <img 
+                src={AmericanExpress} 
+                className={tipoBanco === "AMEX" ? "opacidad-normal" : "opacidad-aplicada"} 
+                alt="AMEX"
+              />
+            </div>
+          </div>
+          </div>
+          
+          <div className="col-md-12">
+            <Form.Item
+              label="Nombre en la tarjeta"
+              name="nombreTarjeta"
+              rules={[{ required: true, message: 'Ingresa el nombre que figura en la tarjeta' }]}                
+            >
+              <Input className="form-control" placeholder="JUAN GARCÍA"  />
+            </Form.Item>
+          </div>
+          <div className="col-md-6">
+            <Form.Item 
+              name="fechaVencimiento" 
+              label="Fecha de vencimiento" 
+              rules={[{ required: true, message: 'Selecciona una fecha' }]}
+            >
+              <DatePicker 
+                selected={fechaVencimientoTarjeta}
+                dateFormat="MM/yyyy"
+                onChange={(date) => setFechaVencimientoTarjeta(date)}
+                showMonthYearPicker
+              />
+            </Form.Item>
+          </div>
+          <div className="col-md-6">
+            <Form.Item 
+              name="cvv" 
+              label="CVV" 
+              rules={[
+                { required: true, message: 'Ingrese el cvv por favor.' }
+              ]} 
+              tooltip="El CVV tiene 3 o 4 dígitos y lo puedes ubicar en el reverso de tu tarjeta."
+            >
+              <Input maxLength={4} minLength={3} placeholder="Ingrese el CVV" style={{ width: "100%"}} />
+            </Form.Item>
           </div>
         </div>
         {

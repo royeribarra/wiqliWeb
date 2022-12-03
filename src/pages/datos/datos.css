@@ -134,3 +134,85 @@
     width: 90%;
     margin: 1rem !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contenedor-tarjetas{
+    display: flex !important;
+    flex-flow: wrap !important;
+    min-width: 0 !important;
+}
+
+.contenedor-tarjeta{
+    display: flex !important;
+    flex: 0 33.3% !important;
+    max-width: 33.3% !important;
+    position: relative !important;
+}
+
+.contenedor-tarjeta img{
+    width: 100% !important;
+}
+
+.opacidad-normal{
+    opacity: 1
+}
+
+.opacidad-aplicada{
+    opacity: 0.2
+}
+
+.contenedor-descuento{
+    margin-bottom: 20px;
+    background-color: rgb(227, 250, 250);
+}
+
+.contenedor-descuento .ant-row .ant-col{
+    text-align: center;
+}
+
+.contenedor-descuento .ant-row .ant-col input{
+    text-align: center;
+}
+
+.botonValidacionPago{
+   color: #1AB39E;
+   border: #1AB39E 2px solid;
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
+   width: 6rem;
+    height: 2rem;
+}
+
+
+.contenedor-descuento{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.botonPago{
+    width: 50%;
+    height: 2.5rem;
+}
+
+.botonPago:after{
+    color: #191D74 ;
+    background-color: white;
+    border: white;
+}
+
+.botonPago:active{
+    color: #191D74 ;
+    background-color: white;
+    border: white;
+}
