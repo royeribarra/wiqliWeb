@@ -83,8 +83,12 @@ function FormDatos({ setBlockPage })
           setBlockPage(false);
           sessionStorage.clear();
           history(`/confirmacion`);
+        }else if(!data.state){
+          setBlockPage(false);
+          setMessageError(data.message);
         }
       }).catch(error => {
+        setBlockPage(false);
         setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
       });
      }else if(!isLoged){
@@ -95,10 +99,13 @@ function FormDatos({ setBlockPage })
           setBlockPage(false);
           sessionStorage.clear();
           history(`/confirmacion`);
+        }else if(!data.state){
+          setBlockPage(false);
+          setMessageError(data.message);
         }
       }).catch(error => {
         setBlockPage(false);
-        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
+        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
       });
     }
   }
@@ -169,7 +176,8 @@ function FormDatos({ setBlockPage })
   }
 
   const guardarFormInStorage = (changedValues, allValues) => {
-    if(changedValues.cvv || changedValues.fechaVencimiento || changedValues.nombreTarjeta || changedValues.numeroTarjeta || changedValues.tipoPago){
+    
+    if(changedValues.cvv || changedValues.fechaVencimiento || changedValues.nombreTarjeta || changedValues.numeroTarjeta){
 
     }else{
       if(changedValues.correo){
@@ -197,7 +205,6 @@ function FormDatos({ setBlockPage })
   }
 
   const onChangeTipoPago = (e) => {
-    console.log(e.target.value)
     setTipoPago(e.target.value);
   };
 
@@ -216,7 +223,10 @@ function FormDatos({ setBlockPage })
   useEffect(() => {
     if(sessionStorage.getItem('cliente')){
       let clienteStorage = JSON.parse(sessionStorage.getItem('cliente'));
-      form.setFieldsValue(clienteStorage);
+      form.setFieldsValue({
+        ...clienteStorage,
+        tipoPago: 1
+      });
       setCliente(JSON.parse(sessionStorage.getItem('cliente')));
     }
   }, []);
@@ -540,6 +550,9 @@ function FormDatos({ setBlockPage })
         {
           dateOfWeekSelected === 1 &&
           <p className="mensajeFinalDestacado">Entregaremos tu pedido entre las 9am y 12pm.</p>
+        }
+        {
+          <p>{messageError}</p>
         }
         <h6 className="textoDisclaimer">
           Recuerda que pueden haber algunas variaciones en el precio por peso o productos adicionales solicitados
