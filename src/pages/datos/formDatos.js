@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Radio } from 'antd';
 import subDays from "date-fns/subDays";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
@@ -27,6 +27,7 @@ function FormDatos({ setBlockPage })
   const [isLoged, setIsLoged] = useState(false);
   const [messageError, setMessageError] = useState();
   const [tipoBanco, setTipoBanco] = useState();
+  const [tipoPago, setTipoPago] = useState(1);
   const [descuento, setDescuento] = useState(0);
   const [total, setTotal] = useState(0);
   const [totalProductos, setTotalProductos] = useState(0);
@@ -84,7 +85,7 @@ function FormDatos({ setBlockPage })
           history(`/confirmacion`);
         }
       }).catch(error => {
-        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
+        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
       });
      }else if(!isLoged){
       axios
@@ -96,6 +97,7 @@ function FormDatos({ setBlockPage })
           history(`/confirmacion`);
         }
       }).catch(error => {
+        setBlockPage(false);
         setMessageError("Ocurrió un error en el servidor, por favor comunícate con Repo.");
       });
     }
@@ -167,7 +169,7 @@ function FormDatos({ setBlockPage })
   }
 
   const guardarFormInStorage = (changedValues, allValues) => {
-    if(changedValues.cvv || changedValues.fechaVencimiento || changedValues.nombreTarjeta || changedValues.numeroTarjeta){
+    if(changedValues.cvv || changedValues.fechaVencimiento || changedValues.nombreTarjeta || changedValues.numeroTarjeta || changedValues.tipoPago){
 
     }else{
       if(changedValues.correo){
@@ -193,6 +195,11 @@ function FormDatos({ setBlockPage })
       tipoBanco: type.toUpperCase()
     });
   }
+
+  const onChangeTipoPago = (e) => {
+    console.log(e.target.value)
+    setTipoPago(e.target.value);
+  };
 
   useEffect(() => {
     calcularTotal();
@@ -267,6 +274,7 @@ function FormDatos({ setBlockPage })
           observacion: cliente.observacion,
           referencia: cliente.referencia,
           telefono: cliente.telefono,
+          tipoPago: tipoPago
         }
       }
     >
@@ -408,110 +416,123 @@ function FormDatos({ setBlockPage })
             <h6 className="datoCampo">S/ {parseFloat(total + delivery).toFixed(2)}</h6>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12">
-            <Form.Item 
-              label="Número de tarjeta" 
-              name="numeroTarjeta"
-              rules={[{ required: true, message: 'Por favor ingresa el número de tarjeta' }]}
-              style={{ marginBottom: "10px"}} 
-            >
-              <Cleave
-                className='ant-input'
-                placeholder="4111 1111 1111 1111"
-                options={{creditCard: true, onCreditCardTypeChanged: (type) => onChangeBank(type) }}
-              />
-            </Form.Item>
-            <Form.Item 
-              label="Banco" 
-              name="tipoBanco"
-              hidden={true}
-            >
-            </Form.Item>
-          </div>
-          <div>
-          <div className="row contenedor-tarjetas">
-            <div className="col-md-4 contenedor-tarjeta">
-              <img 
-                src={Jcb} 
-                className={tipoBanco === "JCB" ? "opacidad-normal" : "opacidad-aplicada"} 
-                alt="JCB"
-              />
-            </div>
-            <div className="col-md-4 contenedor-tarjeta">
-              <img 
-                src={DinnersClub} 
-                className={tipoBanco === "DINERS" ? "opacidad-normal" : "opacidad-aplicada"} 
-                alt='DINERS'
-              />
-            </div>
-            <div className="col-md-4 contenedor-tarjeta">
-              <img 
-                src={MasterCard} 
-                className={tipoBanco === "MASTERCARD" ? "opacidad-normal" : "opacidad-aplicada"} 
-                alt="MASTERCARD"
-              />
-            </div>
-            <div className="col-md-4 contenedor-tarjeta">
-              <img 
-                src={Visa} 
-                className={tipoBanco === "VISA" ? "opacidad-normal" : "opacidad-aplicada"} 
-                alt="VISA"  
-              />
-            </div>
-            <div className="col-md-4 contenedor-tarjeta">
-              <img 
-                src={Discover} 
-                className={tipoBanco === "DISCOVER" ? "opacidad-normal" : "opacidad-aplicada"} 
-                alt="DISCOVER"
-              />
-            </div>
-            <div className="col-md-4 contenedor-tarjeta">
-              <img 
-                src={AmericanExpress} 
-                className={tipoBanco === "AMEX" ? "opacidad-normal" : "opacidad-aplicada"} 
-                alt="AMEX"
-              />
-            </div>
-          </div>
-          </div>
-          
-          <div className="col-md-12">
-            <Form.Item
-              label="Nombre en la tarjeta"
-              name="nombreTarjeta"
-              rules={[{ required: true, message: 'Ingresa el nombre que figura en la tarjeta' }]}                
-            >
-              <Input className="form-control" placeholder="JUAN GARCÍA"  />
-            </Form.Item>
-          </div>
-          <div className="col-md-6">
-            <Form.Item 
-              name="fechaVencimiento" 
-              label="Fecha de vencimiento" 
-              rules={[{ required: true, message: 'Selecciona una fecha' }]}
-            >
-              <DatePicker 
-                selected={fechaVencimientoTarjeta}
-                dateFormat="MM/yyyy"
-                onChange={(date) => setFechaVencimientoTarjeta(date)}
-                showMonthYearPicker
-              />
-            </Form.Item>
-          </div>
-          <div className="col-md-6">
-            <Form.Item 
-              name="cvv" 
-              label="CVV" 
-              rules={[
-                { required: true, message: 'Ingrese el cvv por favor.' }
-              ]} 
-              tooltip="El CVV tiene 3 o 4 dígitos y lo puedes ubicar en el reverso de tu tarjeta."
-            >
-              <Input maxLength={4} minLength={3} placeholder="Ingrese el CVV" style={{ width: "100%"}} />
-            </Form.Item>
-          </div>
+        <div className="col-md-12">
+          <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
+            <Radio.Group>
+              <Radio value={1}>Pagar contraentrega</Radio>
+              <Radio value={2}>Pagar con tarjeta</Radio>
+            </Radio.Group>
+          </Form.Item>
         </div>
+        {
+          tipoPago == 2 &&
+          <div className="row">
+            <div className="col-md-12">
+              <Form.Item 
+                label="Número de tarjeta" 
+                name="numeroTarjeta"
+                rules={[{ required: true, message: 'Por favor ingresa el número de tarjeta' }]}
+                style={{ marginBottom: "10px"}} 
+              >
+                <Cleave
+                  className='ant-input'
+                  placeholder="4111 1111 1111 1111"
+                  options={{creditCard: true, onCreditCardTypeChanged: (type) => onChangeBank(type) }}
+                />
+              </Form.Item>
+              <Form.Item 
+                label="Banco" 
+                name="tipoBanco"
+                hidden={true}
+              >
+              </Form.Item>
+            </div>
+            <div>
+            <div className="row contenedor-tarjetas">
+              <div className="col-md-4 contenedor-tarjeta">
+                <img 
+                  src={Jcb} 
+                  className={tipoBanco === "JCB" ? "opacidad-normal" : "opacidad-aplicada"} 
+                  alt="JCB"
+                />
+              </div>
+              <div className="col-md-4 contenedor-tarjeta">
+                <img 
+                  src={DinnersClub} 
+                  className={tipoBanco === "DINERS" ? "opacidad-normal" : "opacidad-aplicada"} 
+                  alt='DINERS'
+                />
+              </div>
+              <div className="col-md-4 contenedor-tarjeta">
+                <img 
+                  src={MasterCard} 
+                  className={tipoBanco === "MASTERCARD" ? "opacidad-normal" : "opacidad-aplicada"} 
+                  alt="MASTERCARD"
+                />
+              </div>
+              <div className="col-md-4 contenedor-tarjeta">
+                <img 
+                  src={Visa} 
+                  className={tipoBanco === "VISA" ? "opacidad-normal" : "opacidad-aplicada"} 
+                  alt="VISA"  
+                />
+              </div>
+              <div className="col-md-4 contenedor-tarjeta">
+                <img 
+                  src={Discover} 
+                  className={tipoBanco === "DISCOVER" ? "opacidad-normal" : "opacidad-aplicada"} 
+                  alt="DISCOVER"
+                />
+              </div>
+              <div className="col-md-4 contenedor-tarjeta">
+                <img 
+                  src={AmericanExpress} 
+                  className={tipoBanco === "AMEX" ? "opacidad-normal" : "opacidad-aplicada"} 
+                  alt="AMEX"
+                />
+              </div>
+            </div>
+            </div>
+            
+            <div className="col-md-12">
+              <Form.Item
+                label="Nombre en la tarjeta"
+                name="nombreTarjeta"
+                rules={[{ required: true, message: 'Ingresa el nombre que figura en la tarjeta' }]}                
+              >
+                <Input className="form-control" placeholder="JUAN GARCÍA"  />
+              </Form.Item>
+            </div>
+            <div className="col-md-6">
+              <Form.Item 
+                name="fechaVencimiento" 
+                label="Fecha de vencimiento" 
+                rules={[{ required: true, message: 'Selecciona una fecha' }]}
+              >
+                <DatePicker 
+                  selected={fechaVencimientoTarjeta}
+                  dateFormat="MM/yyyy"
+                  onChange={(date) => setFechaVencimientoTarjeta(date)}
+                  showMonthYearPicker
+                />
+              </Form.Item>
+            </div>
+            <div className="col-md-6">
+              <Form.Item 
+                name="cvv" 
+                label="CVV" 
+                rules={[
+                  { required: true, message: 'Ingrese el cvv por favor.' }
+                ]} 
+                tooltip="El CVV tiene 3 o 4 dígitos y lo puedes ubicar en el reverso de tu tarjeta."
+              >
+                <Input maxLength={4} minLength={3} placeholder="Ingrese el CVV" style={{ width: "100%"}} />
+              </Form.Item>
+            </div>
+            
+          </div>
+        }
+        
         {
           dateOfWeekSelected === 0 &&
           <p className="mensajeFinalDestacado">Entregaremos tu pedido entre las 6pm y 10pm.</p>
