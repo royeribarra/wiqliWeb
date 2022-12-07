@@ -9,12 +9,21 @@ import { UsuarioService } from "../../servicios/usuarioService";
 import StorageService from "../../servicios/storageService";
 import {Buffer} from 'buffer';
 import Cleave from 'cleave.js/react';
+
+
 import Jcb from '../../assets/images/jcb.svg';
 import DinnersClub from '../../assets/images/dinners-club.svg';
 import MasterCard from '../../assets/images/master-card.svg';
 import Visa from '../../assets/images/visa.svg';
 import AmericanExpress from '../../assets/images/symbol.svg';
 import Discover from '../../assets/images/symbols.svg';
+import miniAmex from '../../images/miniAmex.png';
+import miniCash from '../../images/miniCash.png';
+import miniMastercard from '../../images/miniMastercard.png';
+import miniPlin from '../../images/miniPlin.png';
+import miniVisa from '../../images/miniVisa.png';
+import miniYape from '../../images/miniYape.png';
+
 
 const { TextArea } = Input;
 
@@ -372,16 +381,16 @@ function FormDatos({ setBlockPage })
         </div>
       </div>
       <div>
-        <div className="cupon-descuento">
+        <div className="contenedorMiniSeccion">
+          <h6 className="tituloMiniSeccion">Agregar cupón de descuento</h6>
           {
             !aplicaCupon && 
             <>
               <Form.Item 
-                label="Agregar cupón de descuento"
                 name="descuento"
                 rules={[{ required: false }]}
               >
-                <Input className="form-control" style={{ margin: "0 5px 0 5px"}} placeholder="Ingresa tu cupón de referido." />
+                <Input className="form-control"  placeholder="Ingresa tu cupón de referido." />
               </Form.Item>
               <Button type="primary" className="botonFinal" onClick={validarCupon}>
                 Agregar
@@ -415,7 +424,7 @@ function FormDatos({ setBlockPage })
           </div>
           {
             aplicaCupon && 
-              <div className="totalesAPagar" style={{ color: "#BA3B46" }}>
+              <div className="totalesAPagar" >
                 <h6 className="tituloCampo">Descuento</h6>
                 <h6 className="datoCampo">- S/ {parseFloat(descuento).toFixed(2)}</h6>
               </div>
@@ -426,24 +435,38 @@ function FormDatos({ setBlockPage })
             <h6 className="datoCampo">S/ {parseFloat(total + delivery).toFixed(2)}</h6>
           </div>
         </div>
-        <div className="col-md-12">
+        <div className="contenedorMiniSeccion" >
+          <h5 className="tituloMiniSeccion">Selecciona tu medio de pago</h5>
           <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
-            <Radio.Group>
-              <Radio value={1}>Pagar contraentrega</Radio>
-              <Radio value={2}>Pagar con tarjeta</Radio>
+            <Radio.Group className="eleccionesDePago">
+              <div className="eleccionDeMedioDePago">
+              <Radio className="eleccionPago" value={1}>Contraentrega</Radio>
+              <div className="imagenesEleccionPago">
+                <img className="imagenEleccionPago" alt='Pago en cash Wiqli'src={miniCash}></img>
+                <img className="imagenEleccionPago" alt='Pago con Plin Wiqli'src={miniPlin}></img>
+                <img className="imagenEleccionPago" alt='Pago con Yape Wiqli'src={miniYape}></img>
+              </div>
+              </div>
+              <div className="eleccionDeMedioDePago">
+              <Radio className="eleccionPago" value={2}>Pago Web</Radio>
+              <div className="imagenesEleccionPago">
+                <img className="imagenEleccionPago" alt='Pago con Visa Wiqli'src={miniVisa}></img>
+                <img className="imagenEleccionPago" alt='Pago con Mastercard Wiqli'src={miniMastercard}></img>
+                <img className="imagenEleccionPago" alt='Pago con American Express Wiqli'src={miniAmex}></img>
+              </div>
+              </div>
             </Radio.Group>
           </Form.Item>
         </div>
         {
           tipoPago == 2 &&
-          <div className="row" style={{ border: "solid", borderColor: "#d5d0d0", borderRadius: "10px", marginTop: "10px" }}>
-            <div className="row col-md-6">
-              <div className="col-md-12">
+          <div className="contenedorPagos contenedorMiniSeccion">
+            <div className="pasarelaDePago">
+              <div className="inputDataPago">
                 <Form.Item 
                   label="Número de tarjeta" 
                   name="numeroTarjeta"
-                  rules={[{ required: true, message: 'Por favor ingresa el número de tarjeta' }]}
-                  style={{ marginBottom: "10px"}} 
+                  rules={[{ required: true, message: 'Por favor ingresa el número de tarjeta' }]} 
                 >
                   <Cleave
                     className='ant-input'
@@ -457,10 +480,46 @@ function FormDatos({ setBlockPage })
                   hidden={true}
                 >
                 </Form.Item>
+              
+
+              <div className="contenedorTarjetasAceptadas ">
+              <div className="tarjetasAceptadas">
+                  <img 
+                    src={Jcb} 
+                    className={tipoBanco === "JCB" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
+                    alt="JCB"
+                  />
+                  <img 
+                    src={DinnersClub} 
+                    className={tipoBanco === "DINERS" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
+                    alt='DINERS'
+                  />
+                  <img 
+                    src={MasterCard} 
+                    className={tipoBanco === "MASTERCARD" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
+                    alt="MASTERCARD"
+                  />
+                  <img 
+                    src={Visa} 
+                    className={tipoBanco === "VISA" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
+                    alt="VISA"  
+                  />
+                  <img 
+                    src={Discover} 
+                    className={tipoBanco === "DISCOVER" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
+                    alt="DISCOVER"
+                  />
+                  <img 
+                    src={AmericanExpress} 
+                    className={tipoBanco === "AMEX" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
+                    alt="AMEX"
+                  />
+
               </div>
+            </div>
+            </div>
               
-              
-              <div className="col-md-12">
+              <div className="inputGrande">
                 <Form.Item
                   label="Nombre en la tarjeta"
                   name="nombreTarjeta"
@@ -469,77 +528,31 @@ function FormDatos({ setBlockPage })
                   <Input className="form-control" placeholder="JUAN GARCÍA"  />
                 </Form.Item>
               </div>
-              <div className="col-md-6">
-                <Form.Item 
-                  name="fechaVencimiento" 
-                  label="Fecha de vencimiento" 
-                  rules={[{ required: true, message: 'Selecciona una fecha' }]}
-                >
-                  <DatePicker 
-                    selected={fechaVencimientoTarjeta}
-                    dateFormat="MM/yyyy"
-                    onChange={(date) => setFechaVencimientoTarjeta(date)}
-                    showMonthYearPicker
-                  />
-                </Form.Item>
-              </div>
-              <div className="col-md-6">
-                <Form.Item 
-                  name="cvv" 
-                  label="CVV" 
-                  rules={[
-                    { required: true, message: 'Ingrese el cvv por favor.' }
-                  ]} 
-                  tooltip="El CVV tiene 3 o 4 dígitos y lo puedes ubicar en el reverso de tu tarjeta."
-                >
-                  <Input maxLength={4} minLength={3} placeholder="Ingrese el CVV" style={{ width: "100%"}} />
-                </Form.Item>
-              </div>
-            </div>
-            
-            <div className="col-md-6">
-              <div className="row contenedor-tarjetas">
-                <div className="col-md-4 contenedor-tarjeta">
-                  <img 
-                    src={Jcb} 
-                    className={tipoBanco === "JCB" ? "opacidad-normal" : "opacidad-aplicada"} 
-                    alt="JCB"
-                  />
+              <div className="inputsMedianos">
+                <div className="inputMediano">
+                  <Form.Item 
+                    name="fechaVencimiento" 
+                    label="Fecha de vencimiento" 
+                    rules={[{ required: true, message: 'Selecciona una fecha' }]}
+                  >
+                    <DatePicker 
+                      selected={fechaVencimientoTarjeta}
+                      dateFormat="MM/yyyy"
+                      onChange={(date) => setFechaVencimientoTarjeta(date)}
+                      showMonthYearPicker
+                    />
+                  </Form.Item>
                 </div>
-                <div className="col-md-4 contenedor-tarjeta">
-                  <img 
-                    src={DinnersClub} 
-                    className={tipoBanco === "DINERS" ? "opacidad-normal" : "opacidad-aplicada"} 
-                    alt='DINERS'
-                  />
-                </div>
-                <div className="col-md-4 contenedor-tarjeta">
-                  <img 
-                    src={MasterCard} 
-                    className={tipoBanco === "MASTERCARD" ? "opacidad-normal" : "opacidad-aplicada"} 
-                    alt="MASTERCARD"
-                  />
-                </div>
-                <div className="col-md-4 contenedor-tarjeta">
-                  <img 
-                    src={Visa} 
-                    className={tipoBanco === "VISA" ? "opacidad-normal" : "opacidad-aplicada"} 
-                    alt="VISA"  
-                  />
-                </div>
-                <div className="col-md-4 contenedor-tarjeta">
-                  <img 
-                    src={Discover} 
-                    className={tipoBanco === "DISCOVER" ? "opacidad-normal" : "opacidad-aplicada"} 
-                    alt="DISCOVER"
-                  />
-                </div>
-                <div className="col-md-4 contenedor-tarjeta">
-                  <img 
-                    src={AmericanExpress} 
-                    className={tipoBanco === "AMEX" ? "opacidad-normal" : "opacidad-aplicada"} 
-                    alt="AMEX"
-                  />
+                <div className="inputMediano">
+                  <Form.Item 
+                    name="cvv" 
+                    label="CVV" 
+                    rules={[
+                      { required: true, message: 'Ingrese el cvv por favor.' }
+                    ]} 
+                  >
+                    <Input maxLength={4} minLength={3} placeholder="Ingrese el CVV" style={{ width: "100%"}} />
+                  </Form.Item>
                 </div>
               </div>
             </div>

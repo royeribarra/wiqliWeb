@@ -41,6 +41,29 @@
     margin-right: 4vw;
 }
 
+
+
+
+@media (min-width: 680px) {
+
+    .baseWiqliForm{
+        padding-left: 20vw;
+        padding-right: 20vw;
+    }
+  
+    }
+
+    @media (min-width: 2000px) {
+
+        .baseWiqliForm{
+            padding-left: 30vw;
+            padding-right: 30vw;
+        }
+      
+        }
+
+
+
 .contenedorDatos{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
     margin-top: 0.5rem;
@@ -111,15 +134,18 @@
     border: 1px solid #ced4da
 }
 
-.cupon-descuento{
+.contenedorMiniSeccion{
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
     border: 1px solid #ced4da;
-    color: #5FAD57;
-    font-weight: 700;
     margin-top: 2rem;
     padding-bottom: 0.8rem;
+}
+
+.tituloMiniSeccion{
+ color: #5FAD57;
+ margin-top: 1rem;
 }
 
 
@@ -137,33 +163,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-.contenedor-tarjetas{
-    display: flex !important;
-    flex-flow: wrap !important;
-    min-width: 0 !important;
-}
-
-.contenedor-tarjeta{
-    display: flex !important;
-    flex: 0 33.3% !important;
-    max-width: 33.3% !important;
-    position: relative !important;
-}
-
-.contenedor-tarjeta img{
-    width: 100% !important;
-}
-
 .opacidad-normal{
     opacity: 1
 }
@@ -172,18 +171,8 @@
     opacity: 0.2
 }
 
-.contenedor-descuento{
-    margin-bottom: 20px;
-    background-color: rgb(227, 250, 250);
-}
 
-.contenedor-descuento .ant-row .ant-col{
-    text-align: center;
-}
 
-.contenedor-descuento .ant-row .ant-col input{
-    text-align: center;
-}
 
 .botonValidacionPago{
    color: #1AB39E;
@@ -194,11 +183,6 @@
     height: 2rem;
 }
 
-
-.contenedor-descuento{
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
 
 .botonPago{
     width: 50%;
@@ -215,4 +199,39 @@
     color: #191D74 ;
     background-color: white;
     border: white;
+}
+
+.eleccionesDePago{
+    display: flex;
+    flex-flow: column ;
+}
+
+
+
+.ant-radio-input{
+    margin-right: 10px;
+}
+
+.eleccionDeMedioDePago{
+    margin: 0.3rem;
+    display: grid;
+    grid-template-columns: 14fr 10fr;
+    gap: 1rem;
+    justify-items: start;
+}
+
+.tarjetaUsada{
+    max-height: 2.5rem;
+    margin: 0.1rem;
+    margin-top: 0.8rem;
+}
+
+.pasarelaDePago{
+    margin: 1rem;
+}
+
+.inputsMedianos{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
 }
