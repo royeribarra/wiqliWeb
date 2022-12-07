@@ -65,7 +65,7 @@ function FormDatos({ setBlockPage })
       cupon: aplicaCupon,
       codigoCupon: values.descuento,
       descuento: descuento,
-      total: total,
+      total: total + delivery,
       datosTarjeta: {
         numeroTarjeta: values.numeroTarjeta,
         fechaVencimiento: values.fechaVencimiento,
