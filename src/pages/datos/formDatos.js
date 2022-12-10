@@ -382,6 +382,7 @@ function FormDatos({ setBlockPage })
       </div>
       <div>
         <div className="contenedorMiniSeccion">
+        <div className="miniSeccion" >
           <h6 className="tituloMiniSeccion">Agregar cupón de descuento</h6>
           {
             !aplicaCupon && 
@@ -411,6 +412,8 @@ function FormDatos({ setBlockPage })
               </Button>
             </>
           }
+        
+        </div>
         </div>
         <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
         <div className="desgloseTotal">
@@ -436,6 +439,7 @@ function FormDatos({ setBlockPage })
           </div>
         </div>
         <div className="contenedorMiniSeccion" >
+          <div className="miniSeccion" >
           <h5 className="tituloMiniSeccion">Selecciona tu medio de pago</h5>
           <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
             <Radio.Group className="eleccionesDePago">
@@ -457,6 +461,7 @@ function FormDatos({ setBlockPage })
               </div>
             </Radio.Group>
           </Form.Item>
+          </div>
         </div>
         {
           tipoPago == 2 &&
