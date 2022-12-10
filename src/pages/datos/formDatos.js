@@ -444,14 +444,6 @@ function FormDatos({ setBlockPage })
           <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
             <Radio.Group className="eleccionesDePago">
               <div className="eleccionDeMedioDePago">
-              <Radio className="eleccionPago" value={1}>Contraentrega</Radio>
-              <div className="imagenesEleccionPago">
-                <img className="imagenEleccionPago" alt='Pago en cash Wiqli'src={miniCash}></img>
-                <img className="imagenEleccionPago" alt='Pago con Plin Wiqli'src={miniPlin}></img>
-                <img className="imagenEleccionPago" alt='Pago con Yape Wiqli'src={miniYape}></img>
-              </div>
-              </div>
-              <div className="eleccionDeMedioDePago">
               <Radio className="eleccionPago" value={2}>Pago Web</Radio>
               <div className="imagenesEleccionPago">
                 <img className="imagenEleccionPago" alt='Pago con Visa Wiqli'src={miniVisa}></img>
@@ -459,6 +451,15 @@ function FormDatos({ setBlockPage })
                 <img className="imagenEleccionPago" alt='Pago con American Express Wiqli'src={miniAmex}></img>
               </div>
               </div>
+              <div className="eleccionDeMedioDePago">
+              <Radio className="eleccionPago" value={1}>Contraentrega</Radio>
+              <div className="imagenesEleccionPago">
+                <img className="imagenEleccionPago" alt='Pago en cash Wiqli'src={miniCash}></img>
+                <img className="imagenEleccionPago" alt='Pago con Plin Wiqli'src={miniPlin}></img>
+                <img className="imagenEleccionPago" alt='Pago con Yape Wiqli'src={miniYape}></img>
+              </div>
+              </div>
+              
             </Radio.Group>
           </Form.Item>
           </div>
