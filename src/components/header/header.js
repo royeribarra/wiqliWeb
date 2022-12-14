@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Container, Nav, Offcanvas, Button } from "react-bootstrap";
+
 import logo from "../../images/miniLogo.png"
 import whatsapp from "../../images/whatsapp.png"
+import carrito from "../../images/carritoCompras.png"
+
 import { useLocation } from 'react-router-dom';
 import StorageService from '../../servicios/storageService';
 import LogService from '../../servicios/logService';
@@ -78,9 +81,13 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
               </Navbar.Brand>)
               }
             </div>
-            <Button variant="primary" onClick={toggleShowCarrito} className="me-2">
-              Carrito
-            </Button>
+              <img
+                onClick={toggleShowCarrito}
+                src={carrito}
+                height="50"
+                className="logoNav"
+                alt="wiqli"
+              /> 
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}

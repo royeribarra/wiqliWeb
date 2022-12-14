@@ -19,7 +19,7 @@ function Carrito({showCarrito, setShowCarrito})
   return(
     <Offcanvas show={showCarrito} onHide={handleClose} scroll={true} backdrop={true}>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Carrito de Compra</Offcanvas.Title>
+        <Offcanvas.Title>Lista de compras</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <div class="col-lg-12">
