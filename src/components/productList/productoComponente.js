@@ -6,24 +6,62 @@ import mas from "../../images/menos.png"
 import menos from "../../images/mas.png"
 
 
-function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades, renderizarNuevamente}) 
+function ProductoComponente({
+  data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades, renderizarNuevamente
+}) 
 {
   const[cantidad, setCantidad] = useState(1);
   const[tipoComponente, setTipoComponente] = useState(1);
+  const[productosCarrito, setProductosCarrito] = useState([]);
 
   const agregarCarrito = () => {
     setTipoComponente(2);
     agregarProducto(data);
+    data.cantidad = 1;
+    if(localStorage.getItem("productos"))
+    {
+      let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+      let result = new_productos.find(
+        (el) => el.id === data.id
+      );
+      if(!result){
+        new_productos.push(data);
+        localStorage.setItem("productos", JSON.stringify(new_productos));
+      }
+    }else{
+      let new_productos = [];
+      new_productos.push(data);
+      localStorage.setItem("productos", JSON.stringify(new_productos));
+    }
+    
   }
 
   const quitarCarrito = () => {
     setTipoComponente(1);
     quitarProducto(data);
+    if(localStorage.getItem("productos")){
+      let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+      const index = new_productos.findIndex(
+        (el) => el.id === data.id
+      );
+      new_productos.splice(index, 1);
+      localStorage.setItem("productos", JSON.stringify(new_productos));
+    }
+    
   }
 
   const agregarCantidadProducto = () => {
     setCantidad(cantidad + 1);
     aumentarUnidades(data);
+    if(localStorage.getItem("productos")){
+      let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+      const index = new_productos.findIndex(
+        (el) => el.id === data.id
+      );
+      new_productos[index].cantidad += 1;
+      localStorage.setItem("productos", JSON.stringify(new_productos));
+    }
+    
   }
 
   const disminuiCantidadProducto = () => {
@@ -31,6 +69,14 @@ function ProductoComponente({data, agregarProducto, quitarProducto, disminuirUni
     }else{
       setCantidad(cantidad - 1);
       disminuirUnidades(data);
+      if(localStorage.getItem("productos")){
+        let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+        const index = new_productos.findIndex(
+          (el) => el.id === data.id
+        );
+        new_productos[index].cantidad -= 1;
+        localStorage.setItem("productos", JSON.stringify(new_productos));
+      }
     }
   }
 

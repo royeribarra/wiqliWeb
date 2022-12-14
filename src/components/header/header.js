@@ -9,6 +9,7 @@ import LogService from '../../servicios/logService';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { Alert } from 'antd';
 import './header.css';
+import Carrito from "../carrito/carrito";
 
 function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) {
   
@@ -17,6 +18,7 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
   const location = useLocation();
   const [isHome, setIsHome] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [showCarrito, setShowCarrito] = useState(false);
 
   const copiarCodigoReferido = () => {
     setShowAlert(true);
@@ -38,12 +40,17 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
     logService.logout(access_token);
   }
 
+  const toggleShowCarrito = () => {
+    setShowCarrito((s) => !s);
+  }
+
   useEffect(() => {
     getHome();
   }, [location])
 
   return (
     <div className="navBarContainer">
+      <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
  {[false].map((expand) => (
         <Navbar key={expand} bg="white" expand={expand} className="mb-3">
           <Container fluid>
@@ -71,6 +78,9 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
               </Navbar.Brand>)
               }
             </div>
+            <Button variant="primary" onClick={toggleShowCarrito} className="me-2">
+              Carrito
+            </Button>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}

@@ -16,6 +16,7 @@ import axios from 'axios';
 import { toastr } from "react-redux-toastr";
 import ModalTarea from './modalTarea';
 import { UsuarioService } from "../../servicios/usuarioService";
+import Carrito from '../../components/carrito/carrito';
 
 function Home({obtenerDataCliente}) 
 {
