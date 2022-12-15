@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Affix, Button, Modal } from 'antd';
 import { Container } from "react-bootstrap";
 import logo from "../../images/logo.png";
@@ -16,10 +16,10 @@ import axios from 'axios';
 import { toastr } from "react-redux-toastr";
 import ModalTarea from './modalTarea';
 import { UsuarioService } from "../../servicios/usuarioService";
-import Carrito from '../../components/carrito/carrito';
 
 function Home({obtenerDataCliente}) 
 {
+
   let history = useNavigate();
   const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
@@ -28,18 +28,22 @@ function Home({obtenerDataCliente})
   const[renderizarNuevamente, setRenderizarNuevamente] = useState(false);
 
   const getProductoStorage = () => {
-    console.log("volviendo a calcular");
-    if(sessionStorage.getItem('productos')){
-      let productosStorage = JSON.parse(sessionStorage.getItem('productos'));
+    if(localStorage.getItem('productos')){
+      let productosStorage = JSON.parse(localStorage.getItem('productos'));
       setProductosCarrito(productosStorage);
     }
   }
 
   const getProductos = () => {
+
     axios
     .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
     .then(({ data }) => {
       setProductos(data);
+      // dispatchCart({
+      //   type: TYPES.FILL_PRODUCTS,
+      //   payload: data,
+      // });
     });
   }
 
@@ -87,7 +91,7 @@ function Home({obtenerDataCliente})
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
-      sessionStorage.setItem('productos', JSON.stringify(productosCarrito));
+      localStorage.setItem('productos', JSON.stringify(productosCarrito));
       history(`/datos`);
     }
   }
@@ -125,7 +129,7 @@ function Home({obtenerDataCliente})
   };
 
   const seleccionarNuevo = () => {
-    sessionStorage.setItem('seleccionTarea', true);
+    localStorage.setItem('seleccionTarea', true);
     obtenerTotalReferidos();
     obtenerCodigoCuponDescuento();
     setShowModal(false);
@@ -135,8 +139,8 @@ function Home({obtenerDataCliente})
     const userService = new UsuarioService("pedido/ultimo");
     userService.obtenerProductosUltimoPedido()
     .then(({data})=> {
-      sessionStorage.setItem('productos', JSON.stringify(data));
-      sessionStorage.setItem('seleccionTarea', true);
+      localStorage.setItem('productos', JSON.stringify(data));
+      localStorage.setItem('seleccionTarea', true);
       setShowModal(false);
       setProductosCarrito(data);
     }).then(()=>{
@@ -156,7 +160,7 @@ function Home({obtenerDataCliente})
   }, [productosCarrito]);
 
   useEffect(()=> {
-    let tarea = sessionStorage.getItem('seleccionTarea');
+    let tarea = localStorage.getItem('seleccionTarea');
     let token = localStorage.getItem('tknData');
     if(token){
       if(tarea){

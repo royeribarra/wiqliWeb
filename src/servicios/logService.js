@@ -54,7 +54,7 @@ export default class LogService {
     const options = this.addOptions(accessToken);
     const storageService = new StorageService;
     storageService.clear();
-    sessionStorage.removeItem('seleccionTarea');
+    localStorage.removeItem('seleccionTarea');
     axios.get(LOG_ENDPOINTS.deleteToken, options).then(null);
     window.location.href = '/';
     return;

@@ -66,10 +66,10 @@ function FormDatos({ setBlockPage })
     setBlockPage(true);
     let data = {
       productos: productos,
-      otrosFrutas: sessionStorage.getItem('otrasFrutas'),
-      otrosVerduras: sessionStorage.getItem('otrasVerduras'),
-      otrosCarnes: sessionStorage.getItem('otrasCarnes'),
-      otrosMenestras: sessionStorage.getItem('otrasMenestras'),
+      otrosFrutas: localStorage.getItem('otrasFrutas'),
+      otrosVerduras: localStorage.getItem('otrasVerduras'),
+      otrosCarnes: localStorage.getItem('otrasCarnes'),
+      otrosMenestras: localStorage.getItem('otrasMenestras'),
       cliente: cliente,
       cupon: aplicaCupon,
       codigoCupon: values.descuento,
@@ -90,7 +90,7 @@ function FormDatos({ setBlockPage })
       .then(({ data }) => {
         if(data.state){
           setBlockPage(false);
-          sessionStorage.clear();
+          localStorage.clear();
           history(`/confirmacion`);
         }else if(!data.state){
           setBlockPage(false);
@@ -106,7 +106,7 @@ function FormDatos({ setBlockPage })
       .then(({ data }) => {
         if(data.state){
           setBlockPage(false);
-          sessionStorage.clear();
+          localStorage.clear();
           history(`/confirmacion`);
         }else if(!data.state){
           setBlockPage(false);
@@ -200,7 +200,7 @@ function FormDatos({ setBlockPage })
       if(newVallues.fecha_recojo){
         allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
       }
-      sessionStorage.setItem('cliente', JSON.stringify(allValues));
+      localStorage.setItem('cliente', JSON.stringify(allValues));
       setCliente(allValues);
     }
     
@@ -222,21 +222,21 @@ function FormDatos({ setBlockPage })
   }, [productos]);
 
   useEffect(() => {
-    if(sessionStorage.getItem('productos')){
-      setProductos(JSON.parse(sessionStorage.getItem('productos')));
+    if(localStorage.getItem('productos')){
+      setProductos(JSON.parse(localStorage.getItem('productos')));
     }else{
       history(`/`);
     }
   }, []);
 
   useEffect(() => {
-    if(sessionStorage.getItem('cliente')){
-      let clienteStorage = JSON.parse(sessionStorage.getItem('cliente'));
+    if(localStorage.getItem('cliente')){
+      let clienteStorage = JSON.parse(localStorage.getItem('cliente'));
       form.setFieldsValue({
         ...clienteStorage,
         tipoPago: 1
       });
-      setCliente(JSON.parse(sessionStorage.getItem('cliente')));
+      setCliente(JSON.parse(localStorage.getItem('cliente')));
     }
   }, []);
 

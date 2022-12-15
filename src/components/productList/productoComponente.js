@@ -1,23 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Form, Card } from "react-bootstrap";
 
 import quitar from "../../images/quitar.png"
 import mas from "../../images/menos.png"
 import menos from "../../images/mas.png"
-
+import { useDispatch, useSelector } from "react-redux";
+import { 
+  addToCart, 
+  addOneToProduct, 
+  delFromCart, 
+  clearCart,
+  fillCart
+} from "../../redux/actions/carritoActions";
 
 function ProductoComponente({
   data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades, renderizarNuevamente
 }) 
 {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const[cantidad, setCantidad] = useState(1);
   const[tipoComponente, setTipoComponente] = useState(1);
-  const[productosCarrito, setProductosCarrito] = useState([]);
 
   const agregarCarrito = () => {
     setTipoComponente(2);
     agregarProducto(data);
     data.cantidad = 1;
+    dispatch(addToCart(data));
     if(localStorage.getItem("productos"))
     {
       let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
@@ -33,12 +43,12 @@ function ProductoComponente({
       new_productos.push(data);
       localStorage.setItem("productos", JSON.stringify(new_productos));
     }
-    
   }
 
   const quitarCarrito = () => {
     setTipoComponente(1);
     quitarProducto(data);
+    dispatch(delFromCart(data.id, true));
     if(localStorage.getItem("productos")){
       let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
       const index = new_productos.findIndex(
@@ -47,12 +57,12 @@ function ProductoComponente({
       new_productos.splice(index, 1);
       localStorage.setItem("productos", JSON.stringify(new_productos));
     }
-    
   }
 
   const agregarCantidadProducto = () => {
     setCantidad(cantidad + 1);
     aumentarUnidades(data);
+    dispatch(addOneToProduct(data.id));
     if(localStorage.getItem("productos")){
       let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
       const index = new_productos.findIndex(
@@ -61,7 +71,6 @@ function ProductoComponente({
       new_productos[index].cantidad += 1;
       localStorage.setItem("productos", JSON.stringify(new_productos));
     }
-    
   }
 
   const disminuiCantidadProducto = () => {
@@ -69,6 +78,7 @@ function ProductoComponente({
     }else{
       setCantidad(cantidad - 1);
       disminuirUnidades(data);
+      dispatch(delFromCart(data.id));
       if(localStorage.getItem("productos")){
         let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
         const index = new_productos.findIndex(
@@ -81,8 +91,10 @@ function ProductoComponente({
   }
 
   useEffect(() => {
-    if(sessionStorage.getItem('productos')){
-      let productosStorage = JSON.parse(sessionStorage.getItem('productos'));
+    if(localStorage.getItem('productos')){
+      
+      let productosStorage = JSON.parse(localStorage.getItem('productos'));
+      dispatch(fillCart(productosStorage));
       productosStorage.forEach(producto => {
         if(producto.id === data.id)
         {

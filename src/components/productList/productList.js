@@ -21,9 +21,9 @@ function ProductList({
   const[otrasMenestras, setOtrasMenestras] = useState([]);
 
   const agregarProductoStorage = (producto, nombre) => {
-    let productos = JSON.parse(sessionStorage.getItem(nombre));
+    let productos = JSON.parse(localStorage.getItem(nombre));
     productos.push(producto);
-    sessionStorage.setItem(nombre, JSON.stringify(productos));
+    localStorage.setItem(nombre, JSON.stringify(productos));
     if(nombre === 'otrasFrutas'){
       setOtrasFrutas(productos);
       toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
@@ -48,7 +48,7 @@ function ProductList({
       const index = copiaArray.findIndex(el => el.id === id);
       copiaArray.splice(index,1);
       setOtrasFrutas(copiaArray);
-      sessionStorage.setItem('otrasFrutas', JSON.stringify(copiaArray));
+      localStorage.setItem('otrasFrutas', JSON.stringify(copiaArray));
       
     }
     if(tipo === 2){
@@ -56,29 +56,29 @@ function ProductList({
       const index = copiaArray.findIndex(el => el.id === id);
       copiaArray.splice(index,1);
       setOtrasVerduras(copiaArray);
-      sessionStorage.setItem('otrasVerduras', JSON.stringify(copiaArray));
+      localStorage.setItem('otrasVerduras', JSON.stringify(copiaArray));
     }
     if(tipo === 3){
       const copiaArray = [...otrasCarnes];
       const index = copiaArray.findIndex(el => el.id === id);
       copiaArray.splice(index,1);
       setOtrasCarnes(copiaArray);
-      sessionStorage.setItem('otrasCarnes', JSON.stringify(copiaArray));
+      localStorage.setItem('otrasCarnes', JSON.stringify(copiaArray));
     }
     if(tipo === 4){
       const copiaArray = [...otrasMenestras];
       const index = copiaArray.findIndex(el => el.id === id);
       copiaArray.splice(index,1);
       setOtrasMenestras(copiaArray);
-      sessionStorage.setItem('otrasMenestras', JSON.stringify(copiaArray));
+      localStorage.setItem('otrasMenestras', JSON.stringify(copiaArray));
     }
   }
 
   useEffect(() => {
-    setOtrasFrutas(JSON.parse(sessionStorage.getItem('otrasFrutas')));
-    setOtrasVerduras(JSON.parse(sessionStorage.getItem('otrasVerduras')));
-    setOtrasCarnes(JSON.parse(sessionStorage.getItem('otrasCarnes')));
-    setOtrasMenestras(JSON.parse(sessionStorage.getItem('otrasMenestras')));
+    setOtrasFrutas(JSON.parse(localStorage.getItem('otrasFrutas')));
+    setOtrasVerduras(JSON.parse(localStorage.getItem('otrasVerduras')));
+    setOtrasCarnes(JSON.parse(localStorage.getItem('otrasCarnes')));
+    setOtrasMenestras(JSON.parse(localStorage.getItem('otrasMenestras')));
   }, []);
 
   return (

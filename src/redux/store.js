@@ -7,13 +7,14 @@ import promise from "redux-promise-middleware";
 import spinner from "./reducers/spinnerReducer";
 import routeReducer from "./reducers/routeReducer";
 import user from "./reducers/userLogedReducer";
+import { cartReducer } from "./reducers/cartReducer";
 
 const reducer = combineReducers({   
     spinner,
     user,
     routeReducer,
-    toastr: toastrReducer 
-
+    toastr: toastrReducer,
+    cart: cartReducer
 });
 
 export default createStore(reducer, {},

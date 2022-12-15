@@ -31,11 +31,11 @@ function AgregarOtroProducto({ title, nombre, agregarProductoStorage})
   }
 
   useEffect(()=> {
-    if(sessionStorage.getItem(nombre)){
-      let productosStorage = JSON.parse(sessionStorage.getItem(nombre));
-      sessionStorage.setItem(nombre, JSON.stringify(productosStorage));
+    if(localStorage.getItem(nombre)){
+      let productosStorage = JSON.parse(localStorage.getItem(nombre));
+      localStorage.setItem(nombre, JSON.stringify(productosStorage));
     }else{
-      sessionStorage.setItem(nombre, JSON.stringify([]));
+      localStorage.setItem(nombre, JSON.stringify([]));
     }
   }, []);
 
