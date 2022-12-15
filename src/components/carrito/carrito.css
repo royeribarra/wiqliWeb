@@ -1585,6 +1585,11 @@ ol {
 	width: 15px;
 }
 
+.quantity{
+	display: flex;
+	align-items: baseline;
+}
+
 .primary-btn.cart-btn {
 	color: #6f6f6f;
 	padding: 14px 30px 12px;

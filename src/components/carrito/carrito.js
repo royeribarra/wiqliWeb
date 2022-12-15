@@ -10,6 +10,7 @@ import {
 import "./carrito.css";
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
+import { AiFillDelete, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
 
 function Carrito({showCarrito, setShowCarrito})
 {
@@ -43,9 +44,9 @@ function Carrito({showCarrito, setShowCarrito})
 
   return(
     <Offcanvas show={showCarrito} onHide={handleClose} scroll={true} backdrop={true}>
-      <button onClick={verCarrito}>ver carrito</button>
+      {/* <button onClick={verCarrito}>ver carrito</button> */}
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Lista de compras</Offcanvas.Title>
+        <Offcanvas.Title>Lista de productos</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <div class="col-lg-12">
@@ -57,7 +58,7 @@ function Carrito({showCarrito, setShowCarrito})
                   <th>Precio</th>
                   <th>Cantidad</th>
                   <th>Total</th>
-                  <th></th>
+                  <th>Eliminar</th>
                 </tr>
               </thead>
               <tbody>
@@ -72,17 +73,22 @@ function Carrito({showCarrito, setShowCarrito})
                         {product.precio_unitario}
                       </td>
                       <td class="shoping__cart__quantity">
+                        
                         <div class="quantity">
+                          <AiFillPlusCircle />
                             <div class="pro-qty">
                                 <input type="text" value={product.cantidad} />
                             </div>
+                          <AiFillMinusCircle />
                         </div>
+                        
                       </td>
                       <td class="shoping__cart__total">
-                        {product.cantidad * product.precio_unitario}
+                        {parseFloat(product.cantidad * product.precio_unitario).toFixed(2)}
                       </td>
                       <td class="shoping__cart__item__close">
                         <span class="icon_close"></span>
+                        <AiFillDelete />
                       </td>
                     </tr>
                   )
