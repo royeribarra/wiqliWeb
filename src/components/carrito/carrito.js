@@ -51,28 +51,28 @@ function Carrito({showCarrito, setShowCarrito})
       <Offcanvas.Body>
         <div class="col-lg-12">
           <div class="shoping__cart__table">
-            <table>
-              <thead>
+            <table className="tablaCarrito">
+              <thead className="headCarrito">
                 <tr>
-                  <th class="shoping__product">Producto</th>
-                  <th>Precio</th>
-                  <th>Cantidad</th>
-                  <th>Total</th>
-                  <th>Eliminar</th>
+                  <th class="shoping__product tituloCarrito">Producto</th>
+                  <th className="tituloCarrito">Precio</th>
+                  <th className="tituloCarrito">Cantidad</th>
+                  <th className="tituloCarrito">Total</th>
+                  <th className="tituloCarrito">Eliminar</th>
                 </tr>
               </thead>
               <tbody>
                 {
                   cart.map((product)=>
                     <tr>
-                      <td class="shoping__cart__item">
+                      <td class="shoping__cart__item inputCarrito">
                         <img src="img/cart/cart-1.jpg" alt="" />
-                        <h5>{product.nombre}</h5>
+                        <h5 className="textoCarrito">{product.nombre}</h5>
                       </td>
-                      <td class="shoping__cart__price">
+                      <td class="shoping__cart__price inputCarrito textoCarrito">
                         {product.precio_unitario}
                       </td>
-                      <td class="shoping__cart__quantity">
+                      <td class="shoping__cart__quantity inputCarrito textoCarrito">
                         
                         <div class="quantity">
                           <AiFillPlusCircle />
@@ -83,10 +83,10 @@ function Carrito({showCarrito, setShowCarrito})
                         </div>
                         
                       </td>
-                      <td class="shoping__cart__total">
+                      <td class="shoping__cart__total inputCarrito textoCarrito">
                         {parseFloat(product.cantidad * product.precio_unitario).toFixed(2)}
                       </td>
-                      <td class="shoping__cart__item__close">
+                      <td class="shoping__cart__item__close inputCarrito textoCarrito">
                         <span class="icon_close"></span>
                         <AiFillDelete />
                       </td>
