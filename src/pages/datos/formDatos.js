@@ -22,6 +22,7 @@ import miniMastercard from '../../images/miniMastercard.png';
 import miniPlin from '../../images/miniPlin.png';
 import miniVisa from '../../images/miniVisa.png';
 import miniYape from '../../images/miniYape.png';
+import { useSelector } from "react-redux";
 
 const { TextArea } = Input;
 
@@ -29,6 +30,9 @@ function FormDatos({ setBlockPage })
 {
   let history = useNavigate();
   
+  const state = useSelector((state) => state);
+  const { cart } = state.cart;
+
   const storageService = new StorageService();
   const [form] = Form.useForm();
   const [isLoged, setIsLoged] = useState(false);
@@ -82,7 +86,6 @@ function FormDatos({ setBlockPage })
         tipoBanco: values.tipoBanco
       }
     }
-    console.log(data);
     if(isLoged){
       const userService = new UsuarioService("usuario");
       userService.realizarPedido(data)
@@ -120,7 +123,7 @@ function FormDatos({ setBlockPage })
 
   const calcularTotal = () => {
     let total = 0;
-    productos.forEach((producto) => {
+    cart.forEach((producto) => {
       if(producto.cantidad_minima === 1){
         total += producto.cantidad * producto.precio_unitario
       }else{
@@ -218,7 +221,7 @@ function FormDatos({ setBlockPage })
 
   useEffect(() => {
     calcularTotal();
-  }, [productos]);
+  }, [productos, cart]);
 
   useEffect(() => {
     if(localStorage.getItem('productos')){
