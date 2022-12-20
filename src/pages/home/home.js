@@ -16,10 +16,20 @@ import axios from 'axios';
 import { toastr } from "react-redux-toastr";
 import ModalTarea from './modalTarea';
 import { UsuarioService } from "../../servicios/usuarioService";
+import { useDispatch, useSelector } from 'react-redux';
+import { 
+  addToCart, 
+  addOneToProduct, 
+  delFromCart, 
+  clearCart,
+  fillCart
+} from "../../redux/actions/carritoActions";
 
 function Home({obtenerDataCliente}) 
 {
-
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { products, cart } = state.cart;
   let history = useNavigate();
   const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
@@ -30,12 +40,12 @@ function Home({obtenerDataCliente})
   const getProductoStorage = () => {
     if(localStorage.getItem('productos')){
       let productosStorage = JSON.parse(localStorage.getItem('productos'));
+      dispatch(fillCart(productosStorage));
       setProductosCarrito(productosStorage);
     }
   }
 
   const getProductos = () => {
-
     axios
     .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
     .then(({ data }) => {

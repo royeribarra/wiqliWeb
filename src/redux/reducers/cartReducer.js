@@ -22,6 +22,7 @@ export function cartReducer(state = carritoInitialState, action){
       
       let newItem = action.payload;
       let itemInCart = state.cart.find((item) => item.id === newItem.id);
+
       return itemInCart
         ? {
             ...state,

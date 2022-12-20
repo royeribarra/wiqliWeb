@@ -12,12 +12,14 @@ import {
   clearCart,
   fillCart
 } from "../../redux/actions/carritoActions";
+import "./productoComponente.css";
 
 function ProductoComponente({
   data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades, renderizarNuevamente
 }) 
 {
   const state = useSelector((state) => state);
+  const { products, cart } = state.cart;
   const dispatch = useDispatch();
 
   const[cantidad, setCantidad] = useState(1);
@@ -91,19 +93,14 @@ function ProductoComponente({
   }
 
   useEffect(() => {
-    if(localStorage.getItem('productos')){
-      
-      let productosStorage = JSON.parse(localStorage.getItem('productos'));
-      dispatch(fillCart(productosStorage));
-      productosStorage.forEach(producto => {
-        if(producto.id === data.id)
-        {
-          setTipoComponente(2);
-          setCantidad(producto.cantidad);
-        } 
-      });
-    }
-  }, [data, renderizarNuevamente]);
+    cart.forEach(producto => {
+      if(producto.id === data.id)
+      {
+        setTipoComponente(2);
+        setCantidad(producto.cantidad);
+      } 
+    });
+  }, [data, renderizarNuevamente, cart]);
 
   return(
     <div className="productCard">
@@ -118,12 +115,19 @@ function ProductoComponente({
         <Card className="descripcionProducto" onClick={agregarCarrito}>
           <div className="datosProducto">
             <h5>{data.nombre}</h5>
-            <p style={{ color: "#BA3B46", fontSize: "12px" }}>{data.disponibilidad_limitada ? 'Sujeto a disponiblidad' : ''}</p>
-            <p style={{ fontSize: "0.9rem" }}>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
-            <p><span style={{ color: "#3681B8", fontWeight: "500" }}>S/{data.precio_unitario} x {data.unidad.abreviatura}</span>
+            <p className="parrafoDisponibilidad">
+              {data.disponibilidad_limitada ? 'Sujeto a disponiblidad' : ''}
+            </p>
+            <p className="parrafoCantidad">
+              {data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}
+            </p>
+            <p>
+              <span className="precioProducto">
+                S/{data.precio_unitario} x {data.unidad.abreviatura}
+              </span>
             {
               data.cantidad_minima !== "1.00" &&
-              <span style={{ color: "#3681B8", fontWeight: "500" }}>
+              <span className="precioProducto">
                 {
                   ` (Aprox S/ ${parseFloat(data.cantidad_minima*data.precio_unitario).toFixed(2)})`
                 }
@@ -148,8 +152,14 @@ function ProductoComponente({
             />
             </div>
             </div>
-            <p style={{ fontSize: "0.9rem" }}>{data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}</p>
-            <p><span style={{ color: "#3681B8", fontWeight: "500" }}>S/{data.precio_unitario} x {data.unidad.abreviatura}</span></p>
+            <p className="parrafoCantidad">
+              {data.cantidad_minima === "1.00" ? '' : `Unidad de aprox ${data.cantidad_minima} ${data.unidad.abreviatura}`}
+            </p>
+            <p>
+              <span className="precioProducto">
+                S/{data.precio_unitario} x {data.unidad.abreviatura}
+              </span>
+            </p>
           </div>
           </Card>
           <div>

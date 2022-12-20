@@ -28,13 +28,37 @@ function Carrito({showCarrito, setShowCarrito})
     console.log(cart);
   };
 
-  useEffect(()=> {
-    // axios
-    // .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
-    // .then(({ data }) => {
-    //   dispatch(fillCart(productosStorage));
-    // });
+  const agregarUnidadProducto = (id) => {
+    try {
+      dispatch(addOneToProduct(id));
+    } catch (error) {
+      console.log(error)
+    } finally{
+      localStorage.setItem('productos', JSON.stringify(cart));
+    }
+  };
 
+  const quitarUnidadProducto = (id) => {
+    try {
+      dispatch(delFromCart(id));
+    } catch (error) {
+      console.log(error)
+    } finally{
+      localStorage.setItem('productos', JSON.stringify(cart));
+    }
+  };
+
+  const eliminarProducto = (id) => {
+    try {
+      dispatch(delFromCart(id, true));
+    } catch (error) {
+      console.log(error)
+    } finally{
+      localStorage.setItem('productos', JSON.stringify(cart));
+    }
+  };
+
+  useEffect(()=> {
     if(localStorage.getItem("productos"))
     {
       let productosStorage = JSON.parse(localStorage.getItem("productos"));
@@ -75,11 +99,11 @@ function Carrito({showCarrito, setShowCarrito})
                       <td class="shoping__cart__quantity inputCarrito textoCarrito">
                         
                         <div class="quantity">
-                          <AiFillPlusCircle />
+                          <AiFillPlusCircle onClick={()=> agregarUnidadProducto(product.id)} />
                             <div class="pro-qty">
                                 <input type="text" value={product.cantidad} />
                             </div>
-                          <AiFillMinusCircle />
+                          <AiFillMinusCircle onClick={()=> quitarUnidadProducto(product.id)} />
                         </div>
                         
                       </td>
@@ -88,7 +112,7 @@ function Carrito({showCarrito, setShowCarrito})
                       </td>
                       <td class="shoping__cart__item__close inputCarrito textoCarrito">
                         <span class="icon_close"></span>
-                        <AiFillDelete />
+                        <AiFillDelete onClick={()=> eliminarProducto(product.id)} />
                       </td>
                     </tr>
                   )

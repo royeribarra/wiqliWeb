@@ -19,6 +19,7 @@ function ProductList({
   const[otrasVerduras, setOtrasVerduras] = useState([]);
   const[otrasCarnes, setOtrasCarnes] = useState([]);
   const[otrasMenestras, setOtrasMenestras] = useState([]);
+  const[otrasFrutasSecas, setOtrasFrutasSecas] = useState([]);
 
   const agregarProductoStorage = (producto, nombre) => {
     let productos = JSON.parse(localStorage.getItem(nombre));
@@ -38,6 +39,10 @@ function ProductList({
     }
     if(nombre === 'otrasMenestras'){
       setOtrasMenestras(productos);
+      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
+    }
+    if(nombre === 'otrasFrutasSecas'){
+      setOtrasFrutasSecas(productos);
       toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
     }
   }
@@ -235,6 +240,44 @@ function ProductList({
                 <AgregarOtroProducto
                   nombre="otrasMenestras"
                   title="Agregar otra menestra"
+                  agregarProductoStorage={agregarProductoStorage}
+                />
+              </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="4" className="acordeonCategoria">
+            <Accordion.Header>
+              <h2 className="tituloCategoria">Elige tus frutos secos</h2>
+            </Accordion.Header>
+              <Accordion.Body>
+                { productos.filter((producto) => producto.categoria_id === 5)
+                  .map( producto => (
+                    <ProductoComponente 
+                      data={producto} 
+                      key={producto.id} 
+                      agregarProducto={agregarProducto}
+                      quitarProducto={quitarProducto}
+                      disminuirUnidades={disminuirUnidades}
+                      aumentarUnidades={aumentarUnidades}
+                      renderizarNuevamente={renderizarNuevamente}
+                    />
+                  ))
+                }
+                <h3>Productos adicionales</h3>
+                {
+                  otrasFrutasSecas.map( frutoSeco => (
+                    <ProductoAdicional 
+                      key={frutoSeco.id}
+                      id={frutoSeco.id}
+                      nombre={frutoSeco.nombre}
+                      cantidad={frutoSeco.cantidad}
+                      tipo={4}
+                      eliminarProductoStorage={eliminarProductoStorage}
+                    />
+                  ))
+                }
+                <AgregarOtroProducto
+                  nombre="otrasFrutasSecas"
+                  title="Agregar otro fruto seco"
                   agregarProductoStorage={agregarProductoStorage}
                 />
               </Accordion.Body>
