@@ -76,7 +76,9 @@ function Carrito({showCarrito, setShowCarrito})
                   cart.map((product)=>
                     <tr>
                       <td class="shoping__cart__item inputCarrito">
-                        <img src="img/cart/cart-1.jpg" alt="" />
+                        <img 
+                          src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+product.imagen}
+                          alt={`comprar ` + product.nombre} />
                         <h5 className="textoCarrito">{product.nombre}</h5>
                       </td>
                       <td class="shoping__cart__price inputCarrito textoCarrito">
