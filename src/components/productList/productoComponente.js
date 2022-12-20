@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Card } from "react-bootstrap";
 
 import quitar from "../../images/quitar.png"
@@ -8,9 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { 
   addToCart, 
   addOneToProduct, 
-  delFromCart, 
-  clearCart,
-  fillCart
+  delFromCart,
 } from "../../redux/actions/carritoActions";
 import "./productoComponente.css";
 
@@ -19,7 +17,7 @@ function ProductoComponente({
 }) 
 {
   const state = useSelector((state) => state);
-  const { products, cart } = state.cart;
+  const { cart } = state.cart;
   const dispatch = useDispatch();
 
   const[cantidad, setCantidad] = useState(1);
@@ -27,52 +25,52 @@ function ProductoComponente({
 
   const agregarCarrito = () => {
     setTipoComponente(2);
-    agregarProducto(data);
-    data.cantidad = 1;
+    // agregarProducto(data);
     dispatch(addToCart(data));
-    if(localStorage.getItem("productos"))
-    {
-      let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
-      let result = new_productos.find(
-        (el) => el.id === data.id
-      );
-      if(!result){
-        new_productos.push(data);
-        localStorage.setItem("productos", JSON.stringify(new_productos));
-      }
-    }else{
-      let new_productos = [];
-      new_productos.push(data);
-      localStorage.setItem("productos", JSON.stringify(new_productos));
-    }
+    // if(localStorage.getItem("productos"))
+    // {
+    //   let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+    //   let result = new_productos.find(
+    //     (el) => el.id === data.id
+    //   );
+    //   if(!result){
+    //     new_productos.push(data);
+    //     localStorage.setItem("productos", JSON.stringify(new_productos));
+    //   }
+    // }else{
+    //   let new_productos = [];
+    //   new_productos.push(data);
+    //   localStorage.setItem("productos", JSON.stringify(new_productos));
+    // }
   }
 
   const quitarCarrito = () => {
     setTipoComponente(1);
-    quitarProducto(data);
+    //quitarProducto(data);
     dispatch(delFromCart(data.id, true));
-    if(localStorage.getItem("productos")){
-      let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
-      const index = new_productos.findIndex(
-        (el) => el.id === data.id
-      );
-      new_productos.splice(index, 1);
-      localStorage.setItem("productos", JSON.stringify(new_productos));
-    }
+    // if(localStorage.getItem("productos")){
+    //   let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+    //   const index = new_productos.findIndex(
+    //     (el) => el.id === data.id
+    //   );
+    //   new_productos.splice(index, 1);
+    //   localStorage.setItem("productos", JSON.stringify(new_productos));
+    // }
   }
 
   const agregarCantidadProducto = () => {
     setCantidad(cantidad + 1);
-    aumentarUnidades(data);
+    //aumentarUnidades(data);
     dispatch(addOneToProduct(data.id));
-    if(localStorage.getItem("productos")){
-      let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
-      const index = new_productos.findIndex(
-        (el) => el.id === data.id
-      );
-      new_productos[index].cantidad += 1;
-      localStorage.setItem("productos", JSON.stringify(new_productos));
-    }
+    
+    // if(localStorage.getItem("productos")){
+    //   let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+    //   const index = new_productos.findIndex(
+    //     (el) => el.id === data.id
+    //   );
+    //   new_productos[index].cantidad += 1;
+    //   localStorage.setItem("productos", JSON.stringify(new_productos));
+    // }
   }
 
   const disminuiCantidadProducto = () => {
@@ -80,27 +78,28 @@ function ProductoComponente({
       quitarCarrito();
     }else{
       setCantidad(cantidad - 1);
-      disminuirUnidades(data);
+      //disminuirUnidades(data);
       dispatch(delFromCart(data.id));
-      if(localStorage.getItem("productos")){
-        let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
-        const index = new_productos.findIndex(
-          (el) => el.id === data.id
-        );
-        new_productos[index].cantidad -= 1;
-        localStorage.setItem("productos", JSON.stringify(new_productos));
-      }
+      // if(localStorage.getItem("productos")){
+      //   let new_productos = [...JSON.parse(localStorage.getItem('productos'))];
+      //   const index = new_productos.findIndex(
+      //     (el) => el.id === data.id
+      //   );
+      //   new_productos[index].cantidad -= 1;
+      //   localStorage.setItem("productos", JSON.stringify(new_productos));
+      // }
     }
   }
 
   useEffect(() => {
-    cart.forEach(producto => {
-      if(producto.id === data.id)
-      {
-        setTipoComponente(2);
-        setCantidad(producto.cantidad);
-      } 
-    });
+    let existeProducto = cart.find((item) => item.id === data.id);
+    if(existeProducto)
+    {
+      setTipoComponente(2);
+    }else{
+      setTipoComponente(1);
+      setCantidad(1);
+    }
   }, [data, renderizarNuevamente, cart]);
 
   return(

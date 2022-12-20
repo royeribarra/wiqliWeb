@@ -10,7 +10,6 @@ import StorageService from "../../servicios/storageService";
 import {Buffer} from 'buffer';
 import Cleave from 'cleave.js/react';
 
-
 import Jcb from '../../assets/images/jcb.svg';
 import DinnersClub from '../../assets/images/dinners-club.svg';
 import MasterCard from '../../assets/images/master-card.svg';
@@ -23,7 +22,6 @@ import miniMastercard from '../../images/miniMastercard.png';
 import miniPlin from '../../images/miniPlin.png';
 import miniVisa from '../../images/miniVisa.png';
 import miniYape from '../../images/miniYape.png';
-
 
 const { TextArea } = Input;
 
@@ -83,40 +81,40 @@ function FormDatos({ setBlockPage })
         tipoBanco: values.tipoBanco
       }
     }
-    
-    if(isLoged){
-      const userService = new UsuarioService("usuario");
-      userService.realizarPedido(data)
-      .then(({ data }) => {
-        if(data.state){
-          setBlockPage(false);
-          localStorage.clear();
-          history(`/confirmacion`);
-        }else if(!data.state){
-          setBlockPage(false);
-          setMessageError(data.message);
-        }
-      }).catch(error => {
-        setBlockPage(false);
-        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
-      });
-     }else if(!isLoged){
-      axios
-      .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
-      .then(({ data }) => {
-        if(data.state){
-          setBlockPage(false);
-          localStorage.clear();
-          history(`/confirmacion`);
-        }else if(!data.state){
-          setBlockPage(false);
-          setMessageError(data.message);
-        }
-      }).catch(error => {
-        setBlockPage(false);
-        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
-      });
-    }
+    console.log(data);
+    // if(isLoged){
+    //   const userService = new UsuarioService("usuario");
+    //   userService.realizarPedido(data)
+    //   .then(({ data }) => {
+    //     if(data.state){
+    //       setBlockPage(false);
+    //       localStorage.clear();
+    //       history(`/confirmacion`);
+    //     }else if(!data.state){
+    //       setBlockPage(false);
+    //       setMessageError(data.message);
+    //     }
+    //   }).catch(error => {
+    //     setBlockPage(false);
+    //     setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
+    //   });
+    //  }else if(!isLoged){
+    //   axios
+    //   .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
+    //   .then(({ data }) => {
+    //     if(data.state){
+    //       setBlockPage(false);
+    //       localStorage.clear();
+    //       history(`/confirmacion`);
+    //     }else if(!data.state){
+    //       setBlockPage(false);
+    //       setMessageError(data.message);
+    //     }
+    //   }).catch(error => {
+    //     setBlockPage(false);
+    //     setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
+    //   });
+    // }
   }
 
   const calcularTotal = () => {

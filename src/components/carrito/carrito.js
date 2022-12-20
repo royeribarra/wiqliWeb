@@ -29,33 +29,19 @@ function Carrito({showCarrito, setShowCarrito})
   };
 
   const agregarUnidadProducto = (id) => {
-    try {
-      dispatch(addOneToProduct(id));
-    } catch (error) {
-      console.log(error)
-    } finally{
-      localStorage.setItem('productos', JSON.stringify(cart));
-    }
+    dispatch(addOneToProduct(id));
   };
 
-  const quitarUnidadProducto = (id) => {
-    try {
-      dispatch(delFromCart(id));
-    } catch (error) {
-      console.log(error)
-    } finally{
-      localStorage.setItem('productos', JSON.stringify(cart));
+  const quitarUnidadProducto = (producto) => {
+    if(producto.cantidad === 1){
+      dispatch(delFromCart(producto.id, true));
+    }else{
+      dispatch(delFromCart(producto.id));
     }
   };
 
   const eliminarProducto = (id) => {
-    try {
-      dispatch(delFromCart(id, true));
-    } catch (error) {
-      console.log(error)
-    } finally{
-      localStorage.setItem('productos', JSON.stringify(cart));
-    }
+    dispatch(delFromCart(id, true));
   };
 
   useEffect(()=> {
@@ -103,7 +89,7 @@ function Carrito({showCarrito, setShowCarrito})
                             <div class="pro-qty">
                                 <input type="text" value={product.cantidad} />
                             </div>
-                          <AiFillMinusCircle onClick={()=> quitarUnidadProducto(product.id)} />
+                          <AiFillMinusCircle onClick={()=> quitarUnidadProducto(product)} />
                         </div>
                         
                       </td>

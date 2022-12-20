@@ -1,10 +1,7 @@
 import React from 'react';
 import { Container } from "react-bootstrap";
-import { Form, Input, Button, Spin } from 'antd';
+import { Form, Input, Button } from 'antd';
 import './login.css';
-import facebook from "../../images/logoFacebook.png";
-import google from "../../images/logoGmail.png";
-import apple from "../../images/logoApple.png";
 import { login } from '../../redux/actions/clienteLogAction';
 import { toogleSpinner } from '../../redux/actions/spinnerActions';
 import { connect } from 'react-redux';

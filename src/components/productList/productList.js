@@ -5,9 +5,10 @@ import './productList.css';
 import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
 import { toastr } from "react-redux-toastr";
+import { useDispatch, useSelector } from "react-redux";
 
 function ProductList({ 
-  productos,
+  // productos,
   agregarProducto,
   quitarProducto,
   disminuirUnidades,
@@ -15,6 +16,11 @@ function ProductList({
   renderizarNuevamente
 })
 {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { cart } = state.cart;
+  const { products } = state.productos;
+
   const[otrasFrutas, setOtrasFrutas] = useState([]);
   const[otrasVerduras, setOtrasVerduras] = useState([]);
   const[otrasCarnes, setOtrasCarnes] = useState([]);
@@ -96,7 +102,7 @@ function ProductList({
             </Accordion.Header>
               <Accordion.Body>
                 
-                { productos.filter((producto) => producto.categoria_id === 1)
+                { products.filter((producto) => producto.categoria_id === 1)
                   .map( producto => (
                     <ProductoComponente 
                       data={producto} 
@@ -134,7 +140,7 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus verduras</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productos.filter((producto) => producto.categoria_id === 2)
+                { products.filter((producto) => producto.categoria_id === 2)
                   .map( producto => (
                     <ProductoComponente 
                       data={producto} 
@@ -173,7 +179,7 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus carnes</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productos.filter((producto) => producto.categoria_id === 3)
+                { products.filter((producto) => producto.categoria_id === 3)
                   .map( producto => (
                     <ProductoComponente 
                       data={producto} 
@@ -211,7 +217,7 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus menestras</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productos.filter((producto) => producto.categoria_id === 4)
+                { products.filter((producto) => producto.categoria_id === 4)
                   .map( producto => (
                     <ProductoComponente 
                       data={producto} 
@@ -249,7 +255,7 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus frutos secos</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productos.filter((producto) => producto.categoria_id === 5)
+                { products.filter((producto) => producto.categoria_id === 5)
                   .map( producto => (
                     <ProductoComponente 
                       data={producto} 

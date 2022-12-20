@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap"
-import { Form, Input, Button, Spin } from 'antd';
+import { Spin } from 'antd';
 import atras from "../../images/atras.png";
 import './datos.css';
-import axios from 'axios';
-import { NavLink, useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
+import { NavLink } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import Loader from "../../components/loader/loader";
-import subDays from "date-fns/subDays";
-import { toastr } from "react-redux-toastr";
 import FormDatos from "./formDatos";
 
 function Datos() 
 {
-  const [form] = Form.useForm();
   const [blockPage, setBlockPage] = useState(false);
   
   return (

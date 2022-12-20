@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { Affix, Button, Modal } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Affix, Button } from 'antd';
 import { Container } from "react-bootstrap";
 import logo from "../../images/logo.png";
 import visa from "../../images/visa.png";
@@ -17,21 +17,20 @@ import { toastr } from "react-redux-toastr";
 import ModalTarea from './modalTarea';
 import { UsuarioService } from "../../servicios/usuarioService";
 import { useDispatch, useSelector } from 'react-redux';
-import { 
-  addToCart, 
-  addOneToProduct, 
-  delFromCart, 
-  clearCart,
+import {
   fillCart
 } from "../../redux/actions/carritoActions";
+import {
+  fillProducts
+} from "../../redux/actions/productosTiendaActions";
 
 function Home({obtenerDataCliente}) 
 {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { products, cart } = state.cart;
+  const { cart } = state.cart;
   let history = useNavigate();
-  const[productos, setProductos] = useState([]);
+  // const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
   const[total, setTotal] = useState(0);
   const[showModal, setShowModal] = useState(true);
@@ -41,7 +40,7 @@ function Home({obtenerDataCliente})
     if(localStorage.getItem('productos')){
       let productosStorage = JSON.parse(localStorage.getItem('productos'));
       dispatch(fillCart(productosStorage));
-      setProductosCarrito(productosStorage);
+      // setProductosCarrito(productosStorage);
     }
   }
 
@@ -49,7 +48,8 @@ function Home({obtenerDataCliente})
     axios
     .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
     .then(({ data }) => {
-      setProductos(data);
+      // setProductos(data);
+      dispatch(fillProducts(data));
     });
   }
 
@@ -211,7 +211,7 @@ function Home({obtenerDataCliente})
           </div>
           <div className='listaDeProductos'>
             <ProductList 
-              productos={productos} 
+              // productos={productos} 
               agregarProducto={agregarProducto}
               quitarProducto={quitarProducto}
               aumentarUnidades={aumentarUnidades}

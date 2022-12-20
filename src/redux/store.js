@@ -8,13 +8,15 @@ import spinner from "./reducers/spinnerReducer";
 import routeReducer from "./reducers/routeReducer";
 import user from "./reducers/userLogedReducer";
 import { cartReducer } from "./reducers/cartReducer";
+import { productosTiendaReducer } from "./reducers/productosTiendaReducer";
 
 const reducer = combineReducers({   
     spinner,
     user,
     routeReducer,
     toastr: toastrReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    productos: productosTiendaReducer
 });
 
 export default createStore(reducer, {},
