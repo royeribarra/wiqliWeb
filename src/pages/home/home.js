@@ -97,7 +97,7 @@ function Home({obtenerDataCliente})
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
-      localStorage.setItem('productos', JSON.stringify(productosCarrito));
+      localStorage.setItem('productos', JSON.stringify(cart));
       history(`/datos`);
     }
   }

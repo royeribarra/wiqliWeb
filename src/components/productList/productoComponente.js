@@ -95,6 +95,7 @@ function ProductoComponente({
     let existeProducto = cart.find((item) => item.id === data.id);
     if(existeProducto)
     {
+      setCantidad(existeProducto.cantidad);
       setTipoComponente(2);
     }else{
       setTipoComponente(1);

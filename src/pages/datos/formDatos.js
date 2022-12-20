@@ -68,6 +68,7 @@ function FormDatos({ setBlockPage })
       otrosVerduras: localStorage.getItem('otrasVerduras'),
       otrosCarnes: localStorage.getItem('otrasCarnes'),
       otrosMenestras: localStorage.getItem('otrasMenestras'),
+      otrosFrutosSecos: localStorage.getItem('otrasFrutasSecas'),
       cliente: cliente,
       cupon: aplicaCupon,
       codigoCupon: values.descuento,
@@ -82,39 +83,39 @@ function FormDatos({ setBlockPage })
       }
     }
     console.log(data);
-    // if(isLoged){
-    //   const userService = new UsuarioService("usuario");
-    //   userService.realizarPedido(data)
-    //   .then(({ data }) => {
-    //     if(data.state){
-    //       setBlockPage(false);
-    //       localStorage.clear();
-    //       history(`/confirmacion`);
-    //     }else if(!data.state){
-    //       setBlockPage(false);
-    //       setMessageError(data.message);
-    //     }
-    //   }).catch(error => {
-    //     setBlockPage(false);
-    //     setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
-    //   });
-    //  }else if(!isLoged){
-    //   axios
-    //   .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
-    //   .then(({ data }) => {
-    //     if(data.state){
-    //       setBlockPage(false);
-    //       localStorage.clear();
-    //       history(`/confirmacion`);
-    //     }else if(!data.state){
-    //       setBlockPage(false);
-    //       setMessageError(data.message);
-    //     }
-    //   }).catch(error => {
-    //     setBlockPage(false);
-    //     setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
-    //   });
-    // }
+    if(isLoged){
+      const userService = new UsuarioService("usuario");
+      userService.realizarPedido(data)
+      .then(({ data }) => {
+        if(data.state){
+          setBlockPage(false);
+          localStorage.clear();
+          history(`/confirmacion`);
+        }else if(!data.state){
+          setBlockPage(false);
+          setMessageError(data.message);
+        }
+      }).catch(error => {
+        setBlockPage(false);
+        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
+      });
+     }else if(!isLoged){
+      axios
+      .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
+      .then(({ data }) => {
+        if(data.state){
+          setBlockPage(false);
+          localStorage.clear();
+          history(`/confirmacion`);
+        }else if(!data.state){
+          setBlockPage(false);
+          setMessageError(data.message);
+        }
+      }).catch(error => {
+        setBlockPage(false);
+        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
+      });
+    }
   }
 
   const calcularTotal = () => {
