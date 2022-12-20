@@ -50,10 +50,6 @@ function Home({obtenerDataCliente})
     .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
     .then(({ data }) => {
       setProductos(data);
-      // dispatchCart({
-      //   type: TYPES.FILL_PRODUCTS,
-      //   payload: data,
-      // });
     });
   }
 
@@ -108,7 +104,7 @@ function Home({obtenerDataCliente})
 
   const calcularTotal = () => {
     let total = 0;
-    productosCarrito.forEach((producto) => {
+    cart.forEach((producto) => {
       if(producto.cantidad_minima === 1){
         total += producto.cantidad * producto.precio_unitario
       }else{
@@ -167,7 +163,7 @@ function Home({obtenerDataCliente})
 
   useEffect(() => {
     calcularTotal();
-  }, [productosCarrito]);
+  }, [productosCarrito, cart]);
 
   useEffect(()=> {
     let tarea = localStorage.getItem('seleccionTarea');

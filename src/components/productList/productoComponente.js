@@ -77,6 +77,7 @@ function ProductoComponente({
 
   const disminuiCantidadProducto = () => {
     if(cantidad === 1){
+      quitarCarrito();
     }else{
       setCantidad(cantidad - 1);
       disminuirUnidades(data);
