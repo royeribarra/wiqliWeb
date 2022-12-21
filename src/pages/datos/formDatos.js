@@ -366,7 +366,7 @@ function FormDatos({ setBlockPage })
               onChange={onChangeDate}
               placeholderText="Por navidad: solo jueves 22."
               minDate={
-                (day === 3 && hour > 18) || day === 4 ? subDays(new Date(), -4) : subDays(new Date(), -1)
+                (day === 3 && hour > 22) || day === 4 ? subDays(new Date(), -4) : subDays(new Date(), -1)
               }
               dateFormat='dd-MM-yyyy'
             />
