@@ -1,0 +1,255 @@
+.ant-form-item-label{
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+
+
+.cabeceraDatos{
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    align-items: center;
+    margin: 1rem;
+}
+
+.cabeceraDatos h4{
+    margin: 0;
+    font-weight: 700;
+}
+
+.itemForm{
+    color: #5FAD57;
+    font-weight: 700;
+    text-align: start;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.grupoForm{
+    display: grid;
+    grid-template-columns:  repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 0.3rem;
+}
+
+.form-control{
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.baseWiqliForm{
+    margin-left: 4vw;
+    margin-right: 4vw;
+    display: flex;
+}
+
+
+
+
+@media (min-width: 680px) {
+
+    .baseWiqliForm{
+        padding-left: 20vw;
+        padding-right: 20vw;
+        display: flex;
+    }
+  
+    }
+
+    @media (min-width: 2000px) {
+
+        .baseWiqliForm{
+            padding-left: 30vw;
+            padding-right: 30vw;
+            display: flex;
+        }
+      
+        }
+
+
+
+.contenedorDatos{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 2rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 1rem;
+    border-radius: 30px;
+}
+
+.ant-form-item-explain-error{
+    color: #F23440;
+    font-size: small;
+}
+
+
+.totalesAPagar{
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    margin-bottom: 0.5rem;
+}
+
+.tituloCampo{
+    grid-column-start: 2;
+    text-align: start;
+}
+
+.datoCampo{
+    text-align: end;
+}
+
+.botonFinal{
+    background-color: #5FAD57;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0.3rem;
+    font-weight: 700;
+    color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+ 
+.ant-input{
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 100%;
+}
+
+.ant-picker-input{
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 100%;
+}
+
+
+.react-datepicker-wrapper input {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 0.3rem;
+    border: 1px solid #ced4da
+}
+
+.contenedorMiniSeccion{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.miniSeccion{
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    border: 1px solid #ced4da;
+    margin-top: 2rem;
+    padding-bottom: 0.8rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.tituloMiniSeccion{
+ color: #5FAD57;
+ margin-top: 1rem;
+}
+
+
+.ant-form-item-control-input-content{
+    display: flex;
+    justify-content: center;
+}
+
+#descuento{
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 1rem !important;
+}
+
+
+
+.opacidad-normal{
+    opacity: 1
+}
+
+.opacidad-aplicada{
+    opacity: 0.2
+}
+
+
+
+
+.botonValidacionPago{
+   color: #1AB39E;
+   border: #1AB39E 2px solid;
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
+   width: 6rem;
+    height: 2rem;
+}
+
+
+.botonPago{
+    width: 50%;
+    height: 2.5rem;
+}
+
+.botonPago:after{
+    color: #191D74 ;
+    background-color: white;
+    border: white;
+}
+
+.botonPago:active{
+    color: #191D74 ;
+    background-color: white;
+    border: white;
+}
+
+.eleccionesDePago{
+    display: flex;
+    flex-flow: column ;
+}
+
+
+
+.ant-radio-input{
+    margin-right: 10px;
+}
+
+.eleccionDeMedioDePago{
+    margin: 0.3rem;
+    display: grid;
+    grid-template-columns: 14fr 10fr;
+    gap: 1rem;
+    justify-items: start;
+}
+
+.tarjetaUsada{
+    max-height: 2.5rem;
+    margin: 0.1rem;
+    margin-top: 0.8rem;
+}
+
+.pasarelaDePago{
+    margin: 1rem;
+}
+
+.inputsMedianos{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+}
+
+.tarjetasAceptadas{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
+}

@@ -25,7 +25,6 @@ function Carrito({showCarrito, setShowCarrito})
   };
 
   const verCarrito = () => {
-    console.log(cart);
   };
 
   const agregarUnidadProducto = (id) => {

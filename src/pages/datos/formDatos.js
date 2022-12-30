@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Radio } from 'antd';
+import { Form, Input, Button, Radio, Switch } from 'antd';
 import subDays from "date-fns/subDays";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
@@ -22,7 +22,11 @@ import miniMastercard from '../../images/miniMastercard.png';
 import miniPlin from '../../images/miniPlin.png';
 import miniVisa from '../../images/miniVisa.png';
 import miniYape from '../../images/miniYape.png';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Resumen from "./resumen";
+import { 
+  clearCart
+} from "../../redux/actions/carritoActions";
 
 const { TextArea } = Input;
 
@@ -32,6 +36,7 @@ function FormDatos({ setBlockPage })
   
   const state = useSelector((state) => state);
   const { cart } = state.cart;
+  const dispatch = useDispatch();
 
   const storageService = new StorageService();
   const [form] = Form.useForm();
@@ -39,6 +44,8 @@ function FormDatos({ setBlockPage })
   const [messageError, setMessageError] = useState();
   const [tipoBanco, setTipoBanco] = useState();
   const [tipoPago, setTipoPago] = useState(1);
+  const [useBilletera, setUseBilletera] = useState(false);
+  const [montoBilletera, setMontoBilletera] = useState(0);
   const [descuento, setDescuento] = useState(0);
   const [total, setTotal] = useState(0);
   const [totalProductos, setTotalProductos] = useState(0);
@@ -77,7 +84,9 @@ function FormDatos({ setBlockPage })
       cupon: aplicaCupon,
       codigoCupon: values.descuento,
       descuento: descuento,
-      total: total + delivery,
+      total: parseFloat(total + delivery).toFixed(2),
+      usarBilletera: useBilletera,
+      saldoBilletera: montoBilletera,
       datosTarjeta: {
         numeroTarjeta: values.numeroTarjeta,
         fechaVencimiento: values.fechaVencimiento,
@@ -88,11 +97,18 @@ function FormDatos({ setBlockPage })
     }
     if(isLoged){
       const userService = new UsuarioService("usuario");
+      
       userService.realizarPedido(data)
       .then(({ data }) => {
         if(data.state){
           setBlockPage(false);
-          localStorage.clear();
+          localStorage.removeItem('otrasFrutas');
+          localStorage.removeItem('otrasCarnes');
+          localStorage.removeItem('otrasMenestras');
+          localStorage.removeItem('otrasVerduras');
+          localStorage.removeItem('otrasFrutasSecas');
+          localStorage.removeItem('productos');
+          dispatch(clearCart());
           history(`/confirmacion`);
         }else if(!data.state){
           setBlockPage(false);
@@ -132,6 +148,9 @@ function FormDatos({ setBlockPage })
     });
     setTotalProductos(total);
     setTotal(total);
+    if(montoBilletera > 0){
+      setTotal(total - montoBilletera);
+    }
   }
 
   const validarCupon = () => {
@@ -219,9 +238,13 @@ function FormDatos({ setBlockPage })
     setTipoPago(e.target.value);
   };
 
+  const onChangeBilletera = (e) => {
+    setUseBilletera(e.target.checked);
+  };
+
   useEffect(() => {
     calcularTotal();
-  }, [productos, cart]);
+  }, [productos, cart, montoBilletera]);
 
   useEffect(() => {
     if(localStorage.getItem('productos')){
@@ -270,7 +293,8 @@ function FormDatos({ setBlockPage })
             'correo': data.email,
             'direccion': data.address,
             'referencia': data.referencia
-          })
+          });
+          setMontoBilletera(data.billetera.saldo);
         });
         setIsLoged(true);
       }else{
@@ -384,86 +408,86 @@ function FormDatos({ setBlockPage })
       </div>
       <div>
         <div className="contenedorMiniSeccion">
-        <div className="miniSeccion" >
-          <h6 className="tituloMiniSeccion">Agregar cupón de descuento</h6>
-          {
-            !aplicaCupon && 
-            <>
-              <Form.Item 
-                name="descuento"
-                rules={[{ required: false }]}
-              >
-                <Input className="form-control"  placeholder="Ingresa tu cupón de referido." />
-              </Form.Item>
-              <Button type="primary" className="botonFinal" onClick={validarCupon}>
-                Agregar
-              </Button>
-            </>
-          }
-          {
-            aplicaCupon && 
-            <>
-              <Form.Item 
-                label="Cupón agregado con éxito."
-                name="descuento"
-                rules={[{ required: false }]}
-              >
-              </Form.Item>
-              <Button type="primary" className="botonFinal" onClick={modificarCupon}>
-                Modificar
-              </Button>
-            </>
-          }
-        
-        </div>
+          <div className="miniSeccion" >
+            <h6 className="tituloMiniSeccion">Agregar cupón de descuento</h6>
+            {
+              !aplicaCupon && 
+              <>
+                <Form.Item 
+                  name="descuento"
+                  rules={[{ required: false }]}
+                >
+                  <Input className="form-control"  placeholder="Ingresa tu cupón de referido." />
+                </Form.Item>
+                <Button type="primary" className="botonFinal" onClick={validarCupon}>
+                  Agregar
+                </Button>
+              </>
+            }
+            {
+              aplicaCupon && 
+              <>
+                <Form.Item 
+                  label="Cupón agregado con éxito."
+                  name="descuento"
+                  rules={[{ required: false }]}
+                >
+                </Form.Item>
+                <Button type="primary" className="botonFinal" onClick={modificarCupon}>
+                  Modificar
+                </Button>
+              </>
+            }
+          
+          </div>
         </div>
         <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
-        <div className="desgloseTotal">
-          <div className="totalesAPagar">
-            <h6 className="tituloCampo">Productos</h6>
-            <h6 className="datoCampo">S/ {parseFloat(totalProductos).toFixed(2)}</h6>
-          </div>
-          <div className="totalesAPagar">
-            <h6 className="tituloCampo">Delivery</h6>
-            <h6 className="datoCampo">S/ {parseFloat(delivery).toFixed(2)}</h6>
-          </div>
-          {
-            aplicaCupon && 
-              <div className="totalesAPagar" >
-                <h6 className="tituloCampo">Descuento</h6>
-                <h6 className="datoCampo">- S/ {parseFloat(descuento).toFixed(2)}</h6>
-              </div>
-          }
-          <hr></hr>
-          <div className="totalesAPagar">
-            <h6 className="tituloCampo">Total</h6>
-            <h6 className="datoCampo">S/ {parseFloat(total + delivery).toFixed(2)}</h6>
-          </div>
-        </div>
-        <div className="contenedorMiniSeccion" >
+          <Resumen 
+            total={total}
+            totalProductos={totalProductos}
+            delivery={delivery}
+            descuento={descuento}
+            aplicaCupon={aplicaCupon}
+            useBilletera={useBilletera}
+            montoBilletera={montoBilletera}
+          />
+        <div className="contenedorMiniSeccion">
           <div className="miniSeccion" >
-          <h5 className="tituloMiniSeccion">Selecciona tu medio de pago</h5>
-          <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
-            <Radio.Group className="eleccionesDePago">
-              <div className="eleccionDeMedioDePago">
-              <Radio className="eleccionPago" value={2}>Pago Web</Radio>
-              <div className="imagenesEleccionPago">
-                <img className="imagenEleccionPago" alt='Pago con Visa Wiqli'src={miniVisa}></img>
-                <img className="imagenEleccionPago" alt='Pago con Mastercard Wiqli'src={miniMastercard}></img>
-                <img className="imagenEleccionPago" alt='Pago con American Express Wiqli'src={miniAmex}></img>
-              </div>
-              </div>
-              <div className="eleccionDeMedioDePago">
-              <Radio className="eleccionPago" value={1}>Contraentrega</Radio>
-              <div className="imagenesEleccionPago">
-                <img className="imagenEleccionPago" alt='Pago en cash Wiqli'src={miniCash}></img>
-                <img className="imagenEleccionPago" alt='Pago con Plin Wiqli'src={miniPlin}></img>
-                <img className="imagenEleccionPago" alt='Pago con Yape Wiqli'src={miniYape}></img>
-              </div>
-              </div>
-              
-            </Radio.Group>
-          </Form.Item>
+            <h5 className="tituloMiniSeccion">Selecciona tu medio de pago</h5>
+            {/* {
+              isLoged && 
+              <Form.Item label={`Billetera S/ ${montoBilletera}` } name="usarBilletera">
+                <FormBoostrap.Check
+                  disabled={montoBilletera <= 0}
+                  type="switch"
+                  id="custom-switch"
+                  label="Usar saldo de billetera"
+                  onChange={onChangeBilletera}
+                />
+              </Form.Item>
+            } */}
+            
+            <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
+              <Radio.Group className="eleccionesDePago">
+                <div className="eleccionDeMedioDePago">
+                <Radio className="eleccionPago" value={2}>Pago Web</Radio>
+                <div className="imagenesEleccionPago">
+                  <img className="imagenEleccionPago" alt='Pago con Visa Wiqli'src={miniVisa}></img>
+                  <img className="imagenEleccionPago" alt='Pago con Mastercard Wiqli'src={miniMastercard}></img>
+                  <img className="imagenEleccionPago" alt='Pago con American Express Wiqli'src={miniAmex}></img>
+                </div>
+                </div>
+                <div className="eleccionDeMedioDePago">
+                <Radio className="eleccionPago" value={1}>Contraentrega</Radio>
+                <div className="imagenesEleccionPago">
+                  <img className="imagenEleccionPago" alt='Pago en cash Wiqli'src={miniCash}></img>
+                  <img className="imagenEleccionPago" alt='Pago con Plin Wiqli'src={miniPlin}></img>
+                  <img className="imagenEleccionPago" alt='Pago con Yape Wiqli'src={miniYape}></img>
+                </div>
+                </div>
+                
+              </Radio.Group>
+            </Form.Item>
           </div>
         </div>
         {
