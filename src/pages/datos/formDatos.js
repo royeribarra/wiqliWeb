@@ -197,7 +197,7 @@ function FormDatos({ setBlockPage })
   }
 
   const filterDate = (date) => {
-    return date.getDay() !== 0 && date.getDay() !== 1 && date.getDay() !== 2 && date.getDay() !== 3 && date.getDay() !== 5 && date.getDay() !== 6;
+    return date.getDay() !== 0 && date.getDay() !== 1 && date.getDay() !== 2 && date.getDay() !== 5 && date.getDay() !== 6;
   }
 
   const onChangeDate = (date) => {
@@ -390,7 +390,7 @@ function FormDatos({ setBlockPage })
               onChange={onChangeDate}
               placeholderText="Por navidad: solo jueves 22."
               minDate={
-                (day === 3 && hour > 22) || day === 4 ? subDays(new Date(), -4) : subDays(new Date(), -1)
+                (day === 4 && hour > 18) ? subDays(new Date(), -4) : subDays(new Date(), -1)
               }
               dateFormat='dd-MM-yyyy'
             />
