@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { 
-  addToCart, 
-  addOneToProduct, 
-  delFromCart, 
-  clearCart,
+import {
+  addOneToProduct,
+  delFromCart,
   fillCart
 } from "../../redux/actions/carritoActions";
 import "./carrito.css";
-import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
 import { AiFillDelete, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
 
@@ -16,15 +13,12 @@ function Carrito({showCarrito, setShowCarrito})
 {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { products, cart } = state.cart;
+  const { cart } = state.cart;
 
   const handleClose = () => setShowCarrito(false);
 
   const cargarCarritoFromLocalStorage = (productosStorage) => {
     dispatch(fillCart(productosStorage));
-  };
-
-  const verCarrito = () => {
   };
 
   const agregarUnidadProducto = (id) => {
@@ -53,7 +47,6 @@ function Carrito({showCarrito, setShowCarrito})
 
   return(
     <Offcanvas show={showCarrito} onHide={handleClose} scroll={true} backdrop={true}>
-      {/* <button onClick={verCarrito}>ver carrito</button> */}
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Lista de productos</Offcanvas.Title>
       </Offcanvas.Header>

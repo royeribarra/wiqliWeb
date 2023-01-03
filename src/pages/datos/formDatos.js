@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Radio, Switch } from 'antd';
+import { Form, Input, Button, Radio } from 'antd';
 import subDays from "date-fns/subDays";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
@@ -44,7 +44,6 @@ function FormDatos({ setBlockPage })
   const [messageError, setMessageError] = useState();
   const [tipoBanco, setTipoBanco] = useState();
   const [tipoPago, setTipoPago] = useState(1);
-  const [useBilletera, setUseBilletera] = useState(false);
   const [montoBilletera, setMontoBilletera] = useState(0);
   const [descuento, setDescuento] = useState(0);
   const [total, setTotal] = useState(0);
@@ -85,7 +84,6 @@ function FormDatos({ setBlockPage })
       codigoCupon: values.descuento,
       descuento: descuento,
       total: parseFloat(total + delivery).toFixed(2),
-      usarBilletera: useBilletera,
       saldoBilletera: montoBilletera,
       datosTarjeta: {
         numeroTarjeta: values.numeroTarjeta,
@@ -224,7 +222,6 @@ function FormDatos({ setBlockPage })
       localStorage.setItem('cliente', JSON.stringify(allValues));
       setCliente(allValues);
     }
-    
   }
 
   const onChangeBank = (type) => {
@@ -236,10 +233,6 @@ function FormDatos({ setBlockPage })
 
   const onChangeTipoPago = (e) => {
     setTipoPago(e.target.value);
-  };
-
-  const onChangeBilletera = (e) => {
-    setUseBilletera(e.target.checked);
   };
 
   useEffect(() => {
@@ -271,13 +264,13 @@ function FormDatos({ setBlockPage })
     const d = new Date();
     let hour = d.getHours();
     setHour(hour);
-  },[]);
+  }, []);
 
   useEffect(()=> {
     axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/configuracion`).then(({data})=> {
       setConfiguracion(data);
     });
-  },[]);
+  }, []);
 
   useEffect(()=>{
     const token = localStorage.getItem("tknData");
@@ -393,6 +386,7 @@ function FormDatos({ setBlockPage })
                 (day === 4 && hour > 18) ? subDays(new Date(), -4) : subDays(new Date(), -1)
               }
               dateFormat='dd-MM-yyyy'
+              excludeDates={[new Date('2023-01-05'), new Date('2023-01-06')]}
             />
           </Form.Item>
         </div>
@@ -448,25 +442,11 @@ function FormDatos({ setBlockPage })
             delivery={delivery}
             descuento={descuento}
             aplicaCupon={aplicaCupon}
-            useBilletera={useBilletera}
             montoBilletera={montoBilletera}
           />
         <div className="contenedorMiniSeccion">
           <div className="miniSeccion" >
             <h5 className="tituloMiniSeccion">Selecciona tu medio de pago</h5>
-            {/* {
-              isLoged && 
-              <Form.Item label={`Billetera S/ ${montoBilletera}` } name="usarBilletera">
-                <FormBoostrap.Check
-                  disabled={montoBilletera <= 0}
-                  type="switch"
-                  id="custom-switch"
-                  label="Usar saldo de billetera"
-                  onChange={onChangeBilletera}
-                />
-              </Form.Item>
-            } */}
-            
             <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
               <Radio.Group className="eleccionesDePago">
                 <div className="eleccionDeMedioDePago">
