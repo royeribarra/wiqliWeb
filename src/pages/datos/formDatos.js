@@ -381,7 +381,7 @@ function FormDatos({ setBlockPage })
               selected={startDate}
               filterDate={filterDate}
               onChange={onChangeDate}
-              placeholderText="Por navidad: solo jueves 22."
+              placeholderText="No hay atención por paro nacional."
               minDate={
                 (day === 4 && hour > 18) ? subDays(new Date(), -4) : subDays(new Date(), -1)
               }
