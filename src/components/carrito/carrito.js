@@ -51,55 +51,49 @@ function Carrito({showCarrito, setShowCarrito})
         <Offcanvas.Title>Lista de productos</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <div class="col-lg-12">
-          <div class="shoping__cart__table">
-            <table className="tablaCarrito">
-              <thead className="headCarrito">
-                <tr>
-                  <th class="shoping__product tituloCarrito">Producto</th>
-                  <th className="tituloCarrito">Precio</th>
-                  <th className="tituloCarrito">Cantidad</th>
-                  <th className="tituloCarrito">Total</th>
-                  <th className="tituloCarrito">Eliminar</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
+        <div class="cartStyles">
+            <div className="headCarrito">
+              <p className="tituloCarrito">Producto</p>
+              <p className="tituloCarrito">Precio</p>
+              <p className="tituloCarrito">Cantidad</p>
+              <p className="tituloCarrito">Total</p>
+            </div>
+
+
+            <div className="bodyCarrito">
+
+            {
                   cart.map((product)=>
-                    <tr>
-                      <td class="shoping__cart__item inputCarrito">
+                  <div>
+
+                      <div class="imgCartDiv">
                         <img 
+                          className="imgCart"
                           src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+product.imagen}
                           alt={`comprar ` + product.nombre} />
                         <h5 className="textoCarrito">{product.nombre}</h5>
-                      </td>
-                      <td class="shoping__cart__price inputCarrito textoCarrito">
-                        {product.precio_unitario}
-                      </td>
-                      <td class="shoping__cart__quantity inputCarrito textoCarrito">
-                        
-                        <div class="quantity">
+                      </div>
+
+                      <div >
+                        <p class="textoCarrito">{product.precio_unitario}</p>
+                      </div>
+                      
+                      <div class="selectorCantidad">
                           <AiFillPlusCircle onClick={()=> agregarUnidadProducto(product.id)} />
-                            <div class="pro-qty">
-                                <input type="text" value={product.cantidad} />
+                            <div>
+                                <p>{product.cantidad}</p> 
                             </div>
                           <AiFillMinusCircle onClick={()=> quitarUnidadProducto(product)} />
-                        </div>
-                        
-                      </td>
-                      <td class="shoping__cart__total inputCarrito textoCarrito">
-                        {parseFloat(product.cantidad * product.precio_unitario).toFixed(2)}
-                      </td>
-                      <td class="shoping__cart__item__close inputCarrito textoCarrito">
-                        <span class="icon_close"></span>
-                        <AiFillDelete onClick={()=> eliminarProducto(product.id)} />
-                      </td>
-                    </tr>
+                      </div>
+                      <div class="textoCarrito">
+                        <p>{parseFloat(product.cantidad * product.precio_unitario).toFixed(2)}</p>
+                      </div>
+                  </div>
                   )
                 }
-              </tbody>
-            </table>
-          </div>
+                
+            </div>
+
       </div>
       </Offcanvas.Body>
     </Offcanvas>
