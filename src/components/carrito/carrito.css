@@ -3,7 +3,61 @@ img {
 }
 
 .headCarrito{
+	margin-left: 1rem;
+	margin-right: 1rem;
 	display: grid;
-	grid-template-columns: 25% 25% 25% 25%;
+	grid-template-columns: 30% 25% 25% 25%;
+	justify-content: center;
+	justify-items: center;
+	font-weight: 800;
 }
 
+.bodyCarrito{
+	margin-left: 1rem;
+	margin-right: 1rem;
+	display: grid;
+	grid-template-columns: 30% 25% 25% 25%;
+	text-align: start;
+	align-items: center;
+	justify-content: center;
+	justify-items: center;
+}
+
+.bodyCarrito p{
+	margin: 0;
+}
+
+.imgCartDiv{
+	display: flex;
+    align-items: center;
+    width: 100%;
+    padding-right: 0.3rem;
+}
+
+.imgCartDiv img{
+	object-fit: cover;
+    overflow: hidden;
+    width: 5rem;
+    height: 4rem;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+
+
+.selectorCantidad{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	align-items: center;
+	justify-items: center;
+	
+}
+
+.textoCarrito{
+	font-weight: 600;
+}
+
+.cuerpoImagenCarrito{
+	display: grid;
+	justify-items: center;
+}
