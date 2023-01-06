@@ -60,18 +60,19 @@ function Carrito({showCarrito, setShowCarrito})
             </div>
 
 
-            <div className="bodyCarrito">
+            <div>
 
             {
                   cart.map((product)=>
-                  <div>
-
-                      <div class="imgCartDiv">
-                        <img 
-                          className="imgCart"
-                          src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+product.imagen}
-                          alt={`comprar ` + product.nombre} />
-                        <h5 className="textoCarrito">{product.nombre}</h5>
+                  <div className="bodyCarrito">
+                      <div className="cuerpoImagenCarrito">
+                        <p className="textoCarrito">{product.nombre}</p>
+                        <div class="imgCartDiv">
+                          <img 
+                            className="imgCart"
+                            src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+product.imagen}
+                            alt={`comprar ` + product.nombre} />
+                        </div>
                       </div>
 
                       <div >
