@@ -53,7 +53,10 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
 
   return (
     <div className="navBarContainer">
-      <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
+      {
+        !isHome && <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
+      }
+      
  {[false].map((expand) => (
         <Navbar key={expand} bg="white" expand={expand} className="mb-3">
           <Container fluid>
@@ -81,13 +84,18 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
               </Navbar.Brand>)
               }
             </div>
+            {
+              !isHome && 
               <img
                 onClick={toggleShowCarrito}
                 src={carrito}
                 height="50"
                 className="logoNav"
                 alt="wiqli"
+                style={{ cursor:"pointer" }}
               /> 
+            }
+              
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -104,6 +112,7 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
                 height="50"
                 className="logoNav"
                 alt="wiqli"
+                
                   /> 
                 </Offcanvas.Title>
               </Offcanvas.Header>

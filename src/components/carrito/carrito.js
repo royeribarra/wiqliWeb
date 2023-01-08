@@ -7,7 +7,9 @@ import {
 } from "../../redux/actions/carritoActions";
 import "./carrito.css";
 import { useDispatch, useSelector } from "react-redux";
-import { AiFillDelete, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
+import { AiFillDelete, AiFillMinusCircle, AiFillPlusCircle, AiOutlineMinus } from 'react-icons/ai';
+import { HiPlus } from 'react-icons/hi';
+
 
 function Carrito({showCarrito, setShowCarrito})
 {
@@ -75,16 +77,16 @@ function Carrito({showCarrito, setShowCarrito})
                         </div>
                       </div>
 
-                      <div >
+                      <div>
                         <p class="textoCarrito">{product.precio_unitario}</p>
                       </div>
                       
                       <div class="selectorCantidad">
-                          <AiFillPlusCircle onClick={()=> agregarUnidadProducto(product.id)} />
-                            <div>
+                          <HiPlus onClick={()=> agregarUnidadProducto(product.id)} />
+                            <div style={{ margin: "8px" }}>
                                 <p>{product.cantidad}</p> 
                             </div>
-                          <AiFillMinusCircle onClick={()=> quitarUnidadProducto(product)} />
+                          <AiOutlineMinus onClick={()=> quitarUnidadProducto(product)} />
                       </div>
                       <div class="textoCarrito">
                         <p>{parseFloat(product.cantidad * product.precio_unitario).toFixed(2)}</p>

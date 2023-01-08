@@ -23,6 +23,8 @@ import {
 import {
   fillProducts
 } from "../../redux/actions/productosTiendaActions";
+import Carrito from "../../components/carrito/carrito";
+import carrito from "../../images/carritoComprasVerde.png"
 
 function Home({obtenerDataCliente}) 
 {
@@ -35,6 +37,7 @@ function Home({obtenerDataCliente})
   const[total, setTotal] = useState(0);
   const[showModal, setShowModal] = useState(true);
   const[renderizarNuevamente, setRenderizarNuevamente] = useState(false);
+  const [showCarrito, setShowCarrito] = useState(false);
 
   const getProductoStorage = () => {
     if(localStorage.getItem('productos')){
@@ -156,6 +159,10 @@ function Home({obtenerDataCliente})
     obtenerCodigoCuponDescuento();
   };
 
+  const toggleShowCarrito = () => {
+    setShowCarrito((s) => !s);
+  }
+
   useEffect(() => {
     getProductos();
     getProductoStorage();
@@ -220,6 +227,15 @@ function Home({obtenerDataCliente})
             />
           </div>
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
+            <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
+              <img
+                onClick={toggleShowCarrito}
+                src={carrito}
+                height="50"
+                className="logoNav"
+                alt="wiqli"
+                style={{ cursor:"pointer" }}
+              /> 
               <Button className='botonDeSiguiente' onClick={goToFormularioDatos}>
                 <div className='botonOrdenado'>
                   <p className='textoDePrecio'>(S/ {parseFloat(total).toFixed(2)})</p>
