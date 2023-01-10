@@ -235,7 +235,10 @@ function Home({obtenerDataCliente})
                 className="logoNav"
                 alt="wiqli"
                 style={{ cursor:"pointer" }}
-              /> 
+              />
+              <span style={{ marginRight: "15px", marginLeft: "15px"}}>
+
+              </span>
               <Button className='botonDeSiguiente' onClick={goToFormularioDatos}>
                 <div className='botonOrdenado'>
                   <p className='textoDePrecio'>(S/ {parseFloat(total).toFixed(2)})</p>

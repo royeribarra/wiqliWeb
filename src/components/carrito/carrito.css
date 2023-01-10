@@ -61,3 +61,7 @@ img {
 	display: grid;
 	justify-items: center;
 }
+
+.letraWhite{
+	color: white
+}
