@@ -29,6 +29,12 @@
 
   .botonOrdenado{
     display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .botonOrdenado p{
+    margin: 0;
   }
 
   
@@ -198,4 +204,7 @@
   }
 
 
- 
+  .contenedorBotones{
+    display: flex;
+    justify-content: space-evenly;
+  }

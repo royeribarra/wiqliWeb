@@ -24,7 +24,7 @@ import {
   fillProducts
 } from "../../redux/actions/productosTiendaActions";
 import Carrito from "../../components/carrito/carrito";
-import carrito from "../../images/carritoComprasVerde.png"
+import carrito from "../../images/carritoCompras.png"
 
 function Home({obtenerDataCliente}) 
 {
@@ -226,22 +226,26 @@ function Home({obtenerDataCliente})
               renderizarNuevamente={renderizarNuevamente}
             />
           </div>
+          
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
+            <div className='contenedorBotones'>
             <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
+            <div onClick={toggleShowCarrito} className='botonDeSiguiente'>
+            <div className='botonOrdenado'>
+             
+            
               <img
-                onClick={toggleShowCarrito}
                 src={carrito}
-                height="50"
+                height="30"
                 className="logoNav"
                 alt="wiqli"
                 style={{ cursor:"pointer" }}
               />
-              <span style={{ marginRight: "15px", marginLeft: "15px"}}>
-
-              </span>
+              <p className='textoDePrecio'>S/ {parseFloat(total).toFixed(2)}</p>
+            </div>
+            </div>
               <Button className='botonDeSiguiente' onClick={goToFormularioDatos}>
                 <div className='botonOrdenado'>
-                  <p className='textoDePrecio'>(S/ {parseFloat(total).toFixed(2)})</p>
                   <div className='clickASiguiente'>
                     <p>Siguiente</p>
                     <img 
@@ -251,6 +255,7 @@ function Home({obtenerDataCliente})
                   </div>
                 </div>
               </Button>
+              </div>
           </Affix>
         </Container>
       </div>
