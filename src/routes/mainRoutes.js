@@ -10,6 +10,7 @@ import PreConfirmacion from "../pages/paginaDeConfirmacion/preConfirmacion";
 import ConfirmacionCorreo from "../pages/paginaDeConfirmacion/confirmacionCorreo";
 import StorageService from "../servicios/storageService";
 import {Buffer} from 'buffer';
+import Suscripcion from "../pages/suscripcion/suscripcion";
 
 function MainRoutes()
 {
@@ -53,6 +54,11 @@ function MainRoutes()
         <Route exact path="/" element={<Home obtenerDataCliente={obtenerDataCliente} />} />
         <Route exact path="/datos" element={<Datos />} />
         <Route exact path="/confirmacion" element={<Confirmacion />} />
+
+
+        <Route exact path="/crear-suscripcion" element={<Suscripcion />} />
+
+
         <Route exact path="/registro-completo" element={<PreConfirmacion />} />
         <Route exact path="/verificar-correo/:codigo" element={<ConfirmacionCorreo />} />
         <Route exact path="/registro" element= {<Registro/> } />

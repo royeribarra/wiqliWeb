@@ -3,7 +3,6 @@ import LogService from "../../servicios/logService";
 import StorageService from "../../servicios/storageService";
 
 export function login(values) {
-    console.log(values)
     return dispatch => {
         const logService = new LogService();
         const storageServicce = new StorageService(); 

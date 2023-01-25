@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { useDispatch, useSelector } from "react-redux";
+import { AiOutlineMinus } from 'react-icons/ai';
+import { HiPlus } from 'react-icons/hi';
+import { Button } from "antd";
+import { toastr } from "react-redux-toastr";
+import { useNavigate } from "react-router-dom";
 import {
   addOneToProduct,
   delFromCart,
   fillCart
 } from "../../redux/actions/carritoActions";
 import "./carrito.css";
-import { useDispatch, useSelector } from "react-redux";
-import { AiFillDelete, AiFillMinusCircle, AiFillPlusCircle, AiOutlineMinus } from 'react-icons/ai';
-import { HiPlus } from 'react-icons/hi';
-import { Button } from "antd";
-import { toastr } from "react-redux-toastr";
-import { useNavigate } from "react-router-dom";
-
 
 function Carrito({showCarrito, setShowCarrito})
 {
@@ -76,7 +75,7 @@ function Carrito({showCarrito, setShowCarrito})
         <Offcanvas.Title>Lista de productos</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <div class="cartStyles">
+        <div className="cartStyles">
             <div className="headCarrito">
               <p className="tituloCarrito">Producto</p>
               <p className="tituloCarrito">Precio</p>
@@ -86,10 +85,10 @@ function Carrito({showCarrito, setShowCarrito})
             <div>
             {
                 cart.map((product)=>
-                  <div className="bodyCarrito">
+                  <div className="bodyCarrito" key={product.id}>
                       <div className="cuerpoImagenCarrito">
                         <p className="textoCarrito">{product.nombre}</p>
-                        <div class="imgCartDiv">
+                        <div className="imgCartDiv">
                           <img 
                             className="imgCart"
                             src={`${process.env.REACT_APP_BASE_PATH}/wiqli/`+product.imagen}
@@ -98,17 +97,17 @@ function Carrito({showCarrito, setShowCarrito})
                       </div>
 
                       <div>
-                        <p class="textoCarrito">{product.precio_unitario}</p>
+                        <p className="textoCarrito">{product.precio_unitario}</p>
                       </div>
                       
-                      <div class="selectorCantidad">
+                      <div className="selectorCantidad">
                           <HiPlus onClick={()=> agregarUnidadProducto(product.id)} />
                             <div style={{ margin: "8px" }}>
                                 <p>{product.cantidad}</p> 
                             </div>
                           <AiOutlineMinus onClick={()=> quitarUnidadProducto(product)} />
                       </div>
-                      <div class="textoCarrito">
+                      <div className="textoCarrito">
                         <p>{parseFloat(product.cantidad * product.precio_unitario).toFixed(2)}</p>
                       </div>
                   </div>

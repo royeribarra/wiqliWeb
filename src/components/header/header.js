@@ -5,7 +5,7 @@ import logo from "../../images/miniLogo.png"
 import whatsapp from "../../images/whatsapp.png"
 import carrito from "../../images/carritoCompras.png"
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import StorageService from '../../servicios/storageService';
 import LogService from '../../servicios/logService';
 
@@ -18,6 +18,7 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
   
   const storageService = new StorageService();
   const logService = new LogService();
+  let history = useNavigate();
   const location = useLocation();
   const [isHome, setIsHome] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -28,7 +29,7 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
     setTimeout(() => {
       setShowAlert(false);
     }, 5000);
-  }
+  };
 
   const getHome = () => {
     let home = false
@@ -36,16 +37,20 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
       home = true;
     }
     setIsHome(home)
-  }
+  };
 
   const cerrarSesion = () => {
     const { access_token } = storageService.getItemObject('tknData');
     logService.logout(access_token);
-  }
+  };
 
   const toggleShowCarrito = () => {
     setShowCarrito((s) => !s);
-  }
+  };
+
+  const createSusbscripcion = () => {
+    history(`/crear-suscripcion`);
+  };
 
   useEffect(() => {
     getHome();
@@ -62,26 +67,26 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
           <Container fluid>
             <div>
               {isHome
-              ? (<Navbar.Brand className="whatsappIcon" href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido">
-              
-              <img
-                src={whatsapp}
-                height="50"
-                className="logoNav"
-                alt="Ayuda Wiqli"
-              />
-              <h6 className="tituloHeaderWhatsapp">Escríbenos</h6>
-              </Navbar.Brand>)
-              
+              ? (<Navbar.Brand 
+                  className="whatsappIcon" 
+                  href="https://api.whatsapp.com/send?phone=947298060&text=Hola,%20necesito%20ayuda%20para%20hacer%20mi%20pedido"
+                >
+                <img
+                  src={whatsapp}
+                  height="50"
+                  className="logoNav"
+                  alt="Ayuda Wiqli"
+                />
+                <h6 className="tituloHeaderWhatsapp">Escríbenos</h6>
+                </Navbar.Brand>)
               : (<Navbar.Brand href="/">
-              <img
-                src={logo}
-                height="50"
-                className="logoNav"
-                alt="wiqli"
-                /> 
-                
-              </Navbar.Brand>)
+                  <img
+                    src={logo}
+                    height="50"
+                    className="logoNav"
+                    alt="wiqli"
+                  />
+                  </Navbar.Brand>)
               }
             </div>
             {
@@ -139,13 +144,26 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
                             />
                           }
                           
-                        <p className="textoDisclaimer">Comparte este cupón y obtén S/5 de dscto. por cada persona que realice su primera compra con tu cupón</p>
+                        <p className="textoDisclaimer">
+                          Comparte este cupón y obtén S/5 de dscto. por cada persona que realice su 
+                          primera compra con tu cupón.
+                        </p>
                         </div>
                       </div>
                       <div className="infoDestacadaHeader">
                         <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
-                          <h4 className="textoInfoDestacadaHeader">S/ { parseFloat(descuentoReferidoCliente).toFixed(2) }</h4>
+                          <h4 className="textoInfoDestacadaHeader">
+                            S/ { parseFloat(descuentoReferidoCliente).toFixed(2) }
+                          </h4>
                       </div>
+                      
+
+                      {/* <Button type="primary" className="botonCreateSubscripcion">
+                        <Nav.Link  href="/crear-suscripcion" style={{ padding: "0px" }}>
+                          Suscribirme
+                        </Nav.Link>
+                      </Button> */}
+
                       <Button type="primary" className="botonCerrarSesion" onClick={cerrarSesion}>
                         Cerrar sesión
                       </Button>
@@ -153,7 +171,9 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
                     (<div>
                       <Nav.Link  href="/login"><div><p className="tituloHeaderFondo">Iniciar sesión</p></div></Nav.Link>
                       <Nav.Link  href="/registro"><p className="tituloHeader">Registrarme</p></Nav.Link>
-                      <Nav.Link  href="/registro"><p className="tituloHeaderDestacado">Quiero crear un cupón de referidos</p></Nav.Link>
+                      <Nav.Link  href="/registro">
+                        <p className="tituloHeaderDestacado">Quiero crear un cupón de referidos</p>
+                      </Nav.Link>
                     </div>)
                   }
                 </Nav>

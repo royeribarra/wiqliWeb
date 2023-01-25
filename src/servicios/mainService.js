@@ -9,6 +9,7 @@ export class MainService {
     constructor(url){
         
         this.url = this.sanitizeUrl(url);
+        this.clearUrl = this.getClearUrl();
         this.options = this.getAuthInfo();
     }
 
@@ -45,6 +46,11 @@ export class MainService {
     sanitizeUrl(url){
         const urlSanitized = `${process.env.REACT_APP_BASE_PATH}/api/${url}`;
         return urlSanitized;
+    }
+
+    getClearUrl(){
+        const clearUrl = `${process.env.REACT_APP_BASE_PATH}/api`;
+        return clearUrl;
     }
 
     async getAll(params = {page: 1 }) {

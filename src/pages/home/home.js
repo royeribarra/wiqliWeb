@@ -149,6 +149,7 @@ function Home({obtenerDataCliente})
     userService.obtenerProductosUltimoPedido()
     .then(({data})=> {
       localStorage.setItem('productos', JSON.stringify(data));
+      dispatch(fillCart(data));
       localStorage.setItem('seleccionTarea', true);
       setShowModal(false);
       setProductosCarrito(data);

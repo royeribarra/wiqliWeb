@@ -154,3 +154,22 @@
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
 }
+
+.botonCreateSubscripcion{
+    background-color: #49b3dd;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    border: none;
+    border-radius: 28px;
+    padding: 5px;
+    margin: 0.3rem;
+    position: absolute;
+    bottom: 100px;
+    right: 30px;
+    width: 50%;
+    font-weight: 700;
+    color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}

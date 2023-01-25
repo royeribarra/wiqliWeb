@@ -378,15 +378,14 @@ function FormDatos({ setBlockPage })
             className="selector-fecha"
           >
             <DatePicker
+              placeholderText="Elige tu fecha."
               selected={startDate}
               filterDate={filterDate}
               onChange={onChangeDate}
-              placeholderText="Elige tu fecha."
               minDate={
-                (day === 1 && hour > 18) ? subDays(new Date(), -4) : subDays(new Date(), -1)
+                (day === 1 && hour > 18) ? subDays(new Date(), -4) : subDays(new Date(), -2)
               }
               dateFormat='dd-MM-yyyy'
-              excludeDates={[new Date('2023-01-05'), new Date('2023-01-06')]}
             />
           </Form.Item>
         </div>
