@@ -39,9 +39,13 @@ function Suscripcion()
       metodoPago: tipoBanco
     };
     //setBlockPage(true);
-    suscripcionService.crearSuscripcion(datos).then(({data})=> {
-      console.log(data);
-    });
+    try {
+      suscripcionService.crearSuscripcion(datos).then(({data})=> {
+        console.log(data);
+      });
+    } catch (error) {
+      toastr.error("Hubo un error, comunícate con Wiqli, por favor.")
+    }
   };
 
   return (
