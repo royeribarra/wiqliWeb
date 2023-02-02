@@ -301,6 +301,7 @@ function FormDatos({ setBlockPage })
       layout="vertical"
       onFinish={onFinish}
       form={form}
+      scrollToFirstError
       onValuesChange={guardarFormInStorage}
       initialValues={
         {
