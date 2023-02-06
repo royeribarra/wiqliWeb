@@ -384,7 +384,8 @@ function FormDatos({ setBlockPage })
               filterDate={filterDate}
               onChange={onChangeDate}
               minDate={
-                (day === 1 && hour > 18) ? subDays(new Date(), -4) : subDays(new Date(), -1)
+                (day === 1 && hour > 18) ? subDays(new Date(), -4) : 
+                (day === 2  || day === 3? subDays(new Date(), -1) : subDays(new Date(), -1))
               }
               dateFormat='dd-MM-yyyy'
             />
