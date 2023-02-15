@@ -340,16 +340,21 @@ function FormDatos({ setBlockPage })
           <Form.Item
             name="telefono"
             label="Número"
-            rules={[{ required: true, message: 'Por favor ingresa tu celular' }]}                
+            rules={[
+              { required: true, message: 'Por favor ingresa tu celular' }
+            ]}                
           >
-            <Input className="form-control" placeholder="Ej. 939784580" />
+            <Input className="form-control" placeholder="Ej. 939784580" maxLength={11} minLength={6} />
           </Form.Item>
         </div>
         <div className="itemForm">
           <Form.Item
             name="correo"
             label="Correo de contacto"
-            rules={[{ required: true, message: 'Por favor ingresa tu correo' }]}                
+            rules={[
+              { required: true, message: 'Por favor ingresa tu correo' },
+              { type: 'email', message: 'No es un E-mail válido.'},
+            ]}                
           >
             <Input className="form-control" placeholder="Ej. nombre@mail.com" disabled={isLoged} />
           </Form.Item>
@@ -385,7 +390,7 @@ function FormDatos({ setBlockPage })
               onChange={onChangeDate}
               minDate={
                 (day === 1 && hour > 20) ? subDays(new Date(), -4) : 
-                (day === 2  || day === 3? subDays(new Date(), -1) : subDays(new Date(), -1))
+                (day === 2  || day === 3? subDays(new Date(), -2) : subDays(new Date(), -1))
               }
               dateFormat='dd-MM-yyyy'
             />
