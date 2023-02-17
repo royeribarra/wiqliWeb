@@ -7,7 +7,6 @@ export class SuscripcionService extends MainService {
   }
 
   crearSuscripcion(data) {
-    console.log(this.url);
     return axios.post(`${this.clearUrl}/cliente/crear-suscripcion`, data, this.options);
   }
 }

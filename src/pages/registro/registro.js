@@ -72,7 +72,7 @@ function Registro()
                   type: 'email', message: 'No es un correo válido.'
                 },
                 { required: true, message: 'Por favor ingresa tu correo.' }
-              ]}                
+              ]}
             >
               <Input className="form-control" placeholder="Ej. nombre@mail.com" />
             </Form.Item>

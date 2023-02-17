@@ -1,63 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
+import { Buffer } from 'buffer';
+
 import Home from '../pages/home/home';
 import Datos from '../pages/datos/datos';
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Registro from '../pages/registro/registro';
 import Login from '../pages/login/login';
 import Confirmacion from '../pages/paginaDeConfirmacion/confirmacion';
-import Header from '../components/header/header';
 import PreConfirmacion from "../pages/paginaDeConfirmacion/preConfirmacion";
 import ConfirmacionCorreo from "../pages/paginaDeConfirmacion/confirmacionCorreo";
+import BeneficiosSuscripcion from "../pages/suscripcion/beneficiosSuscripcion";
+import CreacionSuscripcion from "../pages/suscripcion/crearSuscripcion";
+
 import StorageService from "../servicios/storageService";
-import {Buffer} from 'buffer';
-import Suscripcion from "../pages/suscripcion/suscripcion";
+
+import Header from '../components/header/header';
+import Loader from "../components/loader/loader";
+
+import { login, setInfoCliente, setCuponCliente, setTotalReferidosCliente } from "../redux/actions/clienteLogAction";
+import EditarSuscripcion from "../pages/suscripcion/editarSuscripcion";
+import { UsuarioService } from "../servicios/usuarioService";
 
 function MainRoutes()
 {
   const storageService = new StorageService();
-  const [userLocal, setUserLocal] = useState();
-  const [isLoged, setIsLoged] = useState(false);
-  const [codigoCliente, setCodigoCliente] = useState("None");
-  const [descuentoReferidoCliente, setDescuentoReferidoCliente] = useState(0);
-
-  const obtenerDataCliente = () => {
-    const descuentoSto = storageService.getItemObject('descuentoTotal');
-    if(descuentoSto){
-      setDescuentoReferidoCliente(descuentoSto);
-    }
-    const cuponSto = storageService.getItemObject('codigoCupon');
-    if(descuentoSto){
-      setCodigoCliente(cuponSto);
-    }
-  };
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { showLoader } = state.loader;
 
   useEffect(()=>{
     const token = localStorage.getItem("tknData");
     if(token){
       const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
       if(tknData.status){
-        setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
-        setIsLoged(true);
+        const userService = new UsuarioService();
+        userService.getInfoUser().then(({data})=> {
+          dispatch(setInfoCliente(data));
+        });
+        dispatch(login());
       }
+    }
+  }, []);
+
+  useEffect(()=> {
+    const descuentoTotal = storageService.getItemObject('descuentoTotal');
+    const cupon = storageService.getItemObject('codigoCupon');
+    if(descuentoTotal){
+      dispatch(setTotalReferidosCliente(descuentoTotal));
+    }
+    if(cupon){
+      dispatch(setCuponCliente(cupon));
     }
   }, []);
 
   return(
     <BrowserRouter>
-      <Header 
-        userLocal={userLocal} 
-        isLoged={isLoged} 
-        codigoCliente={codigoCliente} 
-        descuentoReferidoCliente={descuentoReferidoCliente} 
-      />
+      <Header />
+      <div className={ showLoader ? "" : "loaderInvisible"}>
+        <Loader></Loader>
+      </div>
       <Routes>
-        <Route exact path="/" element={<Home obtenerDataCliente={obtenerDataCliente} />} />
+        <Route exact path="/" element={<Home />} />
         <Route exact path="/datos" element={<Datos />} />
         <Route exact path="/confirmacion" element={<Confirmacion />} />
 
-
-        <Route exact path="/crear-suscripcion" element={<Suscripcion />} />
-
+        <Route exact path="/crear-suscripcion" element={<CreacionSuscripcion />} />
+        <Route exact path="/beneficios-suscripcion" element={<BeneficiosSuscripcion />} />
+        <Route exact path="/editar-suscripcion" element={<EditarSuscripcion />} />
 
         <Route exact path="/registro-completo" element={<PreConfirmacion />} />
         <Route exact path="/verificar-correo/:codigo" element={<ConfirmacionCorreo />} />

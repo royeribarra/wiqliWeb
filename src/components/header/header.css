@@ -47,6 +47,19 @@
 }
 
 
+.linkHeader{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+.linkBeneficios{
+    padding: 0px;
+    margin: 0px;
+}
+
+.linkCrearSuscripcion{
+    padding: 0px;
+}
 
 .tituloHeader{
     font-size: calc(2px + 1vw + 0.8rem);
@@ -60,7 +73,6 @@
     font-weight: 700;
     margin: 0.2rem;
     color: #5FAD57;
-    
 }
 
 .tituloHeaderWhatsapp{
@@ -76,7 +88,7 @@
     font-size: calc(2px + 1vw + 0.8rem);
     font-weight: 700;
     margin: 0.2rem;
-    color: #BA3B46;
+    color: #000000;
 }
 
 .infoDestacadaHeader{
@@ -143,7 +155,7 @@
     border-radius: 28px;
     padding: 5px;
     margin: 0.3rem;
-    position: absolute;
+    /* position: absolute; */
     bottom: 50px;
     right: 30px;
     width: 50%;
@@ -172,4 +184,34 @@
     padding-right: 2rem;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
+}
+
+.header-suscripcion{
+    border: 1px solid;
+    border-color: #191D74;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.header-referido{
+    border: 1px solid;
+    border-color: #191D74;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.tituloHeaderFondo-rojo{
+    font-size: calc(2px + 1vw + 0.4rem);
+    font-weight: 700;
+    margin: 0.2rem;
+    color: #BA3B46;
+    
+}
+
+.btnEditar{
+    background-color: #3175b6 !important;
+}
+
+.btnCancelar{
+    background-color: #BA3B46 !important;
 }

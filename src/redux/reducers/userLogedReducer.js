@@ -1,31 +1,52 @@
-const userLogedReducer = (state = {
-    name: "Max",
-    age: 27
-}, action) => {
+import { 
+    LOGIN, 
+    LOGOUT, 
+    SET_INFO_CLIENTE,
+    SET_CUPON_CLIENTE,
+    SET_TOTAL_REFERIDOS_CLIENTE
+} from "../types";
+
+export const userInitialState = {
+    isLoged: true,
+    infoUser: {
+        name: '',
+        isSuscrito: true
+    },
+    codigoUser: '',
+    descuentoReferidos: 0
+};
+
+function userLogedReducer(state = userInitialState, action)
+{
     switch (action.type) {
-        case "SET_NAME":
-            state = {
+        case LOGIN:
+            return {
                 ...state,
-                name: action.payload
+                isLoged: true
             };
-            break;
-        case "SET_AGE":
-            state = {
+        case LOGOUT:
+            return {
                 ...state,
-                age: action.payload
+                isLoged: false
             };
-            break;
-        case "LOGIN":
-            state = {
+        case SET_INFO_CLIENTE:
+            return {
                 ...state,
-                age: action.payload
+                infoUser: action.payload
             };
-            break;
+        case SET_CUPON_CLIENTE:
+            return {
+                ...state,
+                codigoUser: action.payload
+            };
+        case SET_TOTAL_REFERIDOS_CLIENTE:
+            return {
+                ...state,
+                descuentoReferidos: action.payload
+            };
         default:
             return state;
     }
-
-    return state;
 };
 
 export default userLogedReducer;

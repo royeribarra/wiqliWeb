@@ -1,58 +1,15 @@
-import { toastr } from "react-redux-toastr";
-import LogService from "../../servicios/logService";
-import StorageService from "../../servicios/storageService";
+import { 
+    LOGIN, 
+    LOGOUT, 
+    SET_INFO_CLIENTE,
+    SET_CUPON_CLIENTE,
+    SET_TOTAL_REFERIDOS_CLIENTE
+} from "../types";
 
-export function login(values) {
-    return dispatch => {
-        const logService = new LogService();
-        const storageServicce = new StorageService(); 
-       
-        logService.oauthCliente(values)
-            .then(({data}) => {
-                if(data.status === false){
-                    toastr.error(data.message)
-                    
-                    setTimeout(() => {
-                        window.location.reload(false);
-                    }, 2000);
-                }
-                if(data.status){
-                    storageServicce.setItemObject('tknData', data);
-                    logService.getAuthInfo(data.access_token).then(({data}) => {
-                        storageServicce.setItemObject('authUser', data)
-                        storageServicce.setItem('type', 2)
-                        dispatch({
-                            type: "LOGIN",
-                            payload: data
-                         });
-    
-                         dispatch({
-                            type: "HIDE",
-                            payload: false
-                        });
-    
-                        window.location.href = '/';
-                    },
-                    (err)=> {
-                        dispatch({
-                            type: "HIDE",
-                            payload: false
-                        });
-                    })
-                }
-                
-            }, (err) => {
-                dispatch({
-                    type: "HIDE",
-                    payload: false
-                });
-            });
-    }
-}
+export const login = () => ({ type: LOGIN });
 
-export function setAge(age) {
-    return {
-        type: "SET_AGE",
-        payload: age
-    };
-}
+export const setInfoCliente = (data) => ({ type: SET_INFO_CLIENTE, payload: data });
+
+export const setCuponCliente = (data) => ({ type: SET_CUPON_CLIENTE, payload: data });
+
+export const setTotalReferidosCliente = (data) => ({ type: SET_TOTAL_REFERIDOS_CLIENTE, payload: data });

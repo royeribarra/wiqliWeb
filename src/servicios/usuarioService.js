@@ -27,7 +27,7 @@ export class UsuarioService extends MainService {
   }
 
   getInfoUser() {
-    return axios.get(`${this.url}`, this.options);
+    return axios.get(`${this.clearUrl}/usuario/informacion`, this.options);
   }
   
   actualizarInformacionPersonal(id)

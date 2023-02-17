@@ -25,8 +25,9 @@ import {
 } from "../../redux/actions/productosTiendaActions";
 import Carrito from "../../components/carrito/carrito";
 import carrito from "../../images/carritoCompras.png"
+import { setCuponCliente, setTotalReferidosCliente } from '../../redux/actions/clienteLogAction';
 
-function Home({obtenerDataCliente}) 
+function Home() 
 {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -123,7 +124,7 @@ function Home({obtenerDataCliente})
     .then(({data})=> {
       if(data.state){
         localStorage.setItem('codigoCupon', data.cupon);
-        obtenerDataCliente();
+        dispatch(setCuponCliente(data.cupon));
       }
     });
   };
@@ -133,7 +134,7 @@ function Home({obtenerDataCliente})
     userService.obtenerTotalReferidos()
     .then(({data})=> {
       localStorage.setItem('descuentoTotal', data);
-      obtenerDataCliente();
+      dispatch(setTotalReferidosCliente(data));
     });
   };
 

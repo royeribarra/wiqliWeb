@@ -14,7 +14,16 @@ export const carritoInitialState = {
   otrasVerduras: [],
   otrasFrutosSecos: [],
   cart: [],
-  total: 0
+  total: 0,
+  suscripcion:{
+    productos: [],
+    carnes: [],
+    frutas: [],
+    menestras: [],
+    verduras: [],
+    frutosSecos: [],
+    total: 0
+  }
 };
 
 export function cartReducer(state = carritoInitialState, action){

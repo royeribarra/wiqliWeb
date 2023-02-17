@@ -277,7 +277,7 @@ function FormDatos({ setBlockPage })
     if(token){
       const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
       if(tknData.status){
-        const userService = new UsuarioService("usuario/informacion");
+        const userService = new UsuarioService();
         userService.getInfoUser().then(({data})=> {
           form.setFieldsValue({
             'nombres': data.name,

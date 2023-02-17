@@ -2,14 +2,44 @@ import React from 'react';
 import { Container } from "react-bootstrap";
 import { Form, Input, Button } from 'antd';
 import './login.css';
-import { login } from '../../redux/actions/clienteLogAction';
-import { toogleSpinner } from '../../redux/actions/spinnerActions';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import LogService from '../../servicios/logService';
+import StorageService from '../../servicios/storageService';
+import { toastr } from 'react-redux-toastr';
+import { login } from "../../redux/actions/clienteLogAction";
+import { showLoader } from '../../redux/actions/loaderActions';
 
-const Login = ({loginCliente}) =>
+const Login = () =>
 {
+  const dispatch = useDispatch();
+  const logService = new LogService();
+  const storageServicce = new StorageService();
+
   const onFinish = (values) => {
-    loginCliente(values);
+    dispatch(showLoader());
+    logService.oauthCliente(values).then(({data}) => {
+      if(data.status === false){
+        toastr.error(data.message);
+        setTimeout(() => {
+            window.location.reload(false);
+        }, 2000);
+      }
+      if(data.status){
+        storageServicce.setItemObject('tknData', data);
+        logService.getAuthInfo(data.access_token).then(({data}) => {
+          storageServicce.setItemObject('authUser', data);
+          storageServicce.setItem('type', 2);
+          dispatch(login());
+          dispatch(showLoader(false));
+          window.location.href = '/';
+        },
+        (err)=> {
+          dispatch(showLoader(false));
+        })
+      }
+    }, (err) => {
+        dispatch(showLoader(false));
+    });
   };
 
   return (
@@ -67,21 +97,5 @@ const Login = ({loginCliente}) =>
   );
 }
   
-const mapStateToProps = (state) => {
-  return {
-    spinnerDisplay: state.spinner.display
-  }
-}
 
-const mapDispatchProps = (dispatch) => {
-  return {
-    loginCliente: (values) => {
-      dispatch(login(values));
-    },
-    toogleSpinner: (display) => {
-      dispatch(toogleSpinner(display));
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchProps)(Login);
+export default Login;

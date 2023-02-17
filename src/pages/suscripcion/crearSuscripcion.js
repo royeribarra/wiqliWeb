@@ -14,14 +14,16 @@ import Visa from '../../assets/images/visa.svg';
 import AmericanExpress from '../../assets/images/symbol.svg';
 import Discover from '../../assets/images/symbols.svg';
 import { SuscripcionService } from '../../servicios/suscripcionservice';
+import { showLoader } from '../../redux/actions/loaderActions';
+import { useDispatch } from 'react-redux';
 
 
-function Suscripcion() 
+function CreacionSuscripcion() 
 {
   let history = useNavigate();
+  const dispatch = useDispatch();
   const suscripcionService = new SuscripcionService();
   const [form] = Form.useForm();
-  const [blockPage, setBlockPage] = useState(false);
   const [messageError, setMessageError] = useState();
   const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
   const [tipoBanco, setTipoBanco] = useState();
@@ -34,26 +36,26 @@ function Suscripcion()
   }
 
   const onFinish = (values) => {
+    dispatch(showLoader());
     let datos = {
       ...values,
-      metodoPago: tipoBanco
+      metodoPago: tipoBanco,
     };
     //setBlockPage(true);
     try {
       suscripcionService.crearSuscripcion(datos).then(({data})=> {
         console.log(data);
+        dispatch(showLoader(false));
       });
     } catch (error) {
-      toastr.error("Hubo un error, comunícate con Wiqli, por favor.")
+      toastr.error("Hubo un error, comunícate con Wiqli, por favor.");
+      dispatch(showLoader(false));
     }
   };
 
   return (
     <div className="baseWiqliForm">
       <Container className="contenedorSimple">
-        <div className={ blockPage ? "" : "loaderInvisible"}>
-          <Loader></Loader>
-        </div>
         <h2 className="tituloPrincipal">Suscríbete y obtén beneficios exclusivos.</h2>
         <Form
           layout="vertical"
@@ -175,4 +177,4 @@ function Suscripcion()
   );
 }
   
-export default Suscripcion;
+export default CreacionSuscripcion;

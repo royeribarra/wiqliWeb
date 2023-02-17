@@ -6,14 +6,16 @@ import promise from "redux-promise-middleware";
 // ***** REFUCERS *****
 import spinner from "./reducers/spinnerReducer";
 import routeReducer from "./reducers/routeReducer";
-import user from "./reducers/userLogedReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import { productosTiendaReducer } from "./reducers/productosTiendaReducer";
+import loaderReducer from "./reducers/loaderReducer";
+import userLogedReducer from "./reducers/userLogedReducer";
 
 const reducer = combineReducers({   
     spinner,
-    user,
+    user: userLogedReducer,
     routeReducer,
+    loader: loaderReducer,
     toastr: toastrReducer,
     cart: cartReducer,
     productos: productosTiendaReducer

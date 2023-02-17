@@ -13,17 +13,20 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { Alert } from 'antd';
 import './header.css';
 import Carrito from "../carrito/carrito";
+import { useSelector } from "react-redux";
 
-function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) {
-  
+function Header() 
+{
   const storageService = new StorageService();
   const logService = new LogService();
   let history = useNavigate();
   const location = useLocation();
+  const state = useSelector((state) => state);
+  const { infoUser, isLoged, codigoUser, descuentoReferidos} = state.user;
   const [isHome, setIsHome] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showCarrito, setShowCarrito] = useState(false);
-
+  
   const copiarCodigoReferido = () => {
     setShowAlert(true);
     setTimeout(() => {
@@ -50,6 +53,14 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
 
   const createSusbscripcion = () => {
     history(`/crear-suscripcion`);
+  };
+
+  const editarSuscripcion = () => {
+
+  };
+
+  const cancelarSuscripcion = () => {
+
   };
 
   useEffect(() => {
@@ -109,16 +120,7 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                <div>
-
-                </div>
-                    <img
-                src={logo}
-                height="50"
-                className="logoNav"
-                alt="wiqli"
-                
-                  /> 
+                  <img src={logo} height="50" className="logoNav" alt="wiqli" /> 
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
@@ -127,11 +129,36 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
                     isLoged ? 
                     (<div>
                       <div>
-                        <h2 className="tituloHeader">{ userLocal.name }</h2>
-                        <div className="infoDestacadaHeader">
+                        <h2 className="tituloHeader">{ infoUser.name }</h2>
+                        <div className="infoDestacadaHeader header-suscripcion">
+                          <h2>Suscripción</h2>
+                          {
+                            infoUser.isSuscrito ? 
+                            ( <div>
+                                <Nav.Link href="/editar-suscripcion">
+                                  <Button type="primary" className="botonCopiado btnEditar">
+                                    Editar suscripción
+                                  </Button>
+                                </Nav.Link>
+                                
+                                <Button type="primary" className="botonCopiado btnCancelar" onClick={cancelarSuscripcion}>
+                                  Cancelar suscripción
+                                </Button>
+                              </div>)
+                              : (<Nav.Link href="/crear-suscripcion" className="linkCrearSuscripcion">
+                                  <Button type="primary" className="botonCopiado">
+                                    Suscríbete
+                                  </Button>
+                                </Nav.Link>)
+                          }
+                          <Nav.Link  href="/beneficios-suscripcion" className="linkBeneficios">
+                            <p className="tituloHeaderFondo-rojo">Ver beneficios</p>
+                          </Nav.Link>
+                        </div>
+                        <div className="infoDestacadaHeader header-referido">
                           <h2 className="tituloHeaderDestacado">Cupón de referido</h2>
-                          <h4 className="textoInfoDestacadaHeader">{ codigoCliente }</h4>
-                          <CopyToClipboard text={codigoCliente}>
+                          <h4 className="textoInfoDestacadaHeader">{ codigoUser }</h4>
+                          <CopyToClipboard text={codigoUser}>
                             <Button type="primary" className="botonCopiado" onClick={copiarCodigoReferido}>
                               Copiar
                             </Button>
@@ -144,36 +171,32 @@ function Header({ userLocal, isLoged, codigoCliente, descuentoReferidoCliente}) 
                             />
                           }
                           
-                        <p className="textoDisclaimer">
-                          Comparte este cupón y obtén S/5 de dscto. por cada persona que realice su 
-                          primera compra con tu cupón.
-                        </p>
+                          <p className="textoDisclaimer">
+                            Comparte este cupón y obtén S/5 de dscto. por cada persona que realice su 
+                            primera compra con tu cupón.
+                          </p>
+                        </div>
+                        <div className="infoDestacadaHeader">
+                          <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
+                            <h4 className="textoInfoDestacadaHeader">
+                              S/ { parseFloat(descuentoReferidos).toFixed(2) }
+                            </h4>
                         </div>
                       </div>
-                      <div className="infoDestacadaHeader">
-                        <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
-                          <h4 className="textoInfoDestacadaHeader">
-                            S/ { parseFloat(descuentoReferidoCliente).toFixed(2) }
-                          </h4>
-                      </div>
-                      
-
-                      {/* <Button type="primary" className="botonCreateSubscripcion">
-                        <Nav.Link  href="/crear-suscripcion" style={{ padding: "0px" }}>
-                          Suscribirme
-                        </Nav.Link>
-                      </Button> */}
-
                       <Button type="primary" className="botonCerrarSesion" onClick={cerrarSesion}>
                         Cerrar sesión
                       </Button>
                     </div>) :
                     (<div>
-                      <Nav.Link  href="/login"><div><p className="tituloHeaderFondo">Iniciar sesión</p></div></Nav.Link>
-                      <Nav.Link  href="/registro"><p className="tituloHeader">Registrarme</p></Nav.Link>
-                      <Nav.Link  href="/registro">
-                        <p className="tituloHeaderDestacado">Quiero crear un cupón de referidos</p>
+                      <Nav.Link  href="/login" className="linkHeader">
+                        <p className="tituloHeaderFondo">Iniciar sesión</p>
                       </Nav.Link>
+                      <Nav.Link  href="/registro" className="linkHeader">
+                        <p className="tituloHeader">Registrarme</p>
+                      </Nav.Link>
+                      {/* <Nav.Link  href="/registro">
+                        <p className="tituloHeaderDestacado">Quiero crear un cupón de referidos</p>
+                      </Nav.Link> */}
                     </div>)
                   }
                 </Nav>

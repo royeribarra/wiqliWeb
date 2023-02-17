@@ -1,0 +1,189 @@
+.tituloPrincipal{
+    font-size: calc(4px + 1.4vw + 0.8rem);
+    font-weight: 700;
+    margin: 1rem;
+    color: #5FAD57;
+}
+
+.tituloEnunciativo{
+    font-size: calc(0px + 1.4vw + 0.8rem);
+    margin: 0.7rem;
+    margin-bottom: 1rem;
+    color:black;
+}
+
+.numeroDeContacto{
+    text-decoration: none;
+    font-size: calc(0px + 1.4vw + 0.8rem);
+    color: #5FAD57;
+    font-weight: 600;
+}
+
+.botonDeSiguiente{
+    background-color: #5FAD57;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .botonOrdenado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .botonOrdenado p{
+    margin: 0;
+  }
+
+  
+  .botonDeSiguiente p {
+    margin: 0.3rem
+  }
+  
+  .botonDeSiguiente p {
+    margin: 0.3rem;
+    font-weight: 600;
+  }
+
+
+
+  .clickASiguiente{
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+  }
+
+  @media (min-width: 600px) {
+
+  .contenedorProductos{
+    background-color: white;
+    padding-left: 15vw;
+    padding-right: 15vw;
+  }
+
+
+  .imagenProducto{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-right: 0.3rem;
+   }
+
+  .imagenProducto img{
+    object-fit: cover;
+    overflow: hidden;
+    width: 100%;
+    height: 6rem;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+
+  }
+
+
+  .listaDeProductos{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+    .loaderInvisible{
+      display: none;
+  }
+
+  .logoLanding{
+    width: calc(50% + 2rem);
+  }
+
+  .textoDePrecio{
+    color: white;
+  }
+
+  .disclaimerPago{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .mediosDePago{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+    justify-items: center;
+    width: 300px;
+    
+
+  }
+
+  .medioDePago{
+    max-width: 100%;
+    width: 40px;
+    height: 40px;
+    border-radius: 28px;
+    
+  }
+
+  .modalOpciones{
+    text-align: center;
+  }
+
+  .modal-header{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    border: none;
+  }
+
+  .contenedorBotonModal{
+    margin: 0.7rem;
+  }
+
+  .modalTareasBotones{
+    display:grid;
+
+  }
+
+  .botonSecundario{
+   background-color: #3681B8;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .textoCuerpoModal{
+    margin: 0.5rem;
+    margin-top: 0;
+    font-size: calc(3px + 0.8vw + 0.6rem);
+    color: #3681B8;
+    font-weight: 600;
+  }
+
+  .modal-body{
+    padding: 0.5rem;
+  }
+
+  .ant-alert-message{
+    color: #BA3B46;
+    font-weight: 500;
+  }
+
+
+  .contenedorBotones{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .botonActualizarLista{
+    background-color: #5FAD57;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 60%);
+    border-color: #5FAD57;
+  }
