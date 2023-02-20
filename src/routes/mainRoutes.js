@@ -21,6 +21,9 @@ import Loader from "../components/loader/loader";
 import { login, setInfoCliente, setCuponCliente, setTotalReferidosCliente } from "../redux/actions/clienteLogAction";
 import EditarSuscripcion from "../pages/suscripcion/editarSuscripcion";
 import { UsuarioService } from "../servicios/usuarioService";
+import axios from "axios";
+import { fillProducts } from "../redux/actions/productosTiendaActions";
+import { fillCart } from "../redux/actions/carritoActions";
 
 function MainRoutes()
 {
@@ -44,6 +47,11 @@ function MainRoutes()
   }, []);
 
   useEffect(()=> {
+    const productos = JSON.parse(localStorage.getItem("productos"));
+    dispatch(fillCart(productos));
+  }, []);
+
+  useEffect(()=> {
     const descuentoTotal = storageService.getItemObject('descuentoTotal');
     const cupon = storageService.getItemObject('codigoCupon');
     if(descuentoTotal){
@@ -52,6 +60,14 @@ function MainRoutes()
     if(cupon){
       dispatch(setCuponCliente(cupon));
     }
+  }, []);
+
+  useEffect(()=> {
+    axios
+    .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
+    .then(({ data }) => {
+      dispatch(fillProducts(data));
+    });
   }, []);
 
   return(

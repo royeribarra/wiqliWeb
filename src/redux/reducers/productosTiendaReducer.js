@@ -3,7 +3,7 @@ import {
   } from "../../types";
   
 export const productosInitialState = {
-  products: []
+  productosTienda: []
 };
 
 export function productosTiendaReducer(state = productosInitialState, action){
@@ -12,7 +12,7 @@ export function productosTiendaReducer(state = productosInitialState, action){
       
       return {
         ...state,
-        products: action.payload
+        productosTienda: action.payload
       };
       
     default:

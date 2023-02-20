@@ -3,27 +3,19 @@ import { Form, Input, Button, Radio } from 'antd';
 import subDays from "date-fns/subDays";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
+import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { UsuarioService } from "../../servicios/usuarioService";
-import StorageService from "../../servicios/storageService";
 import {Buffer} from 'buffer';
 import Cleave from 'cleave.js/react';
 
-import Jcb from '../../assets/images/jcb.svg';
-import DinnersClub from '../../assets/images/dinners-club.svg';
-import MasterCard from '../../assets/images/master-card.svg';
-import Visa from '../../assets/images/visa.svg';
-import AmericanExpress from '../../assets/images/symbol.svg';
-import Discover from '../../assets/images/symbols.svg';
-import miniAmex from '../../images/miniAmex.png';
-import miniCash from '../../images/miniCash.png';
-import miniMastercard from '../../images/miniMastercard.png';
-import miniPlin from '../../images/miniPlin.png';
-import miniVisa from '../../images/miniVisa.png';
-import miniYape from '../../images/miniYape.png';
-import { useDispatch, useSelector } from "react-redux";
+import { UsuarioService } from "../../servicios/usuarioService";
+import StorageService from "../../servicios/storageService";
+
 import Resumen from "./resumen";
+import TarjetaBancoComponente from "../../components/tarjetaBancoComponente/tarjetaBancoComponente";
+import PagoContraentrega from "../../components/tarjetaBancoComponente/pagoContraentrega";
+import PagoWeb from "../../components/tarjetaBancoComponente/pagoWeb";
 import { 
   clearCart
 } from "../../redux/actions/carritoActions";
@@ -36,11 +28,11 @@ function FormDatos({ setBlockPage })
   
   const state = useSelector((state) => state);
   const { cart } = state.cart;
+  const { isLoged, infoUser, codigoUser, descuentoReferidos } = state.user;
   const dispatch = useDispatch();
 
   const storageService = new StorageService();
   const [form] = Form.useForm();
-  const [isLoged, setIsLoged] = useState(false);
   const [messageError, setMessageError] = useState();
   const [tipoBanco, setTipoBanco] = useState();
   const [tipoPago, setTipoPago] = useState(1);
@@ -232,7 +224,7 @@ function FormDatos({ setBlockPage })
   }
 
   const onChangeTipoPago = (e) => {
-    setTipoPago(e.target.value);
+    setTipoPago(Number(e.target.value));
   };
 
   useEffect(() => {
@@ -272,30 +264,6 @@ function FormDatos({ setBlockPage })
     });
   }, []);
 
-  useEffect(()=>{
-    const token = localStorage.getItem("tknData");
-    if(token){
-      const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
-      if(tknData.status){
-        const userService = new UsuarioService();
-        userService.getInfoUser().then(({data})=> {
-          form.setFieldsValue({
-            'nombres': data.name,
-            'apellidos': data.father_lastname,
-            'telefono': data.phone,
-            'correo': data.email,
-            'direccion': data.address,
-            'referencia': data.referencia
-          });
-          setMontoBilletera(data.billetera.saldo);
-        });
-        setIsLoged(true);
-      }else{
-        setIsLoged(false);
-      }
-    }
-  }, []);
-
   return(
     <Form
       layout="vertical"
@@ -305,14 +273,14 @@ function FormDatos({ setBlockPage })
       onValuesChange={guardarFormInStorage}
       initialValues={
         {
-          apellidos: cliente.apellidos,
-          correo: cliente.correo,
-          direccion: cliente.direccion,
-          fecha_recojo: cliente.fecha_recojo,
-          nombres: cliente.nombres,
-          observacion: cliente.observacion,
-          referencia: cliente.referencia,
-          telefono: cliente.telefono,
+          apellidos: infoUser.father_lastname,
+          correo: infoUser.email,
+          direccion: infoUser.address,
+          fecha_recojo: '',
+          nombres: infoUser.name,
+          observacion: '',
+          referencia: infoUser.referencia,
+          telefono: infoUser.phone,
           tipoPago: tipoPago
         }
       }
@@ -456,28 +424,19 @@ function FormDatos({ setBlockPage })
             <Form.Item label="" name="tipoPago" onChange={onChangeTipoPago}>
               <Radio.Group className="eleccionesDePago">
                 <div className="eleccionDeMedioDePago">
-                <Radio className="eleccionPago" value={2}>Pago Web</Radio>
-                <div className="imagenesEleccionPago">
-                  <img className="imagenEleccionPago" alt='Pago con Visa Wiqli'src={miniVisa}></img>
-                  <img className="imagenEleccionPago" alt='Pago con Mastercard Wiqli'src={miniMastercard}></img>
-                  <img className="imagenEleccionPago" alt='Pago con American Express Wiqli'src={miniAmex}></img>
-                </div>
+                  <Radio className="eleccionPago" value={2}>Pago Web</Radio>
+                  <PagoWeb />
                 </div>
                 <div className="eleccionDeMedioDePago">
-                <Radio className="eleccionPago" value={1}>Contraentrega</Radio>
-                <div className="imagenesEleccionPago">
-                  <img className="imagenEleccionPago" alt='Pago en cash Wiqli'src={miniCash}></img>
-                  <img className="imagenEleccionPago" alt='Pago con Plin Wiqli'src={miniPlin}></img>
-                  <img className="imagenEleccionPago" alt='Pago con Yape Wiqli'src={miniYape}></img>
+                  <Radio className="eleccionPago" value={1}>Contraentrega</Radio>
+                  <PagoContraentrega />
                 </div>
-                </div>
-                
               </Radio.Group>
             </Form.Item>
           </div>
         </div>
         {
-          tipoPago == 2 &&
+          tipoPago === 2 &&
           <div className="contenedorPagos contenedorMiniSeccion">
             <div className="pasarelaDePago">
               <div className="inputDataPago">
@@ -498,45 +457,8 @@ function FormDatos({ setBlockPage })
                   hidden={true}
                 >
                 </Form.Item>
-              
-
-              <div className="contenedorTarjetasAceptadas ">
-              <div className="tarjetasAceptadas">
-                  <img 
-                    src={Jcb} 
-                    className={tipoBanco === "JCB" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                    alt="JCB"
-                  />
-                  <img 
-                    src={DinnersClub} 
-                    className={tipoBanco === "DINERS" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                    alt='DINERS'
-                  />
-                  <img 
-                    src={MasterCard} 
-                    className={tipoBanco === "MASTERCARD" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                    alt="MASTERCARD"
-                  />
-                  <img 
-                    src={Visa} 
-                    className={tipoBanco === "VISA" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                    alt="VISA"  
-                  />
-                  <img 
-                    src={Discover} 
-                    className={tipoBanco === "DISCOVER" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                    alt="DISCOVER"
-                  />
-                  <img 
-                    src={AmericanExpress} 
-                    className={tipoBanco === "AMEX" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                    alt="AMEX"
-                  />
-
+                <TarjetaBancoComponente tipoBanco={tipoBanco} />
               </div>
-            </div>
-            </div>
-              
               <div className="inputGrande">
                 <Form.Item
                   label="Nombre en la tarjeta"

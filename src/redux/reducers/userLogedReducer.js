@@ -7,10 +7,18 @@ import {
 } from "../types";
 
 export const userInitialState = {
-    isLoged: true,
+    isLoged: false,
     infoUser: {
         name: '',
-        isSuscrito: true
+        father_lastname: '',
+        phone: '',
+        email: '',
+        address: '',
+        referencia: '',
+        isSuscrito: false,
+        billetera: {
+            saldo: 0
+        }
     },
     codigoUser: '',
     descuentoReferidos: 0

@@ -10,6 +10,7 @@ import { cartReducer } from "./reducers/cartReducer";
 import { productosTiendaReducer } from "./reducers/productosTiendaReducer";
 import loaderReducer from "./reducers/loaderReducer";
 import userLogedReducer from "./reducers/userLogedReducer";
+import { suscripcionReducer } from "./reducers/suscripcionReducer";
 
 const reducer = combineReducers({   
     spinner,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
     loader: loaderReducer,
     toastr: toastrReducer,
     cart: cartReducer,
+    suscripcion: suscripcionReducer,
     productos: productosTiendaReducer
 });
 

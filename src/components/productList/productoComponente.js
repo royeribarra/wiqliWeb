@@ -10,10 +10,15 @@ import {
   addOneToProduct, 
   delFromCart,
 } from "../../redux/actions/carritoActions";
+import { 
+  SaddToCart, 
+  SaddOneToProduct, 
+  SdelFromCart,
+} from "../../redux/actions/suscripcionActions";
 import "./productoComponente.css";
 
 function ProductoComponente({
-  data, agregarProducto, quitarProducto, disminuirUnidades, aumentarUnidades, renderizarNuevamente
+  data, renderizarNuevamente, tipoLista
 }) 
 {
   const state = useSelector((state) => state);
@@ -25,17 +30,17 @@ function ProductoComponente({
 
   const agregarCarrito = () => {
     setTipoComponente(2);
-    dispatch(addToCart(data));
+    (tipoLista === 1) ? dispatch(addToCart(data)) : dispatch(SaddToCart(data));
   }
 
   const quitarCarrito = () => {
     setTipoComponente(1);
-    dispatch(delFromCart(data.id, true));
+    (tipoLista === 1 ) ? dispatch(delFromCart(data.id, true)) : dispatch(SdelFromCart(data.id, true));
   }
 
   const agregarCantidadProducto = () => {
     setCantidad(cantidad + 1);
-    dispatch(addOneToProduct(data.id));
+    (tipoLista === 1) ? dispatch(addOneToProduct(data.id)) : dispatch(SaddOneToProduct(data.id));
   }
 
   const disminuiCantidadProducto = () => {
@@ -43,7 +48,7 @@ function ProductoComponente({
       quitarCarrito();
     }else{
       setCantidad(cantidad - 1);
-      dispatch(delFromCart(data.id));
+      (tipoLista === 1) ? dispatch(delFromCart(data.id)) : dispatch(SdelFromCart(data.id));
     }
   }
 

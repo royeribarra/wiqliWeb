@@ -19,7 +19,7 @@ function ProductList({
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { cart } = state.cart;
-  const { products } = state.productos;
+  const { productosTienda } = state.productos;
 
   const[otrasFrutas, setOtrasFrutas] = useState([]);
   const[otrasVerduras, setOtrasVerduras] = useState([]);
@@ -102,16 +102,13 @@ function ProductList({
             </Accordion.Header>
               <Accordion.Body>
                 
-                { products.filter((producto) => producto.categoria_id === 1)
+                { productosTienda.filter((producto) => producto.categoria_id === 1)
                   .map( producto => (
                     <ProductoComponente 
-                      data={producto} 
-                      key={producto.id} 
-                      agregarProducto={agregarProducto}
-                      quitarProducto={quitarProducto}
-                      disminuirUnidades={disminuirUnidades}
-                      aumentarUnidades={aumentarUnidades}
+                      data={producto}
+                      key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
+                      tipoLista={2}
                     />
                   ))
                 }
@@ -140,16 +137,13 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus verduras</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { products.filter((producto) => producto.categoria_id === 2)
+                { productosTienda.filter((producto) => producto.categoria_id === 2)
                   .map( producto => (
                     <ProductoComponente 
-                      data={producto} 
-                      key={producto.id} 
-                      agregarProducto={agregarProducto}
-                      quitarProducto={quitarProducto}
-                      disminuirUnidades={disminuirUnidades}
-                      aumentarUnidades={aumentarUnidades}
+                      data={producto}
+                      key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
+                      tipoLista={2}
                     />
                   ))
                 }
@@ -179,16 +173,13 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus carnes</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { products.filter((producto) => producto.categoria_id === 3)
+                { productosTienda.filter((producto) => producto.categoria_id === 3)
                   .map( producto => (
                     <ProductoComponente 
-                      data={producto} 
-                      key={producto.id} 
-                      agregarProducto={agregarProducto}
-                      quitarProducto={quitarProducto}
-                      disminuirUnidades={disminuirUnidades}
-                      aumentarUnidades={aumentarUnidades}
+                      data={producto}
+                      key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
+                      tipoLista={2}
                     />
                   ))
                 }
@@ -217,16 +208,13 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus menestras</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { products.filter((producto) => producto.categoria_id === 4)
+                { productosTienda.filter((producto) => producto.categoria_id === 4)
                   .map( producto => (
                     <ProductoComponente 
-                      data={producto} 
-                      key={producto.id} 
-                      agregarProducto={agregarProducto}
-                      quitarProducto={quitarProducto}
-                      disminuirUnidades={disminuirUnidades}
-                      aumentarUnidades={aumentarUnidades}
+                      data={producto}
+                      key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
+                      tipoLista={2}
                     />
                   ))
                 }
@@ -255,16 +243,13 @@ function ProductList({
               <h2 className="tituloCategoria">Elige tus frutos secos</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { products.filter((producto) => producto.categoria_id === 5)
+                { productosTienda.filter((producto) => producto.categoria_id === 5)
                   .map( producto => (
                     <ProductoComponente 
-                      data={producto} 
-                      key={producto.id} 
-                      agregarProducto={agregarProducto}
-                      quitarProducto={quitarProducto}
-                      disminuirUnidades={disminuirUnidades}
-                      aumentarUnidades={aumentarUnidades}
+                      data={producto}
+                      key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
+                      tipoLista={2}
                     />
                   ))
                 }

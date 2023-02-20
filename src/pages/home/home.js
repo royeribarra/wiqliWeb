@@ -20,9 +20,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fillCart
 } from "../../redux/actions/carritoActions";
-import {
-  fillProducts
-} from "../../redux/actions/productosTiendaActions";
 import Carrito from "../../components/carrito/carrito";
 import carrito from "../../images/carritoCompras.png"
 import { setCuponCliente, setTotalReferidosCliente } from '../../redux/actions/clienteLogAction';
@@ -33,7 +30,6 @@ function Home()
   const dispatch = useDispatch();
   const { cart } = state.cart;
   let history = useNavigate();
-  // const[productos, setProductos] = useState([]);
   const[productosCarrito, setProductosCarrito] = useState([]);
   const[total, setTotal] = useState(0);
   const[showModal, setShowModal] = useState(true);
@@ -44,17 +40,7 @@ function Home()
     if(localStorage.getItem('productos')){
       let productosStorage = JSON.parse(localStorage.getItem('productos'));
       dispatch(fillCart(productosStorage));
-      // setProductosCarrito(productosStorage);
     }
-  }
-
-  const getProductos = () => {
-    axios
-    .get(`${process.env.REACT_APP_BASE_PATH}/wiqli/productos/todos`)
-    .then(({ data }) => {
-      // setProductos(data);
-      dispatch(fillProducts(data));
-    });
   }
 
   const agregarProducto = (producto) => {
@@ -166,7 +152,6 @@ function Home()
   }
 
   useEffect(() => {
-    getProductos();
     getProductoStorage();
   }, []);
 

@@ -1,10 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "./resumen.css";
 
 function Resumen({
-  totalProductos, delivery, descuento, total, aplicaCupon, montoBilletera
+  aplicaCupon
 })
 {
+  const state = useSelector((state) => state);
+  const { total, delivery, totalProductos, descuento } = state.cart;
+  const { infoUser } = state.user;
   return(
     <div className="desgloseTotal">
       <div className="totalesAPagar">
@@ -16,10 +20,10 @@ function Resumen({
         <h6 className="datoCampo">S/ {parseFloat(delivery).toFixed(2)}</h6>
       </div>
       {
-        montoBilletera > 0 &&
+        infoUser.billetera.saldo > 0 &&
           <div className="totalesAPagar" >
             <h6 className="tituloCampo">Billetera</h6>
-            <h6 className="datoCampo">- S/ {parseFloat(montoBilletera).toFixed(2)}</h6>
+            <h6 className="datoCampo">- S/ {parseFloat(infoUser.billetera.saldo).toFixed(2)}</h6>
           </div>
       }
       {
@@ -33,7 +37,7 @@ function Resumen({
       <div className="totalesAPagar">
         <h6 className="tituloCampo">Total</h6>
         <h6 className="datoCampo">
-          S/ {parseFloat(total + delivery).toFixed(2)}
+          S/ {parseFloat(totalProductos + delivery).toFixed(2)}
         </h6>
       </div>
     </div>

@@ -18,7 +18,7 @@ function EditarSuscripcion()
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { cart } = state.cart;
-  const { suscripcion } = state.cart;
+  const { total } = state.suscripcion;
   let history = useNavigate();
 
   const getProductoStorage = () => {
@@ -29,7 +29,7 @@ function EditarSuscripcion()
   }
 
   const guardarListaSuscripcion = () => {
-    if(suscripcion.total === 0){
+    if(total === 0){
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
@@ -79,7 +79,7 @@ function EditarSuscripcion()
               <div className='botonDeSiguiente'>
                 <div className='botonOrdenado'>
                 
-                  <p className='textoDePrecio'>S/ {parseFloat(suscripcion.total).toFixed(2)}</p>
+                  <p className='textoDePrecio'>S/ {parseFloat(total).toFixed(2)}</p>
                 </div>
               </div>
               <Button className='botonDeSiguiente' onClick={guardarListaSuscripcion}>
