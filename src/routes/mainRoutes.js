@@ -48,7 +48,7 @@ function MainRoutes()
 
   useEffect(()=> {
     const productos = JSON.parse(localStorage.getItem("productos"));
-    dispatch(fillCart(productos));
+    dispatch(fillCart(productos ? productos : []));
   }, []);
 
   useEffect(()=> {

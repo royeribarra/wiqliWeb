@@ -20,9 +20,19 @@ export const carritoInitialState = {
   descuento: 0
 };
 
-export function cartReducer(state = carritoInitialState, action){
+export function cartReducer(state = carritoInitialState, action){ 
+  function getTotal (carrito = []){
+    // let carrito1 = [];
+    // console.log(carrito1);
+    let total = carrito.reduce((accumulator, currentValue) => 
+      accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0
+    );
+    return total;
+  };
+
   switch (action.type) {
     case ADD_TO_CART:
+
       let newItem = action.payload;
       let inItem = state.cart.find((item) => item.id === action.payload.id);
       let cartTempAddProduct = [...state.cart, { ...newItem, cantidad: 1 }];
@@ -32,20 +42,18 @@ export function cartReducer(state = carritoInitialState, action){
 
       return {
         ...state,
-        cart: [...state.cart, { ...newItem, cantidad: 1 }],
-        totalProductos: [...state.cart, { ...newItem, cantidad: 1 }].reduce((accumulator, currentValue) => 
-          accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0)
+        cart: cartTempAddProduct,
+        totalProductos: getTotal(cartTempAddProduct)
       };
 
     case REMOVE_ALL_FROM_CART:
 
-      let tempCart = state.cart.filter((item) => item.id !== action.payload);
-      localStorage.setItem("productos", JSON.stringify(tempCart));
+      let tempRemoveCart = state.cart.filter((item) => item.id !== action.payload);
+      localStorage.setItem("productos", JSON.stringify(tempRemoveCart));
       return {
         ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
-        totalProductos: (state.cart.filter((item) => item.id !== action.payload)).reduce((accumulator, currentValue) => 
-          accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0)
+        cart: tempRemoveCart,
+        totalProductos: getTotal(tempRemoveCart)
       };
 
     case CLEAR_CART:
@@ -54,59 +62,44 @@ export function cartReducer(state = carritoInitialState, action){
     case ADD_ONE_PRODUCT:
 
       let cartTempAddOne = state.cart.map((item) =>
-                        item.id === action.payload
-                          ? { ...item, cantidad: item.cantidad + 1 }
-                          : item);
+                            item.id === action.payload
+                              ? { ...item, cantidad: item.cantidad + 1 }
+                              : item);
       localStorage.setItem("productos", JSON.stringify(cartTempAddOne));    
 
       return {
         ...state,
-        cart: state.cart.map((item) =>
-                item.id === action.payload
-                  ? { ...item, cantidad: item.cantidad + 1 }
-                  : item
-              ),
-        totalProductos: (state.cart.map((item) =>
-                item.id === action.payload
-                  ? { ...item, cantidad: item.cantidad + 1 }
-                  : item
-              )).reduce((accumulator, currentValue) => 
-              accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0)
+        cart: cartTempAddOne,
+        totalProductos: getTotal(cartTempAddOne)
       }
 
     case REMOVE_ONE_FROM_CART:
       let itemToDelete = state.cart.find((item) => item.id === action.payload);
+      let itemMinusOne = state.cart.map((item) =>
+                            item.id === action.payload
+                            ? { ...item, cantidad: item.cantidad - 1 }
+                            : item);
       let cartTempRemove = itemToDelete.cantidad > 1
-      ? {
-          ...state,
-          car: state.cart.map((item) =>
-            item.id === action.payload
-              ? { ...item, cantidad: item.cantidad - 1 }
-              : item
-          ),
-          totalProductos: (state.cart.map((item) =>
-                  item.id === action.payload
-                    ? { ...item, cantidad: item.cantidad - 1 }
-                    : item
-                )).reduce((accumulator, currentValue) => 
-                accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0)
-        }
-      : {
-          ...state,
-          cart: state.cart.filter((item) => item.id !== action.payload),
-          totalProductos: (state.cart.filter((item) => item.id !== action.payload)).reduce((accumulator, currentValue) => 
-            accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0),
-        };
+      ? itemMinusOne
+      : state.cart;
       localStorage.setItem("productos", JSON.stringify(cartTempRemove));
 
-      return cartTempRemove;
+      return itemToDelete.cantidad > 1 
+              ?{
+                ...state,
+                cart: itemMinusOne,
+                totalProductos: getTotal(itemMinusOne)
+              } : {
+                ...state,
+                cart: state.cart.filter((item) => item.id !== action.payload),
+                totalProductos: getTotal(state.cart.filter((item) => item.id !== action.payload))
+              };
 
     case FILL_CART:
       return {
         ...state,
         cart: action.payload,
-        totalProductos: (action.payload).reduce((accumulator, currentValue) => 
-          accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0),
+        totalProductos: getTotal(action.payload)
       };
       
     default:

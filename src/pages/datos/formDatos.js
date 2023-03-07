@@ -321,7 +321,7 @@ function FormDatos({ setBlockPage })
             label="Correo de contacto"
             rules={[
               { required: true, message: 'Por favor ingresa tu correo' },
-              { type: 'email', message: 'No es un E-mail válido.'},
+              // { type: 'email', message: 'No es un E-mail válido.'},
             ]}                
           >
             <Input className="form-control" placeholder="Ej. nombre@mail.com" disabled={isLoged} />

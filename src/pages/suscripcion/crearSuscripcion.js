@@ -36,15 +36,16 @@ function CreacionSuscripcion()
   }
 
   const onFinish = (values) => {
-    dispatch(showLoader());
+    //dispatch(showLoader());
     let datos = {
       ...values,
-      metodoPago: tipoBanco,
+      metodoPago: tipoBanco
     };
     //setBlockPage(true);
     try {
       suscripcionService.crearSuscripcion(datos).then(({data})=> {
         console.log(data);
+        toastr.success(data.message)
         dispatch(showLoader(false));
       });
     } catch (error) {

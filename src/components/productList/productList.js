@@ -7,12 +7,7 @@ import ProductoComponente from "./productoComponente";
 import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
 
-function ProductList({ 
-  // productos,
-  agregarProducto,
-  quitarProducto,
-  disminuirUnidades,
-  aumentarUnidades,
+function ProductList({
   renderizarNuevamente
 })
 {
@@ -108,7 +103,7 @@ function ProductList({
                       data={producto}
                       key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
-                      tipoLista={2}
+                      tipoLista={1}
                     />
                   ))
                 }
@@ -143,7 +138,7 @@ function ProductList({
                       data={producto}
                       key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
-                      tipoLista={2}
+                      tipoLista={1}
                     />
                   ))
                 }
@@ -179,7 +174,7 @@ function ProductList({
                       data={producto}
                       key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
-                      tipoLista={2}
+                      tipoLista={1}
                     />
                   ))
                 }
@@ -214,7 +209,7 @@ function ProductList({
                       data={producto}
                       key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
-                      tipoLista={2}
+                      tipoLista={1}
                     />
                   ))
                 }
@@ -249,7 +244,7 @@ function ProductList({
                       data={producto}
                       key={producto.id}
                       renderizarNuevamente={renderizarNuevamente}
-                      tipoLista={2}
+                      tipoLista={1}
                     />
                   ))
                 }

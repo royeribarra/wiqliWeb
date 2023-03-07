@@ -10,10 +10,16 @@ function BeneficiosSuscripcion()
         <Container className="contenedorSimple">
           
             <h2 className="tituloResaltante">¡Beneficios de ser suscriptor!</h2>
-            <h5 className="tituloEnunciativo">Tener los productos de primera clase.</h5>
-            <p className="textoDisclaimer">Recuerda que podría haber una mínima variación final en el precio según el peso de los productos vendidos por unidad al peso.</p>
-            <p className="textoDisclaimer">El pago del pedido se realizará cuando este sea entregado y
-             con cualquier medio de pago</p>
+
+            <p>Olvídate de las compras.</p>
+            <p>Solo actualiza tu pedido.</p>
+            <p>Calidad premium.</p>
+            <p>Productos frescos.</p>
+            <p>Garantía máxima (si algo no te gustó te lo cambiamos).</p>
+            <p>Flexibilidad.</p>
+            <p>5% de descuento en categoría carnes.</p>
+            <p>Regalo: Muestras de nuevos productos.</p>
+            
             <h3 className="mensajeFinalDestacado">Estaremos aquí para todas tus compras semanales</h3>
             <h3 className="mensajeFinalDestacado">A partir de ahora, solo planea tu</h3>
             <img
