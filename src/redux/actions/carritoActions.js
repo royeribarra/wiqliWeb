@@ -5,6 +5,8 @@ import {
     REMOVE_ALL_FROM_CART,
     CLEAR_CART,
     FILL_CART,
+    APPLY_COUPON,
+    CLEAR_COUPON
   } from "../../types";
   
 export const addToCart = (data) => ({ type: ADD_TO_CART, payload: data });
@@ -19,3 +21,7 @@ export const delFromCart = (id, all = false) =>
 export const clearCart = () => ({ type: CLEAR_CART });
 
 export const fillCart = (data) => ({ type: FILL_CART, payload: data });
+
+export const applyCoupon = (data) => ({ type: APPLY_COUPON, payload: data });
+
+export const clearCoupon = () => ({ type: CLEAR_COUPON });

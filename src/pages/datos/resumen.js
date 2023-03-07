@@ -6,8 +6,9 @@ function Resumen({
   aplicaCupon
 })
 {
+  console.log(aplicaCupon)
   const state = useSelector((state) => state);
-  const { total, delivery, totalProductos, descuento } = state.cart;
+  const { total, costoDelivery, totalProductos, descuentoCupon } = state.cart;
   const { infoUser } = state.user;
   return(
     <div className="desgloseTotal">
@@ -17,7 +18,7 @@ function Resumen({
       </div>
       <div className="totalesAPagar">
         <h6 className="tituloCampo">Delivery</h6>
-        <h6 className="datoCampo">S/ {parseFloat(delivery).toFixed(2)}</h6>
+        <h6 className="datoCampo">S/ {parseFloat(costoDelivery).toFixed(2)}</h6>
       </div>
       {
         infoUser.billetera.saldo > 0 &&
@@ -30,14 +31,14 @@ function Resumen({
         aplicaCupon && 
           <div className="totalesAPagar" >
             <h6 className="tituloCampo">Descuento</h6>
-            <h6 className="datoCampo">- S/ {parseFloat(descuento).toFixed(2)}</h6>
+            <h6 className="datoCampo">- S/ {parseFloat(descuentoCupon).toFixed(2)}</h6>
           </div>
       }
       <hr></hr>
       <div className="totalesAPagar">
         <h6 className="tituloCampo">Total</h6>
         <h6 className="datoCampo">
-          S/ {parseFloat(totalProductos + delivery).toFixed(2)}
+          S/ {parseFloat(totalProductos + costoDelivery - descuentoCupon).toFixed(2)}
         </h6>
       </div>
     </div>

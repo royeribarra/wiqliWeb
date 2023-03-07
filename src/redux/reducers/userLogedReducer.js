@@ -17,11 +17,11 @@ export const userInitialState = {
         referencia: '',
         isSuscrito: false,
         billetera: {
-            saldo: 0
+            saldo: 0.00
         }
     },
     codigoUser: '',
-    descuentoReferidos: 0
+    descuentoReferidos: 0.00
 };
 
 function userLogedReducer(state = userInitialState, action)

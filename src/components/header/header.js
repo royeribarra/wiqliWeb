@@ -130,7 +130,7 @@ function Header()
                     (<div>
                       <div>
                         <h2 className="tituloHeader">{ infoUser.name }</h2>
-                        {/* <div className="infoDestacadaHeader header-suscripcion">
+                        <div className="infoDestacadaHeader header-suscripcion">
                           <h2>Suscripción</h2>
                           {
                             infoUser.isSuscrito ? 
@@ -154,7 +154,7 @@ function Header()
                           <Nav.Link  href="/beneficios-suscripcion" className="linkBeneficios">
                             <p className="tituloHeaderFondo-rojo">Ver beneficios</p>
                           </Nav.Link>
-                        </div> */}
+                        </div>
                         <div className="infoDestacadaHeader header-referido">
                           <h2 className="tituloHeaderDestacado">Cupón de referido</h2>
                           <h4 className="textoInfoDestacadaHeader">{ codigoUser }</h4>

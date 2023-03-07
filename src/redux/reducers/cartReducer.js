@@ -4,7 +4,9 @@ import {
   REMOVE_ONE_FROM_CART,
   REMOVE_ALL_FROM_CART,
   CLEAR_CART,
-  FILL_CART
+  FILL_CART,
+  APPLY_COUPON,
+  CLEAR_COUPON
 } from "../../types";
 
 export const carritoInitialState = {
@@ -14,16 +16,14 @@ export const carritoInitialState = {
   otrasVerduras: [],
   otrasFrutosSecos: [],
   cart: [],
-  total: 0,
-  delivery: 10,
-  totalProductos: 0,
-  descuento: 0
+  total: 0.00,
+  costoDelivery: 10.00,
+  totalProductos: 0.00,
+  descuentoCupon: 0.00
 };
 
 export function cartReducer(state = carritoInitialState, action){ 
   function getTotal (carrito = []){
-    // let carrito1 = [];
-    // console.log(carrito1);
     let total = carrito.reduce((accumulator, currentValue) => 
       accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0
     );
@@ -101,7 +101,21 @@ export function cartReducer(state = carritoInitialState, action){
         cart: action.payload,
         totalProductos: getTotal(action.payload)
       };
+    
+    case APPLY_COUPON:
       
+      return {
+        ...state,
+        descuentoCupon: action.payload.tipo === 1 ? 
+          state.totalProductos*parseFloat(action.payload.monto)/100 : 
+          action.payload.monto
+      };
+
+    case CLEAR_COUPON:
+      return {
+        ...state,
+        descuentoCupon: 0.00
+      };
     default:
       return state;
   }

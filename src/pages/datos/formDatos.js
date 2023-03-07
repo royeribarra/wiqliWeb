@@ -6,7 +6,6 @@ import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import {Buffer} from 'buffer';
 import Cleave from 'cleave.js/react';
 
 import { UsuarioService } from "../../servicios/usuarioService";
@@ -17,7 +16,9 @@ import TarjetaBancoComponente from "../../components/tarjetaBancoComponente/tarj
 import PagoContraentrega from "../../components/tarjetaBancoComponente/pagoContraentrega";
 import PagoWeb from "../../components/tarjetaBancoComponente/pagoWeb";
 import { 
-  clearCart
+  clearCart,
+  applyCoupon,
+  clearCoupon
 } from "../../redux/actions/carritoActions";
 
 const { TextArea } = Input;
@@ -27,20 +28,14 @@ function FormDatos({ setBlockPage })
   let history = useNavigate();
   
   const state = useSelector((state) => state);
-  const { cart } = state.cart;
+  const { descuentoCupon, costoDelivery, totalProductos } = state.cart;
   const { isLoged, infoUser, codigoUser, descuentoReferidos } = state.user;
   const dispatch = useDispatch();
 
-  const storageService = new StorageService();
   const [form] = Form.useForm();
   const [messageError, setMessageError] = useState();
   const [tipoBanco, setTipoBanco] = useState();
   const [tipoPago, setTipoPago] = useState(1);
-  const [montoBilletera, setMontoBilletera] = useState(0);
-  const [descuento, setDescuento] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [totalProductos, setTotalProductos] = useState(0);
-  const [delivery, setDelivery] = useState(10);
   const [aplicaCupon, setAplicaCupon] = useState(false);
   const [hour, setHour] = useState(10);
   const [day, setDay] = useState();
@@ -73,10 +68,10 @@ function FormDatos({ setBlockPage })
       otrosFrutosSecos: localStorage.getItem('otrasFrutasSecas'),
       cliente: cliente,
       cupon: aplicaCupon,
-      codigoCupon: values.descuento,
-      descuento: descuento,
-      total: parseFloat(total + delivery).toFixed(2),
-      saldoBilletera: montoBilletera,
+      codigoCupon: values.codigoCupon,
+      descuento: descuentoCupon,
+      total: totalProductos + costoDelivery - descuentoCupon,
+      saldoBilletera: infoUser.billetera.saldo,
       datosTarjeta: {
         numeroTarjeta: values.numeroTarjeta,
         fechaVencimiento: values.fechaVencimiento,
@@ -127,25 +122,9 @@ function FormDatos({ setBlockPage })
     }
   }
 
-  const calcularTotal = () => {
-    let total = 0;
-    cart.forEach((producto) => {
-      if(producto.cantidad_minima === 1){
-        total += producto.cantidad * producto.precio_unitario
-      }else{
-        total += producto.cantidad * (producto.precio_unitario*producto.cantidad_minima)
-      }
-    });
-    setTotalProductos(total);
-    setTotal(total);
-    if(montoBilletera > 0){
-      setTotal(total - montoBilletera);
-    }
-  }
-
   const validarCupon = () => {
     let url = `${process.env.REACT_APP_BASE_PATH}/wiqli/verificar-cupon`;
-    let cupon = form.getFieldValue('descuento');
+    let cupon = form.getFieldValue('codigoCupon');
     let correo = form.getFieldValue('correo');
     if(cupon && correo)
     {
@@ -153,14 +132,9 @@ function FormDatos({ setBlockPage })
         if(data.state && totalProductos >= configuracion.monto_minimo_compra_referido)
         {
           setAplicaCupon(true);
-          if(data.tipo === 1){
-            setDescuento(totalProductos*parseFloat(data.monto)/100);
-            setTotal(totalProductos - (totalProductos*parseFloat(data.monto)/100));
-          }else if(data.tipo === 2)
-          {
-            setTotal(totalProductos - parseFloat(data.monto));
-            setDescuento(parseFloat(data.monto));
-          }
+          data.tipo === 1 ? 
+            dispatch(applyCoupon({monto: data.monto, tipo: 1})) : 
+            dispatch(applyCoupon({monto: data.monto, tipo: 2}));
           toastr.success("Cupón agregado correctamente.");
         }
         else if(!data.state){
@@ -202,17 +176,22 @@ function FormDatos({ setBlockPage })
     }else{
       if(changedValues.correo){
         setAplicaCupon(false);
-        setDescuento(0);
         form.setFieldsValue({
-          descuento: ''
+          codigoCupon: '',
+          correo: changedValues.correo.replace(/ /g, "")
         });
       }
-      let newVallues = allValues;
-      if(newVallues.fecha_recojo){
-        allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
-      }
-      localStorage.setItem('cliente', JSON.stringify(allValues));
-      setCliente(allValues);
+      // let newVallues = allValues;
+      // if(newVallues.fecha_recojo){
+      //   allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
+      // }
+      let newCliente = {
+        ...allValues,
+        correo: allValues.correo.replace(/ /g, ""),
+        fecha_recojo: allValues.fecha_recojo ? (allValues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10) : ''
+      };
+      localStorage.setItem('cliente', JSON.stringify(newCliente));
+      setCliente(newCliente);
     }
   }
 
@@ -226,10 +205,6 @@ function FormDatos({ setBlockPage })
   const onChangeTipoPago = (e) => {
     setTipoPago(Number(e.target.value));
   };
-
-  useEffect(() => {
-    calcularTotal();
-  }, [productos, cart, montoBilletera]);
 
   useEffect(() => {
     if(localStorage.getItem('productos')){
@@ -262,6 +237,10 @@ function FormDatos({ setBlockPage })
     axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/configuracion`).then(({data})=> {
       setConfiguracion(data);
     });
+  }, []);
+
+  useEffect(()=> {
+    dispatch(clearCoupon());
   }, []);
 
   return(
@@ -321,7 +300,7 @@ function FormDatos({ setBlockPage })
             label="Correo de contacto"
             rules={[
               { required: true, message: 'Por favor ingresa tu correo' },
-              // { type: 'email', message: 'No es un E-mail válido.'},
+              { type: 'email', message: 'No es un E-mail válido.'},
             ]}                
           >
             <Input className="form-control" placeholder="Ej. nombre@mail.com" disabled={isLoged} />
@@ -379,10 +358,21 @@ function FormDatos({ setBlockPage })
           <div className="miniSeccion" >
             <h6 className="tituloMiniSeccion">Agregar cupón de descuento</h6>
             {
-              !aplicaCupon && 
-              <>
+              aplicaCupon ?
+              (<>
                 <Form.Item 
-                  name="descuento"
+                  label="Cupón agregado con éxito."
+                  name="codigoCupon"
+                  rules={[{ required: false }]}
+                >
+                </Form.Item>
+                <Button type="primary" className="botonFinal" onClick={modificarCupon}>
+                  Modificar
+                </Button>
+              </>) :
+              (<>
+                <Form.Item 
+                  name="codigoCupon"
                   rules={[{ required: false }]}
                 >
                   <Input className="form-control"  placeholder="Ingresa tu cupón de referido." />
@@ -390,33 +380,13 @@ function FormDatos({ setBlockPage })
                 <Button type="primary" className="botonFinal" onClick={validarCupon}>
                   Agregar
                 </Button>
-              </>
+              </>)
             }
-            {
-              aplicaCupon && 
-              <>
-                <Form.Item 
-                  label="Cupón agregado con éxito."
-                  name="descuento"
-                  rules={[{ required: false }]}
-                >
-                </Form.Item>
-                <Button type="primary" className="botonFinal" onClick={modificarCupon}>
-                  Modificar
-                </Button>
-              </>
-            }
-          
           </div>
         </div>
         <h3 className="mensajeFinalDestacado">Total de pedido:</h3>
-          <Resumen 
-            total={total}
-            totalProductos={totalProductos}
-            delivery={delivery}
-            descuento={descuento}
+          <Resumen
             aplicaCupon={aplicaCupon}
-            montoBilletera={montoBilletera}
           />
         <div className="contenedorMiniSeccion">
           <div className="miniSeccion" >
