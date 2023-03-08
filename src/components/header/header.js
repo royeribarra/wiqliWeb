@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Navbar, Container, Nav, Offcanvas, Button } from "react-bootstrap";
 
 import logo from "../../images/miniLogo.png"
@@ -10,7 +10,8 @@ import StorageService from '../../servicios/storageService';
 import LogService from '../../servicios/logService';
 
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { Alert } from 'antd';
+import { Alert, Space, Tour } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 import './header.css';
 import Carrito from "../carrito/carrito";
 import { useSelector } from "react-redux";
@@ -23,9 +24,38 @@ function Header()
   const location = useLocation();
   const state = useSelector((state) => state);
   const { infoUser, isLoged, codigoUser, descuentoReferidos} = state.user;
+
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
   const [isHome, setIsHome] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showCarrito, setShowCarrito] = useState(false);
+  const [openTourSuscripcion, setOpenTourSuscripcion] = useState(false);
+  
+  const steps = [
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      cover: (
+        <img
+          alt="tour.png"
+          src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
+        />
+      ),
+      target: () => ref1.current,
+    },
+    {
+      title: 'Save',
+      description: 'Save your changes.',
+      target: () => ref2.current,
+    },
+    {
+      title: 'Other Actions',
+      description: 'Click to see other actions.',
+      target: () => ref3.current,
+    },
+  ];
   
   const copiarCodigoReferido = () => {
     setShowAlert(true);
@@ -111,7 +141,7 @@ function Header()
                 style={{ cursor:"pointer" }}
               /> 
             }
-              
+            
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -124,6 +154,14 @@ function Header()
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
+              <Space>
+        <Button ref={ref1}> Upload</Button>
+        <Button ref={ref2} type="primary">
+          Save
+        </Button>
+        <Button ref={ref3} icon={<EllipsisOutlined />} />
+      </Space>
+      <Tour open={openTourSuscripcion} onClose={() => setOpenTourSuscripcion(false)} steps={steps} />
                 <Nav className="cuerpoToggle">
                   {
                     isLoged ? 
@@ -145,11 +183,11 @@ function Header()
                                   Cancelar suscripción
                                 </Button>
                               </div>)
-                              : (<Nav.Link href="/crear-suscripcion" className="linkCrearSuscripcion">
-                                  <Button type="primary" className="botonCopiado">
+                              : (
+                                
+                                  <Button type="primary" className="botonCopiado" onClick={() => setOpenTourSuscripcion(true)}>
                                     Suscríbete
-                                  </Button>
-                                </Nav.Link>)
+                                  </Button>)
                           }
                           <Nav.Link  href="/beneficios-suscripcion" className="linkBeneficios">
                             <p className="tituloHeaderFondo-rojo">Ver beneficios</p>

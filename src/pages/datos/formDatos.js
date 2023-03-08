@@ -181,10 +181,6 @@ function FormDatos({ setBlockPage })
           correo: changedValues.correo.replace(/ /g, "")
         });
       }
-      // let newVallues = allValues;
-      // if(newVallues.fecha_recojo){
-      //   allValues.fecha_recojo = (newVallues.fecha_recojo.toLocaleString('en-GB').replace('/', '-')).replace('/', '-').substr(0, 10);
-      // }
       let newCliente = {
         ...allValues,
         correo: allValues.correo.replace(/ /g, ""),
