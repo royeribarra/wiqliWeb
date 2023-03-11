@@ -21,7 +21,7 @@ function ConfirmacionSuscripcion()
           <NavLink to="/editar-suscripcion" style={{ color: "black"}}><u> modificar lista</u></NavLink>
         </p>
         <p className="textoDisclaimer">
-          2. Se realizará el cobro de tu tarjeta un día antes del día de entrega de tus productos.
+          3. Se realizará el cobro de tu tarjeta un día antes del día de entrega de tus productos.
         </p>
         <h3 className="mensajeFinalDestacado">Estaremos aquí para todas tus compras semanales</h3>
         <h3 className="mensajeFinalDestacado">A partir de ahora, solo planea tu</h3>

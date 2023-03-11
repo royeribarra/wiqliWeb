@@ -12,12 +12,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { SuscripcionService } from "../../servicios/suscripcionservice";
 import { SclearCart, SclearExtra } from "../../redux/actions/suscripcionActions";
 import { showLoader } from "../../redux/actions/loaderActions";
+import { UsuarioService } from "../../servicios/usuarioService";
+import StorageService from "../../servicios/storageService";
+import { setInfoCliente } from "../../redux/actions/clienteLogAction";
 
 const { Option } = Select;
 
 function MetodoPago()
 {
   const suscripcionService = new SuscripcionService();
+  const storageService = new StorageService();
   const state = useSelector((state) => state);
   let history = useNavigate();
   const dispatch = useDispatch();
@@ -58,6 +62,15 @@ function MetodoPago()
       if(data.state){
         dispatch(SclearCart());
         dispatch(SclearExtra());
+        
+        const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
+        if(tknData.status){
+          const userService = new UsuarioService();
+          userService.getInfoUser().then(({data})=> {
+            console.log("actualizando info del cliente")
+            dispatch(setInfoCliente(data));
+          });
+        }
         history(`/confirmacion-suscripcion`);
       }else if(!data.state){
         setMessageError(data.message);
