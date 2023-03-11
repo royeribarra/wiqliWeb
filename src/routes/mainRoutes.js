@@ -24,6 +24,11 @@ import { UsuarioService } from "../servicios/usuarioService";
 import axios from "axios";
 import { fillProducts } from "../redux/actions/productosTiendaActions";
 import { fillCart } from "../redux/actions/carritoActions";
+import SeleccionPeriodo from "../pages/suscripcion/seleccionPeriodo";
+import SeleccionProductos from "../pages/suscripcion/seleccionProductos";
+import MetodoPago from "../pages/suscripcion/metodoPago";
+import { SfillCart, SfillExtra } from "../redux/actions/suscripcionActions";
+import ConfirmacionSuscripcion from "../pages/suscripcion/confirmacionSuscripcion";
 
 function MainRoutes()
 {
@@ -49,6 +54,13 @@ function MainRoutes()
   useEffect(()=> {
     const productos = JSON.parse(localStorage.getItem("productos"));
     dispatch(fillCart(productos ? productos : []));
+  }, []);
+
+  useEffect(()=> {
+    const subProductos = JSON.parse(localStorage.getItem("subProductos"));
+    dispatch(SfillCart(subProductos ? subProductos : []));
+    const xtraSubCart = JSON.parse(localStorage.getItem("xtraSubCart"));
+    dispatch(SfillExtra(xtraSubCart ? xtraSubCart : []));
   }, []);
 
   useEffect(()=> {
@@ -81,9 +93,16 @@ function MainRoutes()
         <Route exact path="/datos" element={<Datos />} />
         <Route exact path="/confirmacion" element={<Confirmacion />} />
 
-        <Route exact path="/crear-suscripcion" element={<CreacionSuscripcion />} />
+        <Route exact path="/crear-suscripcion/" element={<CreacionSuscripcion />}>
+          <Route exact path="" element={<BeneficiosSuscripcion />} />
+          <Route exact path="seleccion-periodo" element={<SeleccionPeriodo />} />
+          <Route exact path="seleccion-productos" element={<SeleccionProductos />} />
+          <Route exact path="metodo-pago" element={<MetodoPago />} />
+        </Route>
+
         <Route exact path="/beneficios-suscripcion" element={<BeneficiosSuscripcion />} />
-        <Route exact path="/editar-suscripcion" element={<EditarSuscripcion />} />
+        <Route exact path="/confirmacion-suscripcion" element={<ConfirmacionSuscripcion />} />
+        <Route exact path="/editar-suscripcion" element={<CreacionSuscripcion />} />
 
         <Route exact path="/registro-completo" element={<PreConfirmacion />} />
         <Route exact path="/verificar-correo/:codigo" element={<ConfirmacionCorreo />} />

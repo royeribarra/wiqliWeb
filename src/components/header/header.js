@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Container, Nav, Offcanvas, Button } from "react-bootstrap";
 
 import logo from "../../images/miniLogo.png"
@@ -11,7 +11,7 @@ import LogService from '../../servicios/logService';
 
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { Alert, Space, Tour } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
+
 import './header.css';
 import Carrito from "../carrito/carrito";
 import { useSelector } from "react-redux";
@@ -25,37 +25,11 @@ function Header()
   const state = useSelector((state) => state);
   const { infoUser, isLoged, codigoUser, descuentoReferidos} = state.user;
 
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
+  
   const [isHome, setIsHome] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showCarrito, setShowCarrito] = useState(false);
-  const [openTourSuscripcion, setOpenTourSuscripcion] = useState(false);
   
-  const steps = [
-    {
-      title: 'Upload File',
-      description: 'Put your files here.',
-      cover: (
-        <img
-          alt="tour.png"
-          src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
-        />
-      ),
-      target: () => ref1.current,
-    },
-    {
-      title: 'Save',
-      description: 'Save your changes.',
-      target: () => ref2.current,
-    },
-    {
-      title: 'Other Actions',
-      description: 'Click to see other actions.',
-      target: () => ref3.current,
-    },
-  ];
   
   const copiarCodigoReferido = () => {
     setShowAlert(true);
@@ -79,10 +53,6 @@ function Header()
 
   const toggleShowCarrito = () => {
     setShowCarrito((s) => !s);
-  };
-
-  const createSusbscripcion = () => {
-    history(`/crear-suscripcion`);
   };
 
   const editarSuscripcion = () => {
@@ -154,14 +124,6 @@ function Header()
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-              <Space>
-        <Button ref={ref1}> Upload</Button>
-        <Button ref={ref2} type="primary">
-          Save
-        </Button>
-        <Button ref={ref3} icon={<EllipsisOutlined />} />
-      </Space>
-      <Tour open={openTourSuscripcion} onClose={() => setOpenTourSuscripcion(false)} steps={steps} />
                 <Nav className="cuerpoToggle">
                   {
                     isLoged ? 
@@ -184,10 +146,11 @@ function Header()
                                 </Button>
                               </div>)
                               : (
-                                
-                                  <Button type="primary" className="botonCopiado" onClick={() => setOpenTourSuscripcion(true)}>
-                                    Suscríbete
-                                  </Button>)
+                                <Nav.Link href="/crear-suscripcion">
+                                  <Button type="primary" className="botonCopiado">
+                                    Suscribirme
+                                  </Button>
+                                </Nav.Link>)
                           }
                           <Nav.Link  href="/beneficios-suscripcion" className="linkBeneficios">
                             <p className="tituloHeaderFondo-rojo">Ver beneficios</p>
@@ -215,7 +178,7 @@ function Header()
                           </p>
                         </div>
                         <div className="infoDestacadaHeader">
-                          <h2 className="tituloHeaderDestacado">Descuento acumulado por referidos</h2>
+                          <h2 className="tituloHeaderDestacado">Descuento disponible por referidos</h2>
                             <h4 className="textoInfoDestacadaHeader">
                               S/ { parseFloat(descuentoReferidos).toFixed(2) }
                             </h4>

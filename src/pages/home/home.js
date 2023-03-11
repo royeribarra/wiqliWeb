@@ -216,33 +216,33 @@ function Home()
           
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
             <div className='contenedorBotones'>
-            <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
-            <div onClick={toggleShowCarrito} className='botonDeSiguiente'>
-            <div className='botonOrdenado'>
-             
-            
-              <img
-                src={carrito}
-                height="30"
-                className="logoNav"
-                alt="wiqli"
-                style={{ cursor:"pointer" }}
-              />
-              <p className='textoDePrecio'>S/ {parseFloat(total).toFixed(2)}</p>
-            </div>
-            </div>
-              <Button className='botonDeSiguiente' onClick={goToFormularioDatos}>
+              <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
+              <div onClick={toggleShowCarrito} className='botonDeSiguiente'>
+                <div className='botonOrdenado'>
+                
+                
+                  <img
+                    src={carrito}
+                    height="30"
+                    className="logoNav"
+                    alt="wiqli"
+                    style={{ cursor:"pointer" }}
+                  />
+                  <p className='textoDePrecio'>S/ {parseFloat(total).toFixed(2)}</p>
+                </div>
+              </div>
+              <div className='botonDeSiguiente' onClick={goToFormularioDatos} style={{ cursor:"pointer" }}>
                 <div className='botonOrdenado'>
                   <div className='clickASiguiente'>
-                    <p>Siguiente</p>
+                    <p className='textoDePrecio'>Siguiente</p>
                     <img 
                       src={siguiente}
                       alt="wiqli compras semanales"
                     />
                   </div>
                 </div>
-              </Button>
               </div>
+            </div>
           </Affix>
         </Container>
       </div>

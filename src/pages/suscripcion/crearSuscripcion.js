@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Container } from "react-bootstrap";
-import { Form, Input, Button, Radio } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { Container, Nav } from "react-bootstrap";
+import { Form, Input, Button, Radio, Space, Tour } from 'antd';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader/loader";
 import { toastr } from 'react-redux-toastr';
 import DatePicker from "react-datepicker";
@@ -16,6 +16,9 @@ import Discover from '../../assets/images/symbols.svg';
 import { SuscripcionService } from '../../servicios/suscripcionservice';
 import { showLoader } from '../../redux/actions/loaderActions';
 import { useDispatch } from 'react-redux';
+import { EllipsisOutlined } from '@ant-design/icons';
+import ListaProductosSuscripcion from './listaProductosSuscripcion';
+import "./suscripcion.css";
 
 
 function CreacionSuscripcion() 
@@ -23,10 +26,42 @@ function CreacionSuscripcion()
   let history = useNavigate();
   const dispatch = useDispatch();
   const suscripcionService = new SuscripcionService();
+  
   const [form] = Form.useForm();
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
   const [messageError, setMessageError] = useState();
   const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
   const [tipoBanco, setTipoBanco] = useState();
+  const [openTourSuscripcion, setOpenTourSuscripcion] = useState(false);
+  
+  const steps = [
+    {
+      title: 'Elige tu pedido base',
+      placement: 'bottom',
+      description: <div className='listaDeProductosSuscripcion'><ListaProductosSuscripcion /></div>,
+      cover: (
+        <img
+          alt="tour.png"
+          src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
+        />
+      ),
+      target: () => ref1.current,
+    },
+    {
+      title: 'Selecciona tu día de entrega',
+      description: 'Save your changes.',
+      placement: 'bottom',
+      target: () => ref2.current,
+    },
+    {
+      title: 'Bríndanos tu información',
+      description: 'Click to see other actions.',
+      placement: 'bottom',
+      target: () => ref3.current,
+    },
+  ];
 
   const onChangeBank = (type) => {
     setTipoBanco(type.toUpperCase());
@@ -54,125 +89,14 @@ function CreacionSuscripcion()
     }
   };
 
+  const goToSelectPeriod = () => {
+    history('crear-suscripcion/seleccionar-periodo')
+  };
+
   return (
     <div className="baseWiqliForm">
       <Container className="contenedorSimple">
-        <h2 className="tituloPrincipal">Suscríbete y obtén beneficios exclusivos.</h2>
-        <Form
-          layout="vertical"
-          onFinish={onFinish}
-        >
-            <div className="grupoForm">
-              <div className="pasarelaDePago">
-                <div className="inputDataPago">
-                  <Form.Item 
-                    label="Dni" 
-                    name="dni"
-                    rules={[{ required: true, message: 'Por favor ingresa tu número de DNI.' }]} 
-                  >
-                    <Input className="form-control" placeholder="Ejm. 70019407" minLength={8} maxLength={8} />
-                  </Form.Item>
-                  <Form.Item 
-                    label="Número de tarjeta" 
-                    name="numeroTarjeta"
-                    rules={[{ required: true, message: 'Por favor ingresa el número de tarjeta.' }]} 
-                  >
-                    <Cleave
-                      className='ant-input'
-                      placeholder="4111 1111 1111 1111"
-                      options={{creditCard: true, onCreditCardTypeChanged: (type) => onChangeBank(type) }}
-                    />
-                  </Form.Item>
-                  <Form.Item 
-                    label="" 
-                    name="tipoBanco"
-                    hidden={true}
-                  >
-                  </Form.Item>
-                <div className="contenedorTarjetasAceptadas ">
-                <div className="tarjetasAceptadas">
-                    <img 
-                      src={Jcb} 
-                      className={tipoBanco === "JCB" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                      alt="JCB"
-                    />
-                    <img 
-                      src={DinnersClub} 
-                      className={tipoBanco === "DINERS" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                      alt='DINERS'
-                    />
-                    <img 
-                      src={MasterCard} 
-                      className={tipoBanco === "MASTERCARD" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                      alt="MASTERCARD"
-                    />
-                    <img 
-                      src={Visa} 
-                      className={tipoBanco === "VISA" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                      alt="VISA"  
-                    />
-                    <img 
-                      src={Discover} 
-                      className={tipoBanco === "DISCOVER" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                      alt="DISCOVER"
-                    />
-                    <img 
-                      src={AmericanExpress} 
-                      className={tipoBanco === "AMEX" ? "opacidad-normal tarjetaUsada" : "opacidad-aplicada tarjetaUsada"} 
-                      alt="AMEX"
-                    />
-
-                </div>
-              </div>
-              </div>
-                
-                <div className="inputGrande">
-                  <Form.Item
-                    label="Nombre en la tarjeta"
-                    name="nombreTarjeta"
-                    rules={[{ required: true, message: 'Ingresa el nombre que figura en la tarjeta' }]}                
-                  >
-                    <Input className="form-control" placeholder="JUAN GARCÍA"  />
-                  </Form.Item>
-                </div>
-                <div className="inputsMedianos">
-                  <div className="inputMediano">
-                    <Form.Item 
-                      name="fechaVencimiento" 
-                      label="Fecha de vencimiento" 
-                      rules={[{ required: true, message: 'Selecciona una fecha' }]}
-                    >
-                      <DatePicker 
-                        selected={fechaVencimientoTarjeta}
-                        dateFormat="MM/yyyy"
-                        onChange={(date) => setFechaVencimientoTarjeta(date)}
-                        showMonthYearPicker
-                      />
-                    </Form.Item>
-                  </div>
-                  <div className="inputMediano">
-                    <Form.Item 
-                      name="cvv" 
-                      label="CVV" 
-                      rules={[
-                        { required: true, message: 'Ingrese el cvv por favor.' }
-                      ]} 
-                    >
-                      <Input maxLength={4} minLength={3} placeholder="Ingrese el CVV" style={{ width: "100%"}} />
-                    </Form.Item>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {
-              <p>{messageError}</p>
-            }
-          <Form.Item>
-            <Button type="primary" htmlType="submit" className="botonFinal">
-              Suscríbete
-            </Button>
-          </Form.Item>
-        </Form>
+        <Outlet />
       </Container>
     </div>
   );

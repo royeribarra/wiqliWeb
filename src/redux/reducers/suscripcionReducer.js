@@ -4,116 +4,161 @@ import {
     S_REMOVE_ONE_FROM_CART,
     S_REMOVE_ALL_FROM_CART,
     S_CLEAR_CART,
-    S_FILL_CART
+    S_FILL_CART,
+    
+    S_ADD_TO_CART_EXTRA,
+    S_CLEAR_CART_EXTRA,
+    S_REMOVE_FROM_CART_EXTRA,
+    S_FILL_CART_EXTRA,
+    S_SET_PERIODO,
+    S_SET_DIA_RECOJO
   } from "../types";
   
   export const suscripcionInitialState = {
-    productos: [],
-    carnes: [],
-    frutas: [],
-    menestras: [],
-    verduras: [],
-    frutosSecos: [],
-    total: 0
+    xtraSubCart: [],
+    subCart: [],
+    totalProductos: 0.00,
+    periodo: 1,
+    diaRecojo: 1,
+    datosTarjeta:{
+      numeroTarjeta: '',
+      tipoBanco: '',
+      nombreTarjeta: '',
+      fechaVencimiento: '',
+      cvv: ''
+    }
   };
   
   export function suscripcionReducer(state = suscripcionInitialState, action){
+    function getTotal (carrito = [])
+    {
+      let total = carrito.reduce((accumulator, currentValue) => 
+        accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0
+      );
+      return total;
+    };
+
     switch (action.type) {
+
       case S_ADD_TO_CART:
-        let newItem = action.payload;
-        let inItem = state.productos.find((item) => item.id === action.payload.id);
-  
-        if(localStorage.getItem("productos"))
-        {
-          if(!inItem){
-            let cartTemp = [...state.productos, { ...newItem, cantidad: 1 }];
-            localStorage.setItem("productos", JSON.stringify(cartTemp));
-          }
-        }else{
-          let cartTemp = [...state.productos, { ...newItem, cantidad: 1 }];
-          localStorage.setItem("productos", JSON.stringify(cartTemp));
-        }
-  
-        return {
-          ...state,
-          productos: [...state.productos, { ...newItem, cantidad: 1 }],
-        };
-  
-      case S_REMOVE_ALL_FROM_CART:
-  
-        let tempCart = state.productos.filter((item) => item.id !== action.payload);
-        if(localStorage.getItem("productos")){
-          localStorage.setItem("productos", JSON.stringify(tempCart));
-        }
-        return {
-          ...state,
-          productos: state.productos.filter((item) => item.id !== action.payload),
-        };
-  
-      case S_CLEAR_CART:
-        return suscripcionInitialState;
-  
-      case S_ADD_ONE_PRODUCT:
-  
-        let cartTemp = state.productos.map((item) =>
-                          item.id === action.payload
-                            ? { ...item, cantidad: item.cantidad + 1 }
+
+      let newItem = action.payload;
+      let inItem = state.subCart.find((item) => item.id === action.payload.id);
+      let cartTempAddProduct = [...state.subCart, { ...newItem, cantidad: 1 }];
+
+      !inItem ? localStorage.setItem("subProductos", JSON.stringify(cartTempAddProduct)) 
+              : console.log("el producto ya existe");
+
+      return {
+        ...state,
+        subCart: cartTempAddProduct,
+        totalProductos: getTotal(cartTempAddProduct)
+      };
+
+    case S_REMOVE_ALL_FROM_CART:
+
+      let tempRemoveCart = state.subCart.filter((item) => item.id !== action.payload);
+      localStorage.setItem("subProductos", JSON.stringify(tempRemoveCart));
+      return {
+        ...state,
+        subCart: tempRemoveCart,
+        totalProductos: getTotal(tempRemoveCart)
+      };
+
+    case S_CLEAR_CART:
+      return suscripcionInitialState;
+
+    case S_ADD_ONE_PRODUCT:
+
+      let cartTempAddOne = state.subCart.map((item) =>
+                            item.id === action.payload
+                              ? { ...item, cantidad: item.cantidad + 1 }
+                              : item);
+      localStorage.setItem("subProductos", JSON.stringify(cartTempAddOne));    
+
+      return {
+        ...state,
+        subCart: cartTempAddOne,
+        totalProductos: getTotal(cartTempAddOne)
+      }
+
+    case S_REMOVE_ONE_FROM_CART:
+      let itemToDelete = state.subCart.find((item) => item.id === action.payload);
+      let itemMinusOne = state.subCart.map((item) =>
+                            item.id === action.payload
+                            ? { ...item, cantidad: item.cantidad - 1 }
                             : item);
-  
-        if(localStorage.getItem("productos")){
-          localStorage.setItem("productos", JSON.stringify(cartTemp));
-        }                    
-  
-        return {
-          ...state,
-          productos: state.productos.map((item) =>
-            item.id === action.payload
-              ? { ...item, cantidad: item.cantidad + 1 }
-              : item
-          ),
-        }
-  
-      case S_REMOVE_ONE_FROM_CART:
-        let itemToDelete = state.productos.find((item) => item.id === action.payload);
-  
-        if(localStorage.getItem("productos")){
-          let cartTemp = itemToDelete.cantidad > 1
-          ? {
-              ...state.productos.map((item) =>
-                item.id === action.payload
-                  ? { ...item, cantidad: item.cantidad - 1 }
-                  : item
-              ),
-            }
-          : {
-              ...state,
-              productos: state.productos.filter((item) => item.id !== action.payload),
-            };
-          localStorage.setItem("productos", JSON.stringify(cartTemp));
-        }
-  
-        return itemToDelete.cantidad > 1
-          ? {
-              ...state,
-              productos: state.productos.map((item) =>
-                item.id === action.payload
-                  ? { ...item, cantidad: item.cantidad - 1 }
-                  : item
-              ),
-            }
-          : {
-              ...state,
-              productos: state.productos.filter((item) => item.id !== action.payload),
-            };
-  
-      case S_FILL_CART:
-        return {
-          ...state,
-          productos: action.payload
-        };
+      let cartTempRemove = itemToDelete.cantidad > 1
+      ? itemMinusOne
+      : state.subCart;
+      localStorage.setItem("subProductos", JSON.stringify(cartTempRemove));
+
+      return itemToDelete.cantidad > 1 
+              ?{
+                ...state,
+                subCart: itemMinusOne,
+                totalProductos: getTotal(itemMinusOne)
+              } : {
+                ...state,
+                subCart: state.subCart.filter((item) => item.id !== action.payload),
+                totalProductos: getTotal(state.subCart.filter((item) => item.id !== action.payload))
+              };
+
+    case S_FILL_CART:
+      return {
+        ...state,
+        subCart: action.payload,
+        totalProductos: getTotal(action.payload)
+      };
+
+      //para los extras
+    case S_ADD_TO_CART_EXTRA:
+      let newItemE = action.payload;
+      let inItemE = state.xtraSubCart.find((item) => item.id === action.payload.id);
+      let cartTmpAddProductE = [...state.xtraSubCart, { ...newItemE }];
+      
+      !inItemE ? localStorage.setItem("xtraSubCart", JSON.stringify(cartTmpAddProductE)) 
+              : console.log("el producto ya existe");
+
+      return {
+        ...state,
+        xtraSubCart: cartTmpAddProductE
+      };
+
+    case S_REMOVE_FROM_CART_EXTRA:
+
+      let tmpRemoveCartE = state.xtraSubCart.filter((item) => item.id !== action.payload);
+      localStorage.setItem("xtraSubCart", JSON.stringify(tmpRemoveCartE));
+      return {
+        ...state,
+        xtraSubCart: tmpRemoveCartE
+      };
+
+    case S_CLEAR_CART_EXTRA:
+      return {
+        ...state,
+        xtraSubCart: []
+      };
+
+    case S_FILL_CART_EXTRA:
+      return {
+        ...state,
+        xtraSubCart: action.payload
+      };
         
-      default:
-        return state;
+    case S_SET_PERIODO:
+      return {
+        ...state,
+        periodo: action.payload
+      };
+
+    case S_SET_DIA_RECOJO:
+      return {
+        ...state,
+        diaRecojo: action.payload
+      };
+    default:
+      return state;
     }
   
   }

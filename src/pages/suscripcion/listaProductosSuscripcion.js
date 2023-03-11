@@ -12,7 +12,7 @@ function ListaProductosSuscripcion()
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { productosTienda } = state.productos;
-  const { productos, carnes, frutas, menestras, verduras, frutosSecos, total } = state.suscripcion;
+  const { xtraSubCart, subCart } = state.suscripcion;
 
   return (
     <div>
@@ -35,19 +35,23 @@ function ListaProductosSuscripcion()
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  frutas.map( fruta => (
+                  xtraSubCart.filter((producto) => producto.categoriaId === 1)
+                  .map( producto => (
                     <ProductoAdicional 
-                      key={fruta.id}
-                      id={fruta.id}
-                      nombre={fruta.nombre}
-                      cantidad={fruta.cantidad}
-                      tipo={1}
+                      key={producto.id}
+                      id={producto.id}
+                      nombre={producto.nombre}
+                      cantidad={producto.cantidad}
+                      categoriaId={producto.categoriaId}
+                      tipoLista={2}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasFrutas" 
+                  nombre="eFrutas" 
                   title="Agregar otra fruta"
+                  categoriaId={1}
+                  tipoLista={2}
                 />
               </Accordion.Body>
           </Accordion.Item>
@@ -67,19 +71,23 @@ function ListaProductosSuscripcion()
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  verduras.map( verdura => (
+                  xtraSubCart.filter((producto) => producto.categoriaId === 2)
+                  .map( producto => (
                     <ProductoAdicional 
-                      key={verdura.id}
-                      id={verdura.id}
-                      nombre={verdura.nombre}
-                      cantidad={verdura.cantidad}
-                      tipo={2}
+                      key={producto.id}
+                      id={producto.id}
+                      nombre={producto.nombre}
+                      cantidad={producto.cantidad}
+                      categoriaId={producto.categoriaId}
+                      tipoLista={2}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasVerduras" 
+                  nombre="eVerduras" 
                   title="Agregar otra verdura"
+                  categoriaId={2}
+                  tipoLista={2}
                 />
               
               </Accordion.Body>
@@ -100,19 +108,23 @@ function ListaProductosSuscripcion()
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  carnes.map( carne => (
-                    <ProductoAdicional
-                      key={carne.id}
-                      id={carne.id}
-                      nombre={carne.nombre}
-                      cantidad={carne.cantidad}
-                      tipo={3}
+                  xtraSubCart.filter((producto) => producto.categoriaId === 3)
+                  .map( producto => (
+                    <ProductoAdicional 
+                      key={producto.id}
+                      id={producto.id}
+                      nombre={producto.nombre}
+                      cantidad={producto.cantidad}
+                      categoriaId={producto.categoriaId}
+                      tipoLista={2}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasCarnes"
+                  nombre="eCarnes"
                   title="Agregar otra carne"
+                  categoriaId={3}
+                  tipoLista={2}
                 />
               </Accordion.Body>
           </Accordion.Item>
@@ -132,19 +144,23 @@ function ListaProductosSuscripcion()
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  menestras.map( menestra => (
+                  xtraSubCart.filter((producto) => producto.categoriaId === 4)
+                  .map( producto => (
                     <ProductoAdicional 
-                      key={menestra.id}
-                      id={menestra.id}
-                      nombre={menestra.nombre}
-                      cantidad={menestra.cantidad}
-                      tipo={4}
+                      key={producto.id}
+                      id={producto.id}
+                      nombre={producto.nombre}
+                      cantidad={producto.cantidad}
+                      categoriaId={producto.categoriaId}
+                      tipoLista={2}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasMenestras"
+                  nombre="eMenestras"
                   title="Agregar otra menestra"
+                  categoriaId={4}
+                  tipoLista={2}
                 />
               </Accordion.Body>
           </Accordion.Item>
@@ -164,19 +180,23 @@ function ListaProductosSuscripcion()
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  frutosSecos.map( frutoSeco => (
+                  xtraSubCart.filter((producto) => producto.categoriaId === 5)
+                  .map( producto => (
                     <ProductoAdicional 
-                      key={frutoSeco.id}
-                      id={frutoSeco.id}
-                      nombre={frutoSeco.nombre}
-                      cantidad={frutoSeco.cantidad}
-                      tipo={4}
+                      key={producto.id}
+                      id={producto.id}
+                      nombre={producto.nombre}
+                      cantidad={producto.cantidad}
+                      categoriaId={producto.categoriaId}
+                      tipoLista={2}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasFrutasSecas"
+                  nombre="eFrutosSecas"
                   title="Agregar otro fruto seco"
+                  categoriaId={5}
+                  tipoLista={2}
                 />
               </Accordion.Body>
           </Accordion.Item>

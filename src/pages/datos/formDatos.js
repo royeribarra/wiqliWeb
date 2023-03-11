@@ -263,6 +263,7 @@ function FormDatos({ setBlockPage })
       <div className="grupoForm">
         <div className="itemForm">
           <Form.Item
+            className="labelProductoAdicional"
             label="Nombres"
             name="nombres"
             rules={[{ required: true, message: 'Por favor ingresa tu nombre' }]}                
@@ -272,6 +273,7 @@ function FormDatos({ setBlockPage })
         </div>
         <div className="itemForm">
           <Form.Item
+            className="labelProductoAdicional"
             label="Apellidos"
             name="apellidos"
             rules={[{ required: true, message: 'Por favor ingresa tus apellidos' }]}                
@@ -281,6 +283,7 @@ function FormDatos({ setBlockPage })
         </div>
         <div className="itemForm">
           <Form.Item
+            className="labelProductoAdicional"
             name="telefono"
             label="Número"
             rules={[
@@ -292,6 +295,7 @@ function FormDatos({ setBlockPage })
         </div>
         <div className="itemForm">
           <Form.Item
+            className="labelProductoAdicional"
             name="correo"
             label="Correo de contacto"
             rules={[
@@ -304,6 +308,7 @@ function FormDatos({ setBlockPage })
         </div>
         <div className="itemForm">
           <Form.Item
+            className="labelProductoAdicional"
             name="direccion"
             label="Dirección de entrega" 
             rules={[{ required: true, message: 'Por favor ingresa tu Dirección' }]}
@@ -313,6 +318,7 @@ function FormDatos({ setBlockPage })
         </div>
         <div className="itemForm">
           <Form.Item
+            className="labelProductoAdicional"
             name="referencia"
             label="Detalle de dirección"        
           >
@@ -320,11 +326,11 @@ function FormDatos({ setBlockPage })
           </Form.Item>
         </div>
         <div className="itemForm">
-          <Form.Item 
+          <Form.Item
             name="fecha_recojo" 
             label="Fecha de entrega" 
             rules={[{ required: true, message: 'Selecciona una fecha' }]}
-            className="selector-fecha"
+            className="selector-fecha labelProductoAdicional"
           >
             <DatePicker
               placeholderText="Elige tu fecha."
@@ -341,6 +347,7 @@ function FormDatos({ setBlockPage })
         </div>
         <div className="itemForm">
           <Form.Item 
+            className="labelProductoAdicional"
             label="Anotaciones adicionales"
             name="observacion"
             rules={[{ required: false }]}

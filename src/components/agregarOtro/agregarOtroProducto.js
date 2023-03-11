@@ -1,33 +1,43 @@
 import React, { useEffect } from "react";
 import './agregarOtro.css';
-import { Form, Button, Space  } from 'antd';
-import agregar from "../../images/agregar.png"
+import { Form, Space  } from 'antd';
 import check from "../../images/check.png"
 import TextArea from "antd/lib/input/TextArea";
 import { toastr } from "react-redux-toastr";
+import { useDispatch } from "react-redux";
+import { SaddToExtra } from "../../redux/actions/suscripcionActions";
 
-function AgregarOtroProducto({ title, nombre, agregarProductoStorage}) 
+function AgregarOtroProducto({ 
+  title, nombre, agregarProductoStorage, tipoLista, categoriaId
+}) 
 {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const onFinish = (e, values) => {
-  };
 
   const add = () => {
     let values = form.getFieldsValue();
-    let producto = {nombre: values.productoAdicionalNombre, cantidad: values.productoAdicionalCantidad, id: Math.floor(Math.random() * 1000)};
+    let producto = {
+      nombre: values.productoAdicionalNombre, 
+      cantidad: values.productoAdicionalCantidad, 
+      id: Math.floor(Math.random() * 1000),
+      categoriaId: categoriaId
+    };
     if(!values.productoAdicionalCantidad || !values.productoAdicionalNombre){
       toastr.error("Por favor ingresa un nombre y cantidad.");
       return;
     }
-    agregarProductoStorage(producto, nombre);
+
+    if(tipoLista === 2)
+    {
+      dispatch(SaddToExtra(producto));
+    }
+    
+    //agregarProductoStorage(producto, nombre);
     
     form.setFieldsValue({
       productoAdicionalNombre: '',
       productoAdicionalCantidad: ''
     });
-  }
-
-  const remove = () => {
   }
 
   useEffect(()=> {
@@ -44,12 +54,12 @@ function AgregarOtroProducto({ title, nombre, agregarProductoStorage})
       <h5>{title} (opcional)</h5>
       <Form
         form={form}
-        onFinish={onFinish}
       >
         <Space align="baseline productoAdicionalAAgregar">
           <div className="detallesDeProductoAgregado">
             <div className="itemForm">
               <Form.Item 
+                className="labelProductoAdicional"
                 label="Nombre de producto"
                 name={['productoAdicionalNombre']}
                 rules={[
@@ -64,6 +74,7 @@ function AgregarOtroProducto({ title, nombre, agregarProductoStorage})
             </div>
             <div className="itemForm">
               <Form.Item 
+                className="labelProductoAdicional"
                 label="Peso o cantidad"
                 name={['productoAdicionalCantidad']}
                 rules={[

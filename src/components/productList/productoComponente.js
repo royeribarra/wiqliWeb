@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 import quitar from "../../images/quitar.png"
 import mas from "../../images/menos.png"
@@ -23,6 +23,7 @@ function ProductoComponente({
 {
   const state = useSelector((state) => state);
   const { cart } = state.cart;
+  const { subCart } = state.suscripcion;
   const dispatch = useDispatch();
 
   const[cantidad, setCantidad] = useState(1);
@@ -53,16 +54,31 @@ function ProductoComponente({
   }
 
   useEffect(() => {
-    let existeProducto = cart.find((item) => item.id === data.id);
-    if(existeProducto)
+    if(tipoLista === 1)
     {
-      setCantidad(existeProducto.cantidad);
-      setTipoComponente(2);
-    }else{
-      setTipoComponente(1);
-      setCantidad(1);
+      let existeProducto = cart.find((item) => item.id === data.id);
+      if(existeProducto)
+      {
+        setCantidad(existeProducto.cantidad);
+        setTipoComponente(2);
+      }else{
+        setTipoComponente(1);
+        setCantidad(1);
+      }
+    }else if(tipoLista === 2)
+    {
+      let existeProducto = subCart.find((item) => item.id === data.id);
+      if(existeProducto)
+      {
+        setCantidad(existeProducto.cantidad);
+        setTipoComponente(2);
+      }else{
+        setTipoComponente(1);
+        setCantidad(1);
+      }
     }
-  }, [data, renderizarNuevamente, cart]);
+    
+  }, [data, renderizarNuevamente, cart, subCart]);
 
   return(
     <div className="productCard">
@@ -96,7 +112,6 @@ function ProductoComponente({
               </span>
             }</p>
           </div>
-          <Form.Check type="checkbox" label="" />
         </Card>
       }
       

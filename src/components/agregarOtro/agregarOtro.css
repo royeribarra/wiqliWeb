@@ -78,3 +78,8 @@
 .agregarProductoAdicional{
     cursor: pointer;
 }
+
+.labelProductoAdicional label{
+    color: #5FAD57 !important;
+    font-size: 16px !important;
+}
