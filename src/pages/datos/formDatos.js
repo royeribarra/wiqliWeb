@@ -217,7 +217,11 @@ function FormDatos({ setBlockPage })
         ...clienteStorage,
         tipoPago: 1
       });
-      setCliente(JSON.parse(localStorage.getItem('cliente')));
+      setCliente(
+        {...clienteStorage,
+          tipoPago: 1
+        }
+      );
     }
   }, []);
 
