@@ -34,5 +34,10 @@ export class UsuarioService extends MainService {
   {
     return axios.get(`${this.url}/update-state/${id}`, this.options);
   }
+
+  getProductosSuscripcion()
+  {
+    return axios.get(`${this.clearUrl}/cliente/suscripcion/productos/todos`, this.options);
+  }
 }
   

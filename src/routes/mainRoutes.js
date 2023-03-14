@@ -11,7 +11,7 @@ import Confirmacion from '../pages/paginaDeConfirmacion/confirmacion';
 import PreConfirmacion from "../pages/paginaDeConfirmacion/preConfirmacion";
 import ConfirmacionCorreo from "../pages/paginaDeConfirmacion/confirmacionCorreo";
 import BeneficiosSuscripcion from "../pages/suscripcion/beneficiosSuscripcion";
-import CreacionSuscripcion from "../pages/suscripcion/crearSuscripcion";
+import Suscripcion from "../pages/suscripcion/suscripcion";
 
 import StorageService from "../servicios/storageService";
 
@@ -45,6 +45,12 @@ function MainRoutes()
         const userService = new UsuarioService();
         userService.getInfoUser().then(({data})=> {
           dispatch(setInfoCliente(data));
+        });
+        userService.getProductosSuscripcion().then(({data})=> {
+          let subCart = data.productos.filter((item) => item.productoId !== 999);
+          let xtraSubCart = data.productos.filter((item) => item.productoId === 999);
+          dispatch(SfillCart(subCart));
+          dispatch(SfillExtra(xtraSubCart));
         });
         dispatch(login());
       }
@@ -93,16 +99,21 @@ function MainRoutes()
         <Route exact path="/datos" element={<Datos />} />
         <Route exact path="/confirmacion" element={<Confirmacion />} />
 
-        <Route exact path="/crear-suscripcion/" element={<CreacionSuscripcion />}>
-          <Route exact path="" element={<BeneficiosSuscripcion />} />
-          <Route exact path="seleccion-periodo" element={<SeleccionPeriodo />} />
-          <Route exact path="seleccion-productos" element={<SeleccionProductos />} />
+        <Route exact path="/crear-suscripcion/" element={<Suscripcion />}>
+          <Route exact path="" element={<BeneficiosSuscripcion suscripcion={1} />} />
+          <Route exact path="seleccion-periodo" element={<SeleccionPeriodo suscripcion={1} />} />
+          <Route exact path="seleccion-productos" element={<SeleccionProductos suscripcion={1} />} />
           <Route exact path="metodo-pago" element={<MetodoPago />} />
+        </Route>
+        <Route exact path="/editar-suscripcion/" element={<Suscripcion />}>
+          <Route exact path="" element={<BeneficiosSuscripcion suscripcion={2} />} />
+          <Route exact path="seleccion-periodo" element={<SeleccionPeriodo suscripcion={2} />} />
+          <Route exact path="seleccion-productos" element={<SeleccionProductos suscripcion={2}  />} />
+          <Route exact path="metodo-pago" element={<MetodoPago suscripcion={2} />} />
         </Route>
 
         <Route exact path="/beneficios-suscripcion" element={<BeneficiosSuscripcion />} />
         <Route exact path="/confirmacion-suscripcion" element={<ConfirmacionSuscripcion />} />
-        <Route exact path="/editar-suscripcion" element={<CreacionSuscripcion />} />
 
         <Route exact path="/registro-completo" element={<PreConfirmacion />} />
         <Route exact path="/verificar-correo/:codigo" element={<ConfirmacionCorreo />} />

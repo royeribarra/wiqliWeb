@@ -16,16 +16,6 @@ export default class LogService {
     return axios.post(LOG_ENDPOINTS.oauth, oauthObj);
   }
 
-  oauthTienda(values) {
-    const oauthObj = {
-      ...values,
-      client_id: process.env.REACT_APP_OAUTH_CLIENT_ID,
-      client_secret: process.env.REACT_APP_OAUTH_CLIENT_SECRET,
-      grant_type: process.env.REACT_APP_OAUTH_GRANT_TYPE
-    }
-    return axios.post(LOG_ENDPOINTS.oauthTienda, oauthObj);
-  }
-
   oauthCliente(values) {
     const oauthObj = {
       ...values,

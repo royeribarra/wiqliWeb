@@ -14,14 +14,14 @@ function ConfirmacionSuscripcion()
         
         <h5 className="tituloEnunciativo">¡Recuerda!</h5>
         <p className="textoDisclaimer">
-          1. Te notificaremos a tu correo electrónico, para que puedas validar la lista de productos que te enviaremos.
+          1. Te enviaremos un recordatorio de tu pedido el domingo a las 10 a.m., para que puedas modificarlo hasta el lunes a las 6 p.m.
         </p>
         <p className="textoDisclaimer">
-          2. En caso desees modificar la lista de productos, podrás hacerlo desde tu cuenta o desde el siguiente enlace: 
+          2. En caso desees modificar la lista de productos, podrás hacerlo desde tu cuenta o desde el link que te enviaremos al correo.
           <NavLink to="/editar-suscripcion" style={{ color: "black"}}><u> modificar lista</u></NavLink>
         </p>
         <p className="textoDisclaimer">
-          3. Se realizará el cobro de tu tarjeta un día antes del día de entrega de tus productos.
+          3. Se realizará el cobro de tu tarjeta los días lunes por la noche.
         </p>
         <h3 className="mensajeFinalDestacado">Estaremos aquí para todas tus compras semanales</h3>
         <h3 className="mensajeFinalDestacado">A partir de ahora, solo planea tu</h3>

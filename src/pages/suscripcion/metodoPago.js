@@ -22,6 +22,7 @@ function MetodoPago()
 {
   const suscripcionService = new SuscripcionService();
   const storageService = new StorageService();
+  const usuarioService = new UsuarioService();
   const state = useSelector((state) => state);
   let history = useNavigate();
   const dispatch = useDispatch();
@@ -58,25 +59,22 @@ function MetodoPago()
       }
     }
     suscripcionService.crearSuscripcion(data).then(({data})=> {
-      console.log(data);
-      if(data.state){
-        dispatch(SclearCart());
-        dispatch(SclearExtra());
-        
-        const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
-        if(tknData.status){
-          const userService = new UsuarioService();
-          userService.getInfoUser().then(({data})=> {
-            console.log("actualizando info del cliente")
-            dispatch(setInfoCliente(data));
-          });
-        }
-        history(`/confirmacion-suscripcion`);
-      }else if(!data.state){
+      // if(data.state){
+      //   dispatch(SclearCart());
+      //   dispatch(SclearExtra());
+      // }
+      if(!data.state){
         setMessageError(data.message);
       }
+    }).then(()=> {
+      usuarioService.getInfoUser().then(({data})=> {
+        dispatch(setInfoCliente(data));
+      });
+    }).then(()=> {
       dispatch(showLoader(false));
-    }).catch(error => {
+      history(`/confirmacion-suscripcion`);
+    })
+    .catch(error => {
       dispatch(showLoader(false));
       setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
     });
@@ -118,7 +116,7 @@ function MetodoPago()
           },
         ]}
       />
-      <h5 className="tituloEnunciativo">Completa con el método de pago:</h5>
+      <h5 className="tituloEnunciativo">Ingresa tu tarjeta para la suscripción</h5>
           
       <div className="contenedorPagos contenedorMiniSeccion">
         <Form

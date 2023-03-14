@@ -18,7 +18,7 @@ import {
 import "./productoComponente.css";
 
 function ProductoComponente({
-  data, renderizarNuevamente, tipoLista
+  data, renderizarNuevamente, tipoLista, suscripcion = null
 }) 
 {
   const state = useSelector((state) => state);
@@ -67,15 +67,29 @@ function ProductoComponente({
       }
     }else if(tipoLista === 2)
     {
-      let existeProducto = subCart.find((item) => item.id === data.id);
-      if(existeProducto)
+      if(suscripcion === 2)
       {
-        setCantidad(existeProducto.cantidad);
-        setTipoComponente(2);
+        let existeProducto = subCart.find((item) => item.productoId === data.id);
+        if(existeProducto)
+        {
+          setCantidad(existeProducto.cantidad);
+          setTipoComponente(2);
+        }else{
+          setTipoComponente(1);
+          setCantidad(1);
+        }
       }else{
-        setTipoComponente(1);
-        setCantidad(1);
+        let existeProducto = subCart.find((item) => item.id === data.id);
+        if(existeProducto)
+        {
+          setCantidad(existeProducto.cantidad);
+          setTipoComponente(2);
+        }else{
+          setTipoComponente(1);
+          setCantidad(1);
+        }
       }
+      
     }
     
   }, [data, renderizarNuevamente, cart, subCart]);

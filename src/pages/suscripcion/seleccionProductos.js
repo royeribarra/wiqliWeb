@@ -14,7 +14,7 @@ import siguiente from "../../images/siguiente.png";
 const { Option } = Select;
 const { Step } = Steps;
 
-function SeleccionProductos()
+function SeleccionProductos({suscripcion})
 {
   let history = useNavigate();
   const state = useSelector((state) => state);
@@ -61,14 +61,9 @@ function SeleccionProductos()
           },
         ]}
       />
-      {/* <Steps current={2} responsive={false}>
-        <Step title="" status="process" />
-        <Step title="" status="process" />
-        <Step title="" status="wait" />
-      </Steps> */}
       <div className='listaDeProductos'>
         <h5>Elige los productos que deseas recibir en cada periodo.</h5>
-        <ListaProductosSuscripcion />
+        <ListaProductosSuscripcion suscripcion={suscripcion} />
       </div>
       <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
         <div className='contenedorBotones'>

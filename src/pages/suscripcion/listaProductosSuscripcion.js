@@ -7,10 +7,9 @@ import AgregarOtroProducto from "../../components/agregarOtro/agregarOtroProduct
 import ProductoComponente from "../../components/productList/productoComponente";
 import ProductoAdicional from "../../components/productList/productoAdicional";
 
-function ListaProductosSuscripcion()
+function ListaProductosSuscripcion({suscripcion})
 {
   const state = useSelector((state) => state);
-  const dispatch = useDispatch();
   const { productosTienda } = state.productos;
   const { xtraSubCart, subCart } = state.suscripcion;
 
@@ -30,6 +29,7 @@ function ListaProductosSuscripcion()
                       data={producto}
                       key={producto.id}
                       tipoLista={2}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -66,6 +66,7 @@ function ListaProductosSuscripcion()
                       data={producto}
                       key={producto.id}
                       tipoLista={2}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -103,6 +104,7 @@ function ListaProductosSuscripcion()
                       data={producto}
                       key={producto.id}
                       tipoLista={2}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -139,6 +141,7 @@ function ListaProductosSuscripcion()
                       data={producto}
                       key={producto.id}
                       tipoLista={2}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -175,6 +178,7 @@ function ListaProductosSuscripcion()
                       data={producto}
                       key={producto.id}
                       tipoLista={2}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }

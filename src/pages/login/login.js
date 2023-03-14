@@ -21,7 +21,7 @@ const Login = () =>
       if(data.status === false){
         toastr.error(data.message);
         setTimeout(() => {
-            window.location.reload(false);
+          window.location.reload(false);
         }, 2000);
       }
       if(data.status){
