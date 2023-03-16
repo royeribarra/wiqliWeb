@@ -28,80 +28,19 @@ function Home()
 {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { cart } = state.cart;
+  const { cart, totalProductos } = state.cart;
   let history = useNavigate();
-  const[productosCarrito, setProductosCarrito] = useState([]);
-  const[total, setTotal] = useState(0);
   const[showModal, setShowModal] = useState(true);
-  const[renderizarNuevamente, setRenderizarNuevamente] = useState(false);
   const [showCarrito, setShowCarrito] = useState(false);
 
-  const getProductoStorage = () => {
-    if(localStorage.getItem('productos')){
-      let productosStorage = JSON.parse(localStorage.getItem('productos'));
-      dispatch(fillCart(productosStorage));
-    }
-  }
-
-  const agregarProducto = (producto) => {
-    producto.cantidad = 1;
-    let new_productos = [...productosCarrito];
-    let result = new_productos.find(
-      (el) => el.id === producto.id
-    );
-    if(!result){
-      new_productos.push(producto);
-      setProductosCarrito(new_productos);
-    }
-  }
-
-  const quitarProducto = (producto) => {
-    let new_productos = [...productosCarrito];
-    const index = new_productos.findIndex(
-      (el) => el.id === producto.id
-    );
-    new_productos.splice(index, 1);
-    setProductosCarrito(new_productos);
-  }
-
-  const aumentarUnidades = (producto) => {
-    let new_productos = [...productosCarrito];
-    const index = new_productos.findIndex(
-      (el) => el.id === producto.id
-    );
-    new_productos[index].cantidad += 1;
-    setProductosCarrito(new_productos);
-  }
-
-  const disminuirUnidades = (producto) => {
-    let new_productos = [...productosCarrito];
-    const index = new_productos.findIndex(
-      (el) => el.id === producto.id
-    );
-    new_productos[index].cantidad -= 1;
-    setProductosCarrito(new_productos);
-  }
-
   const goToFormularioDatos = () => {
-    if(total === 0){
+    if(totalProductos === 0){
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
       localStorage.setItem('productos', JSON.stringify(cart));
       history(`/datos`);
     }
-  }
-
-  const calcularTotal = () => {
-    let total = 0;
-    cart.forEach((producto) => {
-      if(producto.cantidad_minima === 1){
-        total += producto.cantidad * producto.precio_unitario
-      }else{
-        total += producto.cantidad * (producto.precio_unitario*producto.cantidad_minima)
-      }
-    })
-    setTotal(total);
   }
 
   const obtenerCodigoCuponDescuento = () => {
@@ -135,13 +74,9 @@ function Home()
     const userService = new UsuarioService("pedido/ultimo");
     userService.obtenerProductosUltimoPedido()
     .then(({data})=> {
-      localStorage.setItem('productos', JSON.stringify(data));
       dispatch(fillCart(data));
       localStorage.setItem('seleccionTarea', true);
       setShowModal(false);
-      setProductosCarrito(data);
-    }).then(()=>{
-      setRenderizarNuevamente(true);
     });
     obtenerTotalReferidos();
     obtenerCodigoCuponDescuento();
@@ -150,14 +85,6 @@ function Home()
   const toggleShowCarrito = () => {
     setShowCarrito((s) => !s);
   }
-
-  useEffect(() => {
-    getProductoStorage();
-  }, []);
-
-  useEffect(() => {
-    calcularTotal();
-  }, [productosCarrito, cart]);
 
   useEffect(()=> {
     let tarea = localStorage.getItem('seleccionTarea');
@@ -204,14 +131,7 @@ function Home()
             </div>
           </div>
           <div className='listaDeProductos'>
-            <ProductList 
-              // productos={productos} 
-              agregarProducto={agregarProducto}
-              quitarProducto={quitarProducto}
-              aumentarUnidades={aumentarUnidades}
-              disminuirUnidades={disminuirUnidades}
-              renderizarNuevamente={renderizarNuevamente}
-            />
+            <ProductList />
           </div>
           
           <Affix offsetBottom={40} onChange={(affixed) => console.log(affixed)}>
@@ -228,7 +148,7 @@ function Home()
                     alt="wiqli"
                     style={{ cursor:"pointer" }}
                   />
-                  <p className='textoDePrecio'>S/ {parseFloat(total).toFixed(2)}</p>
+                  <p className='textoDePrecio'>S/ {parseFloat(totalProductos).toFixed(2)}</p>
                 </div>
               </div>
               <div className='botonDeSiguiente' onClick={goToFormularioDatos} style={{ cursor:"pointer" }}>

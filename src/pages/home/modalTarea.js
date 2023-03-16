@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import StorageService from '../../servicios/storageService';
-import {Buffer} from 'buffer';
+import { useSelector } from "react-redux";
 
 function ModalTarea({showModal, seleccionarNuevo, seleccionarUltimaCompra})
 {
-  const [fullscreen, setFullscreen] = useState(false);
-  const storageService = new StorageService();
-  const [isLoged, setIsLoged] = useState(false);
-  const [userLocal, setUserLocal] = useState();
-
-  useEffect(()=>{
-    const token = localStorage.getItem("tknData");
-    if(token){
-      const tknData = JSON.parse(Buffer.from(storageService.getItemObject("tknData"), 'base64'));
-      if(tknData.status){
-        setUserLocal(JSON.parse(Buffer.from(storageService.getItemObject("authUser"), 'base64')));
-        setIsLoged(true);
-      }
-    }
-  }, []);
+  const fullscreen = false;
+  const state = useSelector((state) => state);
+  const { infoUser } = state.user;
 
   return(
     <Modal size="md" aria-labelledby="contained-modal-tittle-vcenter" centered show={showModal} fullscreen={fullscreen} className="modalOpciones"> 
       <Modal.Header>
-        <Modal.Title className="tituloPrincipal" >¡Hola { isLoged ? userLocal.name: '' }!</Modal.Title>
+        <Modal.Title className="tituloPrincipal" >¡Hola { infoUser.name }!</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="textoCuerpoModal">

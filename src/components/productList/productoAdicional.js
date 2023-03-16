@@ -2,21 +2,18 @@ import Card from 'antd/lib/card/Card';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import quitar from "../../images/quitar.png"
+import { delFromCartExtra } from '../../redux/actions/carritoActions';
 import { SdelFromExtra } from '../../redux/actions/suscripcionActions';
 import './productList';
 
 
 function ProductoAdicional({ 
-  id, nombre, cantidad, tipo, eliminarProductoStorage, tipoLista
+  id, nombre, cantidad, tipoLista
 }) 
 {
   const dispatch = useDispatch();
   const quitarProducto = () => {
-    if(tipoLista === 2)
-    {
-      dispatch(SdelFromExtra(id));
-    }
-    eliminarProductoStorage(id, tipo);
+    tipoLista === 1 ? dispatch(delFromCartExtra(id)) : dispatch(SdelFromExtra(id));
   }
   
   return (

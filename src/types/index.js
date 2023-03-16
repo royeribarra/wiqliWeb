@@ -15,6 +15,12 @@ export const FILL_CART = "FILL_CART";
 export const APPLY_COUPON = "APPLY_COUPON";
 export const CLEAR_COUPON = "CLEAR_COUPON";
 
+//shoping cart extra
+export const ADD_TO_CART_EXTRA = "ADD_TO_CART_EXTRA";
+export const DEL_FROM_CART_EXTRA = "DEL_FROM_CART_EXTRA";
+export const FILL_CART_EXTRA = "FILL_CART_EXTRA";
+export const CLEAR_CART_EXTRA = "CLEAR_CART_EXTRA";
+
 //PRODUCTOS TIENDA
 export const FILL_PRODUCTS = "FILL_PRODUCTS";
 

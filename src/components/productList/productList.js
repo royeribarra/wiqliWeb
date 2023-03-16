@@ -1,91 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Accordion, Form } from "react-bootstrap";
 import AgregarOtroProducto from "../agregarOtro/agregarOtroProducto";
 import './productList.css';
 import ProductoAdicional from "./productoAdicional";
 import ProductoComponente from "./productoComponente";
-import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
 
-function ProductList({
-  renderizarNuevamente
-})
+function ProductList()
 {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { cart } = state.cart;
+  const { cart, xtraCart } = state.cart;
   const { productosTienda } = state.productos;
-
-  const[otrasFrutas, setOtrasFrutas] = useState([]);
-  const[otrasVerduras, setOtrasVerduras] = useState([]);
-  const[otrasCarnes, setOtrasCarnes] = useState([]);
-  const[otrasMenestras, setOtrasMenestras] = useState([]);
-  const[otrasFrutasSecas, setOtrasFrutasSecas] = useState([]);
-
-  const agregarProductoStorage = (producto, nombre) => {
-    let productos = JSON.parse(localStorage.getItem(nombre));
-    productos.push(producto);
-    localStorage.setItem(nombre, JSON.stringify(productos));
-    if(nombre === 'otrasFrutas'){
-      setOtrasFrutas(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
-    }
-    if(nombre === 'otrasVerduras'){
-      setOtrasVerduras(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
-    }
-    if(nombre === 'otrasCarnes'){
-      setOtrasCarnes(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
-    }
-    if(nombre === 'otrasMenestras'){
-      setOtrasMenestras(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
-    }
-    if(nombre === 'otrasFrutasSecas'){
-      setOtrasFrutasSecas(productos);
-      toastr.success("Producto adicional agregado con éxito! Incluiremos el precio del producto adicional al entregarte los productos.");
-    }
-  }
-
-  const eliminarProductoStorage = (id, tipo) => {
-    if(tipo === 1){
-      const copiaArray = [...otrasFrutas];
-      const index = copiaArray.findIndex(el => el.id === id);
-      copiaArray.splice(index,1);
-      setOtrasFrutas(copiaArray);
-      localStorage.setItem('otrasFrutas', JSON.stringify(copiaArray));
-      
-    }
-    if(tipo === 2){
-      const copiaArray = [...otrasVerduras];
-      const index = copiaArray.findIndex(el => el.id === id);
-      copiaArray.splice(index,1);
-      setOtrasVerduras(copiaArray);
-      localStorage.setItem('otrasVerduras', JSON.stringify(copiaArray));
-    }
-    if(tipo === 3){
-      const copiaArray = [...otrasCarnes];
-      const index = copiaArray.findIndex(el => el.id === id);
-      copiaArray.splice(index,1);
-      setOtrasCarnes(copiaArray);
-      localStorage.setItem('otrasCarnes', JSON.stringify(copiaArray));
-    }
-    if(tipo === 4){
-      const copiaArray = [...otrasMenestras];
-      const index = copiaArray.findIndex(el => el.id === id);
-      copiaArray.splice(index,1);
-      setOtrasMenestras(copiaArray);
-      localStorage.setItem('otrasMenestras', JSON.stringify(copiaArray));
-    }
-  }
-
-  useEffect(() => {
-    setOtrasFrutas(JSON.parse(localStorage.getItem('otrasFrutas')));
-    setOtrasVerduras(JSON.parse(localStorage.getItem('otrasVerduras')));
-    setOtrasCarnes(JSON.parse(localStorage.getItem('otrasCarnes')));
-    setOtrasMenestras(JSON.parse(localStorage.getItem('otrasMenestras')));
-  }, []);
 
   return (
     <div>
@@ -102,28 +28,26 @@ function ProductList({
                     <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      renderizarNuevamente={renderizarNuevamente}
                       tipoLista={1}
                     />
                   ))
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  otrasFrutas.map( fruta => (
+                  xtraCart.filter((producto)=> producto.categoriaId === 1).map( fruta => (
                     <ProductoAdicional 
                       key={fruta.id}
                       id={fruta.id}
                       nombre={fruta.nombre}
                       cantidad={fruta.cantidad}
-                      tipo={1}
-                      eliminarProductoStorage={eliminarProductoStorage}
+                      tipoLista={1}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasFrutas" 
                   title="Agregar otra fruta"
-                  agregarProductoStorage={agregarProductoStorage}
+                  tipoLista={1}
+                  categoriaId={1}
                 />
               </Accordion.Body>
           </Accordion.Item>
@@ -137,28 +61,26 @@ function ProductList({
                     <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      renderizarNuevamente={renderizarNuevamente}
                       tipoLista={1}
                     />
                   ))
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  otrasVerduras.map( verdura => (
+                  xtraCart.filter((producto)=> producto.categoriaId === 2).map( verdura => (
                     <ProductoAdicional 
                       key={verdura.id}
                       id={verdura.id}
                       nombre={verdura.nombre}
                       cantidad={verdura.cantidad}
-                      tipo={2}
-                      eliminarProductoStorage={eliminarProductoStorage}
+                      tipoLista={1}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasVerduras" 
                   title="Agregar otra verdura"
-                  agregarProductoStorage={agregarProductoStorage}
+                  tipoLista={1}
+                  categoriaId={2}
                 />
               
               </Accordion.Body>
@@ -173,28 +95,26 @@ function ProductList({
                     <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      renderizarNuevamente={renderizarNuevamente}
                       tipoLista={1}
                     />
                   ))
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  otrasCarnes.map( carne => (
+                  xtraCart.filter((producto)=> producto.categoriaId === 3).map( carne => (
                     <ProductoAdicional 
                       key={carne.id}
                       id={carne.id}
                       nombre={carne.nombre}
                       cantidad={carne.cantidad}
-                      tipo={3}
-                      eliminarProductoStorage={eliminarProductoStorage}
+                      tipoLista={1}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasCarnes"
                   title="Agregar otra carne"
-                  agregarProductoStorage={agregarProductoStorage}
+                  tipoLista={1}
+                  categoriaId={3}
                 />
               </Accordion.Body>
           </Accordion.Item>
@@ -208,28 +128,26 @@ function ProductList({
                     <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      renderizarNuevamente={renderizarNuevamente}
                       tipoLista={1}
                     />
                   ))
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  otrasMenestras.map( menestra => (
+                  xtraCart.filter((producto)=> producto.categoriaId === 4).map( menestra => (
                     <ProductoAdicional 
                       key={menestra.id}
                       id={menestra.id}
                       nombre={menestra.nombre}
                       cantidad={menestra.cantidad}
-                      tipo={4}
-                      eliminarProductoStorage={eliminarProductoStorage}
+                      tipoLista={1}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasMenestras"
                   title="Agregar otra menestra"
-                  agregarProductoStorage={agregarProductoStorage}
+                  tipoLista={1}
+                  categoriaId={4}
                 />
               </Accordion.Body>
           </Accordion.Item>
@@ -243,28 +161,26 @@ function ProductList({
                     <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      renderizarNuevamente={renderizarNuevamente}
                       tipoLista={1}
                     />
                   ))
                 }
                 <h3>Productos adicionales</h3>
                 {
-                  otrasFrutasSecas.map( frutoSeco => (
+                  xtraCart.filter((producto)=> producto.categoriaId === 5).map( frutoSeco => (
                     <ProductoAdicional 
                       key={frutoSeco.id}
                       id={frutoSeco.id}
                       nombre={frutoSeco.nombre}
                       cantidad={frutoSeco.cantidad}
-                      tipo={4}
-                      eliminarProductoStorage={eliminarProductoStorage}
+                      tipoLista={1}
                     />
                   ))
                 }
                 <AgregarOtroProducto
-                  nombre="otrasFrutasSecas"
                   title="Agregar otro fruto seco"
-                  agregarProductoStorage={agregarProductoStorage}
+                  tipoLista={1}
+                  categoriaId={5}
                 />
               </Accordion.Body>
           </Accordion.Item>

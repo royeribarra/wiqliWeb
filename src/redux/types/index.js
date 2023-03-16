@@ -25,3 +25,7 @@ export const S_FILL_CART_EXTRA = "S_FILL_CART_EXTRA";
 
 export const S_SET_PERIODO = "S_SET_PERIODO";
 export const S_SET_DIA_RECOJO = "S_SET_DIA_RECOJO";
+
+
+//actions to configuration
+export const SET_CONFIGURATION = "SET_CONFIGURATION";

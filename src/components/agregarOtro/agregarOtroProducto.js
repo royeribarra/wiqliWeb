@@ -6,9 +6,10 @@ import TextArea from "antd/lib/input/TextArea";
 import { toastr } from "react-redux-toastr";
 import { useDispatch } from "react-redux";
 import { SaddToExtra } from "../../redux/actions/suscripcionActions";
+import { addToCartExtra } from "../../redux/actions/carritoActions";
 
 function AgregarOtroProducto({ 
-  title, nombre, agregarProductoStorage, tipoLista, categoriaId
+  title, tipoLista, categoriaId
 }) 
 {
   const dispatch = useDispatch();
@@ -26,28 +27,13 @@ function AgregarOtroProducto({
       toastr.error("Por favor ingresa un nombre y cantidad.");
       return;
     }
-
-    if(tipoLista === 2)
-    {
-      dispatch(SaddToExtra(producto));
-    }
-    
-    //agregarProductoStorage(producto, nombre);
+    tipoLista === 1 ? dispatch(addToCartExtra(producto)) : dispatch(SaddToExtra(producto));
     
     form.setFieldsValue({
       productoAdicionalNombre: '',
       productoAdicionalCantidad: ''
     });
   }
-
-  useEffect(()=> {
-    if(localStorage.getItem(nombre)){
-      let productosStorage = JSON.parse(localStorage.getItem(nombre));
-      localStorage.setItem(nombre, JSON.stringify(productosStorage));
-    }else{
-      localStorage.setItem(nombre, JSON.stringify([]));
-    }
-  }, []);
 
   return (
     <div>

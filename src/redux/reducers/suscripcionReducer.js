@@ -139,6 +139,7 @@ export function suscripcionReducer(state = suscripcionInitialState, action){
     };
 
   case S_CLEAR_CART_EXTRA:
+    localStorage.setItem("xtraSubCart", []);
     return {
       ...state,
       xtraSubCart: []

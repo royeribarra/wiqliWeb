@@ -6,7 +6,11 @@ import {
     CLEAR_CART,
     FILL_CART,
     APPLY_COUPON,
-    CLEAR_COUPON
+    CLEAR_COUPON,
+    ADD_TO_CART_EXTRA,
+    DEL_FROM_CART_EXTRA,
+    FILL_CART_EXTRA,
+    CLEAR_CART_EXTRA
   } from "../../types";
   
 export const addToCart = (data) => ({ type: ADD_TO_CART, payload: data });
@@ -25,3 +29,13 @@ export const fillCart = (data) => ({ type: FILL_CART, payload: data });
 export const applyCoupon = (data) => ({ type: APPLY_COUPON, payload: data });
 
 export const clearCoupon = () => ({ type: CLEAR_COUPON });
+
+///para los productos extras
+
+export const addToCartExtra = (data) => ({ type: ADD_TO_CART_EXTRA, payload: data });
+
+export const delFromCartExtra = (data) => ({ type: DEL_FROM_CART_EXTRA, payload: data });
+
+export const fillCartExtra = (data) => ({ type: FILL_CART_EXTRA, payload: data });
+
+export const clearCartExtra = () => ({ type: CLEAR_CART_EXTRA });

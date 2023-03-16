@@ -6,7 +6,11 @@ import {
   CLEAR_CART,
   FILL_CART,
   APPLY_COUPON,
-  CLEAR_COUPON
+  CLEAR_COUPON,
+  ADD_TO_CART_EXTRA,
+  DEL_FROM_CART_EXTRA,
+  CLEAR_CART_EXTRA,
+  FILL_CART_EXTRA
 } from "../../types";
 
 export const carritoInitialState = {
@@ -15,6 +19,7 @@ export const carritoInitialState = {
   otrasMenestras: [],
   otrasVerduras: [],
   otrasFrutosSecos: [],
+  xtraCart: [],
   cart: [],
   total: 0.00,
   costoDelivery: 10.00,
@@ -57,7 +62,11 @@ export function cartReducer(state = carritoInitialState, action){
       };
 
     case CLEAR_CART:
-      return carritoInitialState;
+      localStorage.setItem("productos", JSON.stringify([]));
+      return {
+        ...state,
+        cart: []
+      };
 
     case ADD_ONE_PRODUCT:
 
@@ -96,6 +105,7 @@ export function cartReducer(state = carritoInitialState, action){
               };
 
     case FILL_CART:
+      localStorage.setItem("productos", JSON.stringify(action.payload));
       return {
         ...state,
         cart: action.payload,
@@ -115,6 +125,42 @@ export function cartReducer(state = carritoInitialState, action){
       return {
         ...state,
         descuentoCupon: 0.00
+      };
+
+    case ADD_TO_CART_EXTRA:
+      let newItemE = action.payload;
+      let inItemE = state.xtraCart.find((item) => item.id === action.payload.id);
+      let cartTmpAddProductE = [...state.xtraCart, { ...newItemE }];
+      
+      !inItemE ? localStorage.setItem("xtraCart", JSON.stringify(cartTmpAddProductE)) 
+              : console.log("el producto ya existe");
+
+      return {
+        ...state,
+        xtraCart: cartTmpAddProductE
+      };
+    
+    case DEL_FROM_CART_EXTRA:
+      console.log(action.payload)
+      let tmpRemoveCartE = state.xtraCart.filter((item) => item.id !== action.payload);
+      localStorage.setItem("xtraCart", JSON.stringify(tmpRemoveCartE));
+      return {
+        ...state,
+        xtraCart: tmpRemoveCartE
+      };
+
+    case CLEAR_CART_EXTRA:
+      localStorage.setItem("xtraCart", JSON.stringify([]));
+      return {
+        ...state,
+        xtraSubCart: []
+      };
+
+    case FILL_CART_EXTRA:
+      localStorage.setItem("xtraCart", JSON.stringify(action.payload));
+      return {
+        ...state,
+        xtraSubCart: action.payload
       };
     default:
       return state;

@@ -18,18 +18,20 @@ import PagoWeb from "../../components/tarjetaBancoComponente/pagoWeb";
 import { 
   clearCart,
   applyCoupon,
-  clearCoupon
+  clearCoupon,
+  clearCartExtra
 } from "../../redux/actions/carritoActions";
+import { showLoader } from "../../redux/actions/loaderActions";
 
 const { TextArea } = Input;
 
-function FormDatos({ setBlockPage })
+function FormDatos()
 {
   let history = useNavigate();
-  
   const state = useSelector((state) => state);
-  const { descuentoCupon, costoDelivery, totalProductos } = state.cart;
+  const { descuentoCupon, costoDelivery, totalProductos, cart, xtraCart } = state.cart;
   const { isLoged, infoUser, codigoUser, descuentoReferidos } = state.user;
+  const { montoDescuento, montoMinimoCompraReferido, montoMinimoEnvioCodigo, tipoDescuento } = state.configuracion;
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -42,30 +44,16 @@ function FormDatos({ setBlockPage })
   const [startDate, setStartDate] = useState(new Date());
   const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
   const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
-  const [productos, setProductos] = useState([]);
   const [cliente, setCliente] = useState({
     apellidos: '', correo: '', direccion: '', fecha_recojo: '', nombres: '',
     observacion: '', referencia: '', telefono: ''
   });
-  const [configuracion, setConfiguracion] = useState(
-    {
-      id: 1,
-      monto_descuento: 0.00,
-      monto_minimo_compra_referido: 100.00,
-      monto_minimo_envio_codigo: 0.00,
-      tipo_descuento: 1
-    }
-  );
 
   const onFinish = (values) => {
-    setBlockPage(true);
+    dispatch(showLoader());
     let data = {
-      productos: productos,
-      otrosFrutas: localStorage.getItem('otrasFrutas'),
-      otrosVerduras: localStorage.getItem('otrasVerduras'),
-      otrosCarnes: localStorage.getItem('otrasCarnes'),
-      otrosMenestras: localStorage.getItem('otrasMenestras'),
-      otrosFrutosSecos: localStorage.getItem('otrasFrutasSecas'),
+      productos: cart,
+      productosExtra: xtraCart,
       cliente: cliente,
       cupon: aplicaCupon,
       codigoCupon: values.codigoCupon,
@@ -82,25 +70,19 @@ function FormDatos({ setBlockPage })
     }
     if(isLoged){
       const userService = new UsuarioService("usuario");
-      
       userService.realizarPedido(data)
       .then(({ data }) => {
         if(data.state){
-          setBlockPage(false);
-          localStorage.removeItem('otrasFrutas');
-          localStorage.removeItem('otrasCarnes');
-          localStorage.removeItem('otrasMenestras');
-          localStorage.removeItem('otrasVerduras');
-          localStorage.removeItem('otrasFrutasSecas');
-          localStorage.removeItem('productos');
+          dispatch(showLoader(false));
           dispatch(clearCart());
+          dispatch(clearCartExtra());
           history(`/confirmacion`);
         }else if(!data.state){
-          setBlockPage(false);
+          dispatch(showLoader(false));
           setMessageError(data.message);
         }
       }).catch(error => {
-        setBlockPage(false);
+        dispatch(showLoader(false));
         setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
       });
      }else if(!isLoged){
@@ -108,15 +90,15 @@ function FormDatos({ setBlockPage })
       .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
       .then(({ data }) => {
         if(data.state){
-          setBlockPage(false);
+          dispatch(showLoader(false));
           localStorage.clear();
           history(`/confirmacion`);
         }else if(!data.state){
-          setBlockPage(false);
+          dispatch(showLoader(false));
           setMessageError(data.message);
         }
       }).catch(error => {
-        setBlockPage(false);
+        dispatch(showLoader(false));
         setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
       });
     }
@@ -129,7 +111,7 @@ function FormDatos({ setBlockPage })
     if(cupon && correo)
     {
       axios.get(`${url}/${cupon}/${correo}`).then(({data}) => {
-        if(data.state && totalProductos >= configuracion.monto_minimo_compra_referido)
+        if(data.state && totalProductos >= montoMinimoCompraReferido)
         {
           setAplicaCupon(true);
           data.tipo === 1 ? 
@@ -141,9 +123,9 @@ function FormDatos({ setBlockPage })
           setAplicaCupon(false);
           toastr.error(data.message);
         }
-        else if(!(totalProductos >= configuracion.monto_minimo_compra_referido)){
+        else if(!(totalProductos >= montoMinimoCompraReferido)){
           setAplicaCupon(false);
-          toastr.error(`Los cupones solo son válidos para una compra mayor o igual a ${configuracion.monto_minimo_compra_referido}.`);
+          toastr.error(`Los cupones solo son válidos para una compra mayor o igual a ${montoMinimoCompraReferido}.`);
         } else{
           setAplicaCupon(false);
           toastr.error("El cupón no existe o ya fue usado.");
@@ -203,9 +185,8 @@ function FormDatos({ setBlockPage })
   };
 
   useEffect(() => {
-    if(localStorage.getItem('productos')){
-      setProductos(JSON.parse(localStorage.getItem('productos')));
-    }else{
+    if(!(cart.length > 0))
+    {
       history(`/`);
     }
   }, []);
@@ -231,12 +212,6 @@ function FormDatos({ setBlockPage })
     const d = new Date();
     let hour = d.getHours();
     setHour(hour);
-  }, []);
-
-  useEffect(()=> {
-    axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/configuracion`).then(({data})=> {
-      setConfiguracion(data);
-    });
   }, []);
 
   useEffect(()=> {

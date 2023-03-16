@@ -19,16 +19,16 @@ import Header from '../components/header/header';
 import Loader from "../components/loader/loader";
 
 import { login, setInfoCliente, setCuponCliente, setTotalReferidosCliente } from "../redux/actions/clienteLogAction";
-import EditarSuscripcion from "../pages/suscripcion/editarSuscripcion";
 import { UsuarioService } from "../servicios/usuarioService";
 import axios from "axios";
 import { fillProducts } from "../redux/actions/productosTiendaActions";
-import { fillCart } from "../redux/actions/carritoActions";
+import { fillCart, fillCartExtra } from "../redux/actions/carritoActions";
 import SeleccionPeriodo from "../pages/suscripcion/seleccionPeriodo";
 import SeleccionProductos from "../pages/suscripcion/seleccionProductos";
 import MetodoPago from "../pages/suscripcion/metodoPago";
 import { SfillCart, SfillExtra } from "../redux/actions/suscripcionActions";
 import ConfirmacionSuscripcion from "../pages/suscripcion/confirmacionSuscripcion";
+import { setConfiguration } from "../redux/actions/configuracionActions";
 
 function MainRoutes()
 {
@@ -60,6 +60,8 @@ function MainRoutes()
   useEffect(()=> {
     const productos = JSON.parse(localStorage.getItem("productos"));
     dispatch(fillCart(productos ? productos : []));
+    const xtraCart = JSON.parse(localStorage.getItem("xtraCart"));
+    dispatch(fillCartExtra(xtraCart ? xtraCart : []));
   }, []);
 
   useEffect(()=> {
@@ -67,6 +69,12 @@ function MainRoutes()
     dispatch(SfillCart(subProductos ? subProductos : []));
     const xtraSubCart = JSON.parse(localStorage.getItem("xtraSubCart"));
     dispatch(SfillExtra(xtraSubCart ? xtraSubCart : []));
+  }, []);
+
+  useEffect(()=> {
+    axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/configuracion`).then(({data})=> {
+      dispatch(setConfiguration(data)) 
+    });
   }, []);
 
   useEffect(()=> {

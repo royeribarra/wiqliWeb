@@ -4,10 +4,10 @@ import './listaProductosSuscripcion.css';
 import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
 import AgregarOtroProducto from "../../components/agregarOtro/agregarOtroProducto";
-import ProductoComponente from "../../components/productList/productoComponente";
 import ProductoAdicional from "../../components/productList/productoAdicional";
+import ProductoSuscripcionComponente from "../../components/productList/productoSuscripcionComponente";
 
-function ListaProductosSuscripcion({suscripcion})
+function ListaProductosSuscripcion({tipo})
 {
   const state = useSelector((state) => state);
   const { productosTienda } = state.productos;
@@ -25,11 +25,10 @@ function ListaProductosSuscripcion({suscripcion})
                 
                 { productosTienda.filter((producto) => producto.categoria_id === 1)
                   .map( producto => (
-                    <ProductoComponente 
-                      data={producto}
+                    <ProductoSuscripcionComponente
                       key={producto.id}
-                      tipoLista={2}
-                      suscripcion={suscripcion}
+                      data={producto}
+                      tipo={tipo}
                     />
                   ))
                 }
@@ -62,11 +61,10 @@ function ListaProductosSuscripcion({suscripcion})
               <Accordion.Body>
                 { productosTienda.filter((producto) => producto.categoria_id === 2)
                   .map( producto => (
-                    <ProductoComponente 
+                    <ProductoSuscripcionComponente
                       data={producto}
                       key={producto.id}
-                      tipoLista={2}
-                      suscripcion={suscripcion}
+                      tipo={tipo}
                     />
                   ))
                 }
@@ -100,11 +98,10 @@ function ListaProductosSuscripcion({suscripcion})
               <Accordion.Body>
                 { productosTienda.filter((producto) => producto.categoria_id === 3)
                   .map( producto => (
-                    <ProductoComponente
+                    <ProductoSuscripcionComponente
                       data={producto}
                       key={producto.id}
-                      tipoLista={2}
-                      suscripcion={suscripcion}
+                      tipo={tipo}
                     />
                   ))
                 }
@@ -137,11 +134,10 @@ function ListaProductosSuscripcion({suscripcion})
               <Accordion.Body>
                 { productosTienda.filter((producto) => producto.categoria_id === 4)
                   .map( producto => (
-                    <ProductoComponente 
+                    <ProductoSuscripcionComponente
                       data={producto}
                       key={producto.id}
-                      tipoLista={2}
-                      suscripcion={suscripcion}
+                      tipo={tipo}
                     />
                   ))
                 }
@@ -174,11 +170,10 @@ function ListaProductosSuscripcion({suscripcion})
               <Accordion.Body>
                 { productosTienda.filter((producto) => producto.categoria_id === 5)
                   .map( producto => (
-                    <ProductoComponente 
+                    <ProductoSuscripcionComponente
                       data={producto}
                       key={producto.id}
-                      tipoLista={2}
-                      suscripcion={suscripcion}
+                      tipo={tipo}
                     />
                   ))
                 }
