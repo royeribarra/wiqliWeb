@@ -1,4 +1,6 @@
 import {
+  S_SET_INFO_SUSCRIPTION,
+
     S_ADD_TO_CART,
     S_ADD_ONE_PRODUCT,
     S_REMOVE_ONE_FROM_CART,
@@ -13,6 +15,8 @@ import {
     S_SET_DIA_RECOJO
   } from "../types";
   
+export const SinfoSuscription = (data) => ({ type: S_SET_INFO_SUSCRIPTION, payload: data });
+
 export const SaddToCart = (data) => ({ type: S_ADD_TO_CART, payload: data });
 
 export const SaddOneToProduct = (id) => ({ type: S_ADD_ONE_PRODUCT, payload: id });

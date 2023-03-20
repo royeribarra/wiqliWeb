@@ -13,17 +13,16 @@ import {
 import "./productoComponente.css";
 
 function ProductoSuscripcionComponente({
-  data, tipo
+  data, suscripcion
 }) 
 {
   const state = useSelector((state) => state);
-  const { cart } = state.cart;
   const { subCart } = state.suscripcion;
   const dispatch = useDispatch();
 
   const[cantidad, setCantidad] = useState(1);
   const[tipoComponente, setTipoComponente] = useState(1);
-
+  
   const agregarCarrito = () => {
     setTipoComponente(2);
     dispatch(SaddToCart(data));
@@ -31,6 +30,7 @@ function ProductoSuscripcionComponente({
 
   const quitarCarrito = () => {
     setTipoComponente(1);
+    console.log(data.id)
     dispatch(SdelFromCart(data.id, true));
   }
 
@@ -49,18 +49,16 @@ function ProductoSuscripcionComponente({
   }
 
   useEffect(() => {
-    let existeProducto = tipo === 1 ? 
-                          subCart.find((item) => item.id === data.id) : 
-                          subCart.find((item) => item.productoId === data.id);
+    let existeProducto = subCart.find((item) => item.productoId === data.id);
     if(existeProducto)
     {
-      setCantidad(existeProducto.cantidad);
+      setCantidad(parseFloat(existeProducto.cantidad));
       setTipoComponente(2);
     }else{
       setTipoComponente(1);
       setCantidad(1);
     }
-  }, [data, cart, subCart]);
+  }, [data, subCart]);
 
   return(
     <div className="productCard">

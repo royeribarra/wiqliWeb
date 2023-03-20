@@ -15,10 +15,11 @@ import { showLoader } from "../../redux/actions/loaderActions";
 import { UsuarioService } from "../../servicios/usuarioService";
 import StorageService from "../../servicios/storageService";
 import { setInfoCliente } from "../../redux/actions/clienteLogAction";
+import { toastr } from "react-redux-toastr";
 
 const { Option } = Select;
 
-function MetodoPago()
+function MetodoPago({suscripcion})
 {
   const suscripcionService = new SuscripcionService();
   const storageService = new StorageService();
@@ -30,6 +31,7 @@ function MetodoPago()
   const [form] = Form.useForm();
   const [tipoBanco, setTipoBanco] = useState();
   const [messageError, setMessageError] = useState("");
+  const [suscripcionId, setSuscripcionId] = useState(false);
   const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
 
   const onChangeBank = (type) => {
@@ -40,7 +42,6 @@ function MetodoPago()
   }
 
   const onFinish = (values) => {
-    console.log(values)
     dispatch(showLoader());
     let data = {
       ...values,
@@ -49,6 +50,7 @@ function MetodoPago()
       totalProductos: totalProductos,
       diaRecojo: diaRecojo,
       periodo: periodo,
+      suscripcionId: suscripcionId,
       datosTarjeta: {
         numeroTarjeta: values.numeroTarjeta,
         fechaVencimiento: values.fechaVencimiento,
@@ -58,11 +60,14 @@ function MetodoPago()
         dni: values.dni
       }
     }
-    suscripcionService.crearSuscripcion(data).then(({data})=> {
-      // if(data.state){
-      //   dispatch(SclearCart());
-      //   dispatch(SclearExtra());
-      // }
+    let query = suscripcion === 1 ? 
+      suscripcionService.crearSuscripcion(data) : 
+      suscripcionService.editarDatosTarjetaSuscripcion(data);
+
+    query.then(({data})=> {
+      if(data.state){
+        toastr.success(data.message);
+      }
       if(!data.state){
         setMessageError(data.message);
       }
@@ -72,7 +77,16 @@ function MetodoPago()
       });
     }).then(()=> {
       dispatch(showLoader(false));
-      history(`/confirmacion-suscripcion`);
+      if(suscripcion === 1)
+      {
+        history(`/confirmacion-suscripcion`);
+      }
+      if(suscripcion ===2)
+      {
+        history(`/editar-suscripcion`);
+      }
+
+      
     })
     .catch(error => {
       dispatch(showLoader(false));
@@ -80,42 +94,62 @@ function MetodoPago()
     });
   };
 
+  const crearSuscripcion = () => {
+  };
+
+  const editarSuscripcion = () => {
+
+  };
+
   useEffect(()=> {
     form.resetFields();
   }, []);
 
+  useEffect(()=> {
+    usuarioService.getProductosSuscripcion().then(({data})=> {
+      setSuscripcionId(data.id)
+    });
+  }, []);
+
   return (
     <div>
-      <Steps
-        responsive={false}
-        items={[
-          {
-            title: 
-              <NavLink to="/crear-suscripcion/seleccion-productos">
-              <p style={{color: "black", fontSize: "12px"}}>Productos</p>
-              </NavLink>,
-            status: 'finish',
-            icon: <NavLink to="/crear-suscripcion/seleccion-productos"><MdProductionQuantityLimits /></NavLink>
-            ,
-          },
-          {
-            title: 
-              <NavLink to="/crear-suscripcion/seleccion-periodo">
-              <p style={{color: "black", fontSize: "12px"}}>Recurrencia</p>
-              </NavLink>,
-            status: 'finish',
-            icon: <NavLink to="/crear-suscripcion/seleccion-periodo"><AiOutlineFieldTime /></NavLink>
-          },
-          {
-            title: 
-              <NavLink to="/crear-suscripcion/metodo-pago">
-              <p style={{color: "black", fontSize: "12px"}}>Pago</p>
-              </NavLink>,
-            status: 'process',
-            icon: <NavLink to="/crear-suscripcion/metodo-pago"><FaAmazonPay /></NavLink>
-          },
-        ]}
-      />
+      {
+        suscripcion === 1 &&
+        <Steps
+          responsive={false}
+          items={[
+            {
+              title: 
+                <NavLink to="/crear-suscripcion/seleccion-productos">
+                <p style={{color: "black", fontSize: "12px"}}>Productos</p>
+                </NavLink>,
+              status: 'finish',
+              icon: <NavLink to="/crear-suscripcion/seleccion-productos"><MdProductionQuantityLimits /></NavLink>
+              ,
+            },
+            {
+              title: 
+                <NavLink to="/crear-suscripcion/seleccion-periodo">
+                <p style={{color: "black", fontSize: "12px"}}>Recurrencia</p>
+                </NavLink>,
+              status: 'finish',
+              icon: <NavLink to="/crear-suscripcion/seleccion-periodo"><AiOutlineFieldTime /></NavLink>
+            },
+            {
+              title: 
+                <NavLink to="/crear-suscripcion/metodo-pago">
+                <p style={{color: "black", fontSize: "12px"}}>Pago</p>
+                </NavLink>,
+              status: 'process',
+              icon: <NavLink to="/crear-suscripcion/metodo-pago"><FaAmazonPay /></NavLink>
+            },
+          ]}
+        />
+      }
+      {
+        suscripcion === 2 &&
+        <h4><u>Modifica los datos de tu tarjeta</u></h4>
+      }
       <h5 className="tituloEnunciativo">Ingresa tu tarjeta para la suscripción</h5>
           
       <div className="contenedorPagos contenedorMiniSeccion">

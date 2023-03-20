@@ -8,7 +8,7 @@ import './productList';
 
 
 function ProductoAdicional({ 
-  id, nombre, cantidad, tipoLista
+  id, nombre_desc, cantidad_desc, tipoLista
 }) 
 {
   const dispatch = useDispatch();
@@ -20,8 +20,8 @@ function ProductoAdicional({
     <div>
       <Card className="descripcionProductoAdicional descripcionProductoAgregadoAdicional">
         <div className="datosProducto nuevoProductoAdicional">
-          <h5>{nombre}</h5>
-          <p>{cantidad}</p>
+          <h5>{nombre_desc}</h5>
+          <p>{cantidad_desc}</p>
           <div className="eliminarProductoAgregado" onClick={quitarProducto}>
             <div className="botonBorrarProductoAgregado" >
             <img

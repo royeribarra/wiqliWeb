@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { FaAmazonPay } from 'react-icons/fa';
@@ -10,34 +10,61 @@ import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import { NavLink, useNavigate } from "react-router-dom";
 import siguiente from "../../images/siguiente.png";
+import { SuscripcionService } from "../../servicios/suscripcionservice";
+import { UsuarioService } from "../../servicios/usuarioService";
 
 const { Option } = Select;
 const { Step } = Steps;
 
 function SeleccionProductos({suscripcion})
 {
+  const suscripcionService = new SuscripcionService();
   let history = useNavigate();
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { totalProductos } = state.suscripcion;
+  const { totalProductos, subCart, xtraSubCart } = state.suscripcion;
+  const [suscripcionId, setSuscripcionId] = useState(false);
 
   const goToSelectDate = () => {
     if(totalProductos === 0){
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
-      history(`/crear-suscripcion/seleccion-periodo`);
+      history(`/editar-suscripcion/seleccion-periodo`);
     }
   }
 
+  const saveNewProductos = () => {
+    let data = {
+      suscripcionId: suscripcionId,
+      productos: subCart,
+      productosExtra: xtraSubCart
+    }
+    suscripcionService.editarProductosSuscripcion(data).then(({data})=> {
+      toastr.success(data.message);
+      history(`/editar-suscripcion`);
+    }).catch((error)=>{
+      toastr.error("Fallo en la actualización de la lista.")
+    });
+  };
+
+  useEffect(()=> {
+    const userService = new UsuarioService();
+    userService.getProductosSuscripcion().then(({data})=> {
+      setSuscripcionId(data.id)
+    });
+  }, []);
+  
   return (
     <div>
+    {
+      suscripcion === 1 && 
       <Steps
         responsive={false}
         items={[
           {
             title: 
-              <NavLink to="/crear-suscripcion/seleccion-productos">
+              <NavLink to={"/crear-suscripcion/seleccion-productos"}>
               <p style={{color: "black", fontSize: "14px"}}>Productos</p>
               </NavLink>,
             status: 'process',
@@ -61,7 +88,12 @@ function SeleccionProductos({suscripcion})
           },
         ]}
       />
+    }
+      
       <div className='listaDeProductos'>
+        {
+          suscripcion == 2 && <h4><u>Edita tus productos</u></h4>
+        }
         <h5>Elige los productos que deseas recibir en cada periodo.</h5>
         <ListaProductosSuscripcion suscripcion={suscripcion} />
       </div>
@@ -79,17 +111,29 @@ function SeleccionProductos({suscripcion})
               <p className='textoDePrecio'>S/ {parseFloat(totalProductos).toFixed(2)}</p>
             </div>
           </div>
-          <div className='botonDeSiguiente' onClick={goToSelectDate} style={{ cursor:"pointer" }}>
-            <div className='botonOrdenado'>
-              <div className='clickASiguiente'>
-                <p className='textoDePrecio'>Siguiente</p>
-                <img 
-                  src={siguiente}
-                  alt="wiqli compras semanales"
-                />
+          {
+            suscripcion === 1 ? 
+            (
+              <div className='botonDeSiguiente' onClick={goToSelectDate} style={{ cursor:"pointer" }}>
+                <div className='botonOrdenado'>
+                  <div className='clickASiguiente'>
+                    <p className='textoDePrecio'>Siguiente</p>
+                    <img 
+                      src={siguiente}
+                      alt="wiqli compras semanales"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            ) : 
+            (<div className='botonDeSiguiente' onClick={saveNewProductos} style={{ cursor:"pointer" }}>
+              <div className='botonOrdenado'>
+                <div className='clickASiguiente'>
+                  <p className='textoDePrecio'>Guardar</p>
+                </div>
+              </div>
+            </div>)
+          }
         </div>
       </Affix>
     </div>

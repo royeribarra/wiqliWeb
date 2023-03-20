@@ -38,8 +38,8 @@ function ProductList()
                     <ProductoAdicional 
                       key={fruta.id}
                       id={fruta.id}
-                      nombre={fruta.nombre}
-                      cantidad={fruta.cantidad}
+                      nombre_desc={fruta.nombre_desc}
+                      cantidad_desc={fruta.cantidad_desc}
                       tipoLista={1}
                     />
                   ))
@@ -71,8 +71,8 @@ function ProductList()
                     <ProductoAdicional 
                       key={verdura.id}
                       id={verdura.id}
-                      nombre={verdura.nombre}
-                      cantidad={verdura.cantidad}
+                      nombre_desc={verdura.nombre_desc}
+                      cantidad_desc={verdura.cantidad_desc}
                       tipoLista={1}
                     />
                   ))
@@ -105,8 +105,8 @@ function ProductList()
                     <ProductoAdicional 
                       key={carne.id}
                       id={carne.id}
-                      nombre={carne.nombre}
-                      cantidad={carne.cantidad}
+                      nombre_desc={carne.nombre_desc}
+                      cantidad_desc={carne.cantidad_desc}
                       tipoLista={1}
                     />
                   ))
@@ -138,8 +138,8 @@ function ProductList()
                     <ProductoAdicional 
                       key={menestra.id}
                       id={menestra.id}
-                      nombre={menestra.nombre}
-                      cantidad={menestra.cantidad}
+                      nombre_desc={menestra.nombre_desc}
+                      cantidad_desc={menestra.cantidad_desc}
                       tipoLista={1}
                     />
                   ))
@@ -171,8 +171,8 @@ function ProductList()
                     <ProductoAdicional 
                       key={frutoSeco.id}
                       id={frutoSeco.id}
-                      nombre={frutoSeco.nombre}
-                      cantidad={frutoSeco.cantidad}
+                      nombre_desc={frutoSeco.nombre_desc}
+                      cantidad_desc={frutoSeco.cantidad_desc}
                       tipoLista={1}
                     />
                   ))

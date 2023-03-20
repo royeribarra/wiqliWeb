@@ -18,7 +18,7 @@ import {
 import "./productoComponente.css";
 
 function ProductoComponente({
-  data, renderizarNuevamente, tipoLista, suscripcion = null
+  data, tipoLista, suscripcion = null
 }) 
 {
   const state = useSelector((state) => state);
@@ -92,7 +92,7 @@ function ProductoComponente({
       
     }
     
-  }, [data, renderizarNuevamente, cart, subCart]);
+  }, [data, cart, subCart]);
 
   return(
     <div className="productCard">

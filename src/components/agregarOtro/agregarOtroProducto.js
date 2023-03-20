@@ -18,8 +18,8 @@ function AgregarOtroProducto({
   const add = () => {
     let values = form.getFieldsValue();
     let producto = {
-      nombre: values.productoAdicionalNombre, 
-      cantidad: values.productoAdicionalCantidad, 
+      nombre_desc: values.productoAdicionalNombre, 
+      cantidad_desc: values.productoAdicionalCantidad, 
       id: Math.floor(Math.random() * 1000),
       categoriaId: categoriaId
     };

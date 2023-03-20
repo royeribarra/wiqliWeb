@@ -26,7 +26,7 @@ import { fillCart, fillCartExtra } from "../redux/actions/carritoActions";
 import SeleccionPeriodo from "../pages/suscripcion/seleccionPeriodo";
 import SeleccionProductos from "../pages/suscripcion/seleccionProductos";
 import MetodoPago from "../pages/suscripcion/metodoPago";
-import { SfillCart, SfillExtra } from "../redux/actions/suscripcionActions";
+import { SfillCart, SfillExtra, SinfoSuscription } from "../redux/actions/suscripcionActions";
 import ConfirmacionSuscripcion from "../pages/suscripcion/confirmacionSuscripcion";
 import { setConfiguration } from "../redux/actions/configuracionActions";
 
@@ -47,10 +47,14 @@ function MainRoutes()
           dispatch(setInfoCliente(data));
         });
         userService.getProductosSuscripcion().then(({data})=> {
-          let subCart = data.productos.filter((item) => item.productoId !== 999);
-          let xtraSubCart = data.productos.filter((item) => item.productoId === 999);
-          dispatch(SfillCart(subCart));
-          dispatch(SfillExtra(xtraSubCart));
+          
+          dispatch(SinfoSuscription({
+            suscripcionId: data.id,
+            subCart: data.productos.filter((item) => item.productoId !== 999),
+            xtraSubCart: data.productos.filter((item) => item.productoId === 999),
+            periodo: data.periodo,
+            diaEntrega: data.diaEntrega
+          }));
         });
         dispatch(login());
       }
@@ -64,12 +68,12 @@ function MainRoutes()
     dispatch(fillCartExtra(xtraCart ? xtraCart : []));
   }, []);
 
-  useEffect(()=> {
-    const subProductos = JSON.parse(localStorage.getItem("subProductos"));
-    dispatch(SfillCart(subProductos ? subProductos : []));
-    const xtraSubCart = JSON.parse(localStorage.getItem("xtraSubCart"));
-    dispatch(SfillExtra(xtraSubCart ? xtraSubCart : []));
-  }, []);
+  // useEffect(()=> {
+  //   const subProductos = JSON.parse(localStorage.getItem("subProductos"));
+  //   dispatch(SfillCart(subProductos ? subProductos : []));
+  //   const xtraSubCart = JSON.parse(localStorage.getItem("xtraSubCart"));
+  //   dispatch(SfillExtra(xtraSubCart ? xtraSubCart : []));
+  // }, []);
 
   useEffect(()=> {
     axios.get(`${process.env.REACT_APP_BASE_PATH}/wiqli/configuracion`).then(({data})=> {
@@ -111,7 +115,7 @@ function MainRoutes()
           <Route exact path="" element={<BeneficiosSuscripcion suscripcion={1} />} />
           <Route exact path="seleccion-periodo" element={<SeleccionPeriodo suscripcion={1} />} />
           <Route exact path="seleccion-productos" element={<SeleccionProductos suscripcion={1} />} />
-          <Route exact path="metodo-pago" element={<MetodoPago />} />
+          <Route exact path="metodo-pago" element={<MetodoPago suscripcion={1} />} />
         </Route>
         <Route exact path="/editar-suscripcion/" element={<Suscripcion />}>
           <Route exact path="" element={<BeneficiosSuscripcion suscripcion={2} />} />

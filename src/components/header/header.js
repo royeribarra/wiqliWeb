@@ -15,11 +15,13 @@ import { Alert, Space, Tour } from 'antd';
 import './header.css';
 import Carrito from "../carrito/carrito";
 import { useSelector } from "react-redux";
+import { SuscripcionService } from "../../servicios/suscripcionservice";
 
 function Header() 
 {
   const storageService = new StorageService();
   const logService = new LogService();
+  
   let history = useNavigate();
   const location = useLocation();
   const state = useSelector((state) => state);
@@ -60,7 +62,10 @@ function Header()
   };
 
   const cancelarSuscripcion = () => {
-
+    const suscripcionService = new SuscripcionService();
+    suscripcionService.cancelarSuscripcion().then(({data})=>{
+      console.log(data)
+    });
   };
 
   useEffect(() => {

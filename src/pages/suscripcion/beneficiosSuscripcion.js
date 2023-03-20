@@ -1,15 +1,13 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { Nav } from "react-bootstrap";
 import { Button } from 'antd';
-import logo from "../../images/logo.png"
 
-function BeneficiosSuscripcion({tipo}) 
+function BeneficiosSuscripcion({suscripcion}) 
 {
   return (
     <div>
       {
-        tipo === 1 &&
+        suscripcion === 1 &&
         <div>
           <h2 className="tituloPrincipal">Suscríbete y obtén beneficios exclusivos.</h2>
           <ul>
@@ -30,16 +28,33 @@ function BeneficiosSuscripcion({tipo})
         </div>
       }
       {
-        tipo === 2 &&
+        suscripcion === 2 &&
         <div>
           <h2 className="tituloPrincipal">¿Deseas editar tu lista de pedido?</h2>
           <p>¡Recuerda!</p>
           <p>Si tienes cualquier duda, puedes contactarnos o escribirnos, estaremos encantados de ayudarte.</p>
-          <NavLink to="/editar-suscripcion/seleccion-productos">
-            <Button type="primary" className="botonCopiado btnEditar">
-              ¡Editar!
-            </Button>
-          </NavLink>
+          <p>¿Qué deseas cambiar?</p>
+          <div>
+            <NavLink to="/editar-suscripcion/seleccion-productos">
+              <Button type="primary" className="botonCopiado btnEditar">
+                Mis productos
+              </Button>
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/editar-suscripcion/seleccion-periodo">
+              <Button type="primary" className="botonCopiado btnEditar">
+                La recurrencia
+              </Button>
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/editar-suscripcion/metodo-pago">
+              <Button type="primary" className="botonCopiado btnEditar">
+                Datos de pago
+              </Button>
+            </NavLink>
+          </div>
         </div>
       }
     </div>

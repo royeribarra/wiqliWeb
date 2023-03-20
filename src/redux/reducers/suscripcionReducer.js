@@ -1,4 +1,6 @@
 import {
+  S_SET_INFO_SUSCRIPTION,
+
   S_ADD_TO_CART,
   S_ADD_ONE_PRODUCT,
   S_REMOVE_ONE_FROM_CART,
@@ -19,14 +21,15 @@ export const suscripcionInitialState = {
   subCart: [],
   totalProductos: 0.00,
   periodo: 1,
-  diaRecojo: 1,
+  diaRecojo: 2,
   datosTarjeta:{
     numeroTarjeta: '',
     tipoBanco: '',
     nombreTarjeta: '',
     fechaVencimiento: '',
     cvv: ''
-  }
+  },
+  suscripcionId: null
 };
   
 export function suscripcionReducer(state = suscripcionInitialState, action){
@@ -40,11 +43,23 @@ export function suscripcionReducer(state = suscripcionInitialState, action){
 
   switch (action.type) {
 
+    case S_SET_INFO_SUSCRIPTION:
+      localStorage.setItem("subProductos", JSON.stringify(action.payload.subCart));
+      localStorage.setItem("xtraSubCart", JSON.stringify(action.payload.xtraSubCart));
+      return {
+        ...state,
+        suscripcionId: action.payload.id,
+        xtraSubCart: action.payload.xtraSubCart,
+        subCart: action.payload.subCart,
+        diaRecojo: action.payload.diaEntrega,
+        periodo: action.payload.periodo,
+        totalProductos: getTotal(action.payload.subCart)
+      };
     case S_ADD_TO_CART:
 
     let newItem = action.payload;
-    let inItem = state.subCart.find((item) => item.id === action.payload.id);
-    let cartTempAddProduct = [...state.subCart, { ...newItem, cantidad: 1 }];
+    let inItem = state.subCart.find((item) => item.productoId === action.payload.id);
+    let cartTempAddProduct = [...state.subCart, { ...newItem, cantidad: 1, productoId:  action.payload.id}];
 
     !inItem ? localStorage.setItem("subProductos", JSON.stringify(cartTempAddProduct)) 
             : console.log("el producto ya existe");
@@ -57,7 +72,7 @@ export function suscripcionReducer(state = suscripcionInitialState, action){
 
   case S_REMOVE_ALL_FROM_CART:
 
-    let tempRemoveCart = state.subCart.filter((item) => item.id !== action.payload);
+    let tempRemoveCart = state.subCart.filter((item) => item.productoId !== action.payload);
     localStorage.setItem("subProductos", JSON.stringify(tempRemoveCart));
     return {
       ...state,
@@ -66,6 +81,7 @@ export function suscripcionReducer(state = suscripcionInitialState, action){
     };
 
   case S_CLEAR_CART:
+    localStorage.setItem("subProductos", JSON.stringify([]));
     return {
       ...state,
       subCart: []
@@ -74,8 +90,8 @@ export function suscripcionReducer(state = suscripcionInitialState, action){
   case S_ADD_ONE_PRODUCT:
 
     let cartTempAddOne = state.subCart.map((item) =>
-                          item.id === action.payload
-                            ? { ...item, cantidad: item.cantidad + 1 }
+                          item.productoId === action.payload
+                            ? { ...item, cantidad: parseFloat(item.cantidad) + 1 }
                             : item);
     localStorage.setItem("subProductos", JSON.stringify(cartTempAddOne));    
 
@@ -86,9 +102,9 @@ export function suscripcionReducer(state = suscripcionInitialState, action){
     }
 
   case S_REMOVE_ONE_FROM_CART:
-    let itemToDelete = state.subCart.find((item) => item.id === action.payload);
+    let itemToDelete = state.subCart.find((item) => item.productoId === action.payload);
     let itemMinusOne = state.subCart.map((item) =>
-                          item.id === action.payload
+                          item.productoId === action.payload
                           ? { ...item, cantidad: item.cantidad - 1 }
                           : item);
     let cartTempRemove = itemToDelete.cantidad > 1
@@ -103,8 +119,8 @@ export function suscripcionReducer(state = suscripcionInitialState, action){
               totalProductos: getTotal(itemMinusOne)
             } : {
               ...state,
-              subCart: state.subCart.filter((item) => item.id !== action.payload),
-              totalProductos: getTotal(state.subCart.filter((item) => item.id !== action.payload))
+              subCart: state.subCart.filter((item) => item.productoId !== action.payload),
+              totalProductos: getTotal(state.subCart.filter((item) => item.productoId !== action.payload))
             };
 
   case S_FILL_CART:

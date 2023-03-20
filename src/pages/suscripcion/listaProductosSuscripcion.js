@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import AgregarOtroProducto from "../../components/agregarOtro/agregarOtroProducto";
 import ProductoAdicional from "../../components/productList/productoAdicional";
 import ProductoSuscripcionComponente from "../../components/productList/productoSuscripcionComponente";
+import ProductoComponente from "../../components/productList/productoComponente";
 
-function ListaProductosSuscripcion({tipo})
+function ListaProductosSuscripcion({suscripcion})
 {
   const state = useSelector((state) => state);
   const { productosTienda } = state.productos;
@@ -22,13 +23,21 @@ function ListaProductosSuscripcion({tipo})
               <h2 className="tituloCategoria">Elige tus frutas</h2>
             </Accordion.Header>
               <Accordion.Body>
-                
-                { productosTienda.filter((producto) => producto.categoria_id === 1)
+                { suscripcion === 1 && productosTienda.filter((producto) => producto.categoria_id === 1)
+                  .map( producto => (
+                    <ProductoComponente 
+                      data={producto}
+                      key={producto.id}
+                      tipoLista={2}
+                    />
+                  ))
+                }
+                { suscripcion === 2 && productosTienda.filter((producto) => producto.categoria_id === 1)
                   .map( producto => (
                     <ProductoSuscripcionComponente
                       key={producto.id}
                       data={producto}
-                      tipo={tipo}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -39,8 +48,8 @@ function ListaProductosSuscripcion({tipo})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombre={producto.nombre}
-                      cantidad={producto.cantidad}
+                      nombreDesc={producto.nombre_desc}
+                      cantidadDesc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -59,12 +68,21 @@ function ListaProductosSuscripcion({tipo})
               <h2 className="tituloCategoria">Elige tus verduras</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productosTienda.filter((producto) => producto.categoria_id === 2)
+                { suscripcion === 1 && productosTienda.filter((producto) => producto.categoria_id === 2)
                   .map( producto => (
-                    <ProductoSuscripcionComponente
+                    <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      tipo={tipo}
+                      tipoLista={2}
+                    />
+                  ))
+                }
+                { suscripcion === 2 && productosTienda.filter((producto) => producto.categoria_id === 2)
+                  .map( producto => (
+                    <ProductoSuscripcionComponente
+                      key={producto.id}
+                      data={producto}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -75,8 +93,8 @@ function ListaProductosSuscripcion({tipo})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombre={producto.nombre}
-                      cantidad={producto.cantidad}
+                      nombreDesc={producto.nombre_desc}
+                      cantidadDesc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -96,12 +114,21 @@ function ListaProductosSuscripcion({tipo})
               <h2 className="tituloCategoria">Elige tus carnes</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productosTienda.filter((producto) => producto.categoria_id === 3)
+                { suscripcion === 1 && productosTienda.filter((producto) => producto.categoria_id === 3)
                   .map( producto => (
-                    <ProductoSuscripcionComponente
+                    <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      tipo={tipo}
+                      tipoLista={2}
+                    />
+                  ))
+                }
+                { suscripcion === 2 && productosTienda.filter((producto) => producto.categoria_id === 3)
+                  .map( producto => (
+                    <ProductoSuscripcionComponente
+                      key={producto.id}
+                      data={producto}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -112,8 +139,8 @@ function ListaProductosSuscripcion({tipo})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombre={producto.nombre}
-                      cantidad={producto.cantidad}
+                      nombreDesc={producto.nombre_desc}
+                      cantidadDesc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -132,12 +159,21 @@ function ListaProductosSuscripcion({tipo})
               <h2 className="tituloCategoria">Elige tus menestras</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productosTienda.filter((producto) => producto.categoria_id === 4)
+                { suscripcion === 1 && productosTienda.filter((producto) => producto.categoria_id === 4)
                   .map( producto => (
-                    <ProductoSuscripcionComponente
+                    <ProductoComponente 
                       data={producto}
                       key={producto.id}
-                      tipo={tipo}
+                      tipoLista={2}
+                    />
+                  ))
+                }
+                { suscripcion === 2 && productosTienda.filter((producto) => producto.categoria_id === 4)
+                  .map( producto => (
+                    <ProductoSuscripcionComponente
+                      key={producto.id}
+                      data={producto}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -148,8 +184,8 @@ function ListaProductosSuscripcion({tipo})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombre={producto.nombre}
-                      cantidad={producto.cantidad}
+                      nombreDesc={producto.nombre_desc}
+                      cantidadDesc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -168,12 +204,21 @@ function ListaProductosSuscripcion({tipo})
               <h2 className="tituloCategoria">Elige tus frutos secos</h2>
             </Accordion.Header>
               <Accordion.Body>
-                { productosTienda.filter((producto) => producto.categoria_id === 5)
+                { suscripcion === 1 && productosTienda.filter((producto) => producto.categoria_id === 5)
                   .map( producto => (
-                    <ProductoSuscripcionComponente
+                    <ProductoComponente
                       data={producto}
                       key={producto.id}
-                      tipo={tipo}
+                      tipoLista={2}
+                    />
+                  ))
+                }
+                { suscripcion === 2 && productosTienda.filter((producto) => producto.categoria_id === 5)
+                  .map( producto => (
+                    <ProductoSuscripcionComponente
+                      key={producto.id}
+                      data={producto}
+                      suscripcion={suscripcion}
                     />
                   ))
                 }
@@ -184,8 +229,8 @@ function ListaProductosSuscripcion({tipo})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombre={producto.nombre}
-                      cantidad={producto.cantidad}
+                      nombreDesc={producto.nombre_desc}
+                      cantidadDesc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
