@@ -101,6 +101,10 @@ function MetodoPago({suscripcion})
 
   };
 
+  const cancelarEdicion = () => {
+    history(`/editar-suscripcion`);
+  };
+
   useEffect(()=> {
     form.resetFields();
   }, []);
@@ -228,7 +232,7 @@ function MetodoPago({suscripcion})
             <Button className='botonDeSiguiente' type="primary" htmlType="submit">
               <div className='botonOrdenado'>
                 <div className='clickASiguiente'>
-                  <p>Crear Suscripción</p>
+                  <p>{ suscripcion === 1 ? "Crear Suscripción": "Editar tarjeta"}</p>
                   <img 
                     src={siguiente}
                     alt="wiqli compras semanales"
@@ -236,7 +240,18 @@ function MetodoPago({suscripcion})
                 </div>
               </div>
             </Button>
+            {
+            suscripcion === 2 &&
+            <div className='botonDeSiguiente' onClick={cancelarEdicion} style={{ marginLeft: "10px" , cursor:"pointer", backgroundColor: "red" }}>
+              <div className='botonOrdenado'>
+                <div className='clickASiguiente'>
+                  <p className='textoDePrecio'>Cancelar</p>
+                </div>
+              </div>
+            </div>
+          }
           </Form.Item>
+          
         </Form>
       </div>
       {

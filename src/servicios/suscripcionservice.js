@@ -23,7 +23,7 @@ export class SuscripcionService extends MainService {
   }
 
   cancelarSuscripcion() {
-    return axios.get(`${this.clearUrl}/cliente/cancelar-suscripcion`, this.options);
+    return axios.get(`${this.clearUrl}/cliente/suscripcion/cancelar`, this.options);
   }
 }
   

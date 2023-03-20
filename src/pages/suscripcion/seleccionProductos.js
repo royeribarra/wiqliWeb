@@ -13,9 +13,6 @@ import siguiente from "../../images/siguiente.png";
 import { SuscripcionService } from "../../servicios/suscripcionservice";
 import { UsuarioService } from "../../servicios/usuarioService";
 
-const { Option } = Select;
-const { Step } = Steps;
-
 function SeleccionProductos({suscripcion})
 {
   const suscripcionService = new SuscripcionService();
@@ -30,7 +27,14 @@ function SeleccionProductos({suscripcion})
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
-      history(`/editar-suscripcion/seleccion-periodo`);
+      if(suscripcion === 1)
+      {
+        history(`/crear-suscripcion/seleccion-periodo`);
+      }else{
+        history(`/editar-suscripcion/seleccion-periodo`);
+      }
+      
+      
     }
   }
 
@@ -46,6 +50,10 @@ function SeleccionProductos({suscripcion})
     }).catch((error)=>{
       toastr.error("Fallo en la actualización de la lista.")
     });
+  };
+
+  const cancelarEdicion = () => {
+    history(`/editar-suscripcion`);
   };
 
   useEffect(()=> {
@@ -133,6 +141,16 @@ function SeleccionProductos({suscripcion})
                 </div>
               </div>
             </div>)
+          }
+          {
+            suscripcion === 2 &&
+            <div className='botonDeSiguiente' onClick={cancelarEdicion} style={{ cursor:"pointer", backgroundColor: "red" }}>
+              <div className='botonOrdenado'>
+                <div className='clickASiguiente'>
+                  <p className='textoDePrecio'>Cancelar</p>
+                </div>
+              </div>
+            </div>
           }
         </div>
       </Affix>

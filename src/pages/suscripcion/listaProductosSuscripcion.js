@@ -48,8 +48,8 @@ function ListaProductosSuscripcion({suscripcion})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombreDesc={producto.nombre_desc}
-                      cantidadDesc={producto.cantidad_desc}
+                      nombre_desc={producto.nombre_desc}
+                      cantidad_desc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -93,8 +93,8 @@ function ListaProductosSuscripcion({suscripcion})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombreDesc={producto.nombre_desc}
-                      cantidadDesc={producto.cantidad_desc}
+                      nombre_desc={producto.nombre_desc}
+                      cantidad_desc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -139,8 +139,8 @@ function ListaProductosSuscripcion({suscripcion})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombreDesc={producto.nombre_desc}
-                      cantidadDesc={producto.cantidad_desc}
+                      nombre_desc={producto.nombre_desc}
+                      cantidad_desc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -184,8 +184,8 @@ function ListaProductosSuscripcion({suscripcion})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombreDesc={producto.nombre_desc}
-                      cantidadDesc={producto.cantidad_desc}
+                      nombre_desc={producto.nombre_desc}
+                      cantidad_desc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />
@@ -229,8 +229,8 @@ function ListaProductosSuscripcion({suscripcion})
                     <ProductoAdicional 
                       key={producto.id}
                       id={producto.id}
-                      nombreDesc={producto.nombre_desc}
-                      cantidadDesc={producto.cantidad_desc}
+                      nombre_desc={producto.nombre_desc}
+                      cantidad_desc={producto.cantidad_desc}
                       categoriaId={producto.categoriaId}
                       tipoLista={2}
                     />

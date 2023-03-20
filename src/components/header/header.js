@@ -15,7 +15,8 @@ import { Alert, Space, Tour } from 'antd';
 import './header.css';
 import Carrito from "../carrito/carrito";
 import { useSelector } from "react-redux";
-import { SuscripcionService } from "../../servicios/suscripcionservice";
+
+import ModalCancelarSuscripcion from "../../pages/suscripcion/modalCancelarSuscripcion";
 
 function Header() 
 {
@@ -28,9 +29,10 @@ function Header()
   const { infoUser, isLoged, codigoUser, descuentoReferidos} = state.user;
 
   
-  const [isHome, setIsHome] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [showCarrito, setShowCarrito] = useState(false);
+  const[isHome, setIsHome] = useState(false);
+  const[showAlert, setShowAlert] = useState(false);
+  const[showCarrito, setShowCarrito] = useState(false);
+  const[showModalCancelSuscripcion, setShowModalCancelSuscripcion] = useState(false);
   
   
   const copiarCodigoReferido = () => {
@@ -57,15 +59,8 @@ function Header()
     setShowCarrito((s) => !s);
   };
 
-  const editarSuscripcion = () => {
-
-  };
-
   const cancelarSuscripcion = () => {
-    const suscripcionService = new SuscripcionService();
-    suscripcionService.cancelarSuscripcion().then(({data})=>{
-      console.log(data)
-    });
+    setShowModalCancelSuscripcion(true);
   };
 
   useEffect(() => {
@@ -74,6 +69,7 @@ function Header()
 
   return (
     <div className="navBarContainer">
+      <ModalCancelarSuscripcion status={showModalCancelSuscripcion} handleClose={setShowModalCancelSuscripcion} />
       {
         !isHome && <Carrito showCarrito={showCarrito} setShowCarrito={setShowCarrito} />
       }
