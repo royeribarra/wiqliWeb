@@ -17,9 +17,8 @@ function Carrito({showCarrito, setShowCarrito})
 {
   let history = useNavigate();
   const state = useSelector((state) => state);
-  const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
-  const { cart } = state.cart;
+  const { totalProductos, cart } = state.cart;
 
   const handleClose = () => setShowCarrito(false);
 
@@ -44,7 +43,7 @@ function Carrito({showCarrito, setShowCarrito})
   };
 
   const goToFormularioDatos = () => {
-    if(total === 0){
+    if(totalProductos === 0){
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
@@ -60,14 +59,6 @@ function Carrito({showCarrito, setShowCarrito})
       cargarCarritoFromLocalStorage(productosStorage);
     }
   }, []);
-
-  useEffect(()=> {
-    let totalNew = 0;
-    cart.forEach(product => {
-      totalNew += product.precio_unitario * product.cantidad;
-    });
-    setTotal(totalNew)
-  }, [cart]);
 
   return(
     <Offcanvas show={showCarrito} onHide={handleClose} scroll={true} backdrop={true}>
@@ -97,7 +88,9 @@ function Carrito({showCarrito, setShowCarrito})
                       </div>
 
                       <div>
-                        <p className="textoCarrito">{product.precio_unitario}</p>
+                        <p className="textoCarrito">
+                          {parseFloat(product.precio_unitario * product.cantidad_minima).toFixed(2)}
+                        </p>
                       </div>
                       
                       <div className="selectorCantidad">
@@ -108,7 +101,7 @@ function Carrito({showCarrito, setShowCarrito})
                           <AiOutlineMinus onClick={()=> quitarUnidadProducto(product)} />
                       </div>
                       <div className="textoCarrito">
-                        <p>{parseFloat(product.cantidad * product.precio_unitario).toFixed(2)}</p>
+                        <p>{parseFloat(product.cantidad * product.precio_unitario * product.cantidad_minima).toFixed(2)}</p>
                       </div>
                   </div>
                   )
@@ -120,11 +113,11 @@ function Carrito({showCarrito, setShowCarrito})
                 <div></div>
                 <div></div>
                 <div>Total</div>
-                <div><p>{parseFloat(total).toFixed(2)}</p></div>
+                <div><p>{parseFloat(totalProductos).toFixed(2)}</p></div>
                 
               </div>
               {
-                total > 0 && 
+                totalProductos > 0 && 
                 <div style={{ marginTop: "30px", display: "flex", justifyContent: "center"}}>
                 <Button onClick={goToFormularioDatos} className='botonDeSiguiente letraWhite'>
                   Siguiente

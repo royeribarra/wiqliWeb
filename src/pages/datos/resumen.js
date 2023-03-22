@@ -6,7 +6,6 @@ function Resumen({
   aplicaCupon
 })
 {
-  console.log(aplicaCupon)
   const state = useSelector((state) => state);
   const { total, costoDelivery, totalProductos, descuentoCupon } = state.cart;
   const { infoUser } = state.user;
