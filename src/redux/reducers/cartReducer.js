@@ -30,7 +30,7 @@ export const carritoInitialState = {
 export function cartReducer(state = carritoInitialState, action){ 
   function getTotal (carrito = []){
     let total = carrito.reduce((accumulator, currentValue) => 
-      accumulator + (currentValue.precio_unitario * currentValue.cantidad), 0
+      accumulator + (currentValue.precio_unitario * (currentValue.cantidad_minima === "1.00" ? currentValue.cantidad: currentValue.cantidad_minima)), 0
     );
     return total;
   };
