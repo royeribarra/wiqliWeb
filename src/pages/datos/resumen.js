@@ -9,6 +9,7 @@ function Resumen({
   const state = useSelector((state) => state);
   const { total, costoDelivery, totalProductos, descuentoCupon } = state.cart;
   const { infoUser } = state.user;
+  console.log(infoUser)
   return(
     <div className="desgloseTotal">
       <div className="totalesAPagar">
@@ -20,10 +21,15 @@ function Resumen({
         <h6 className="datoCampo">S/ {parseFloat(costoDelivery).toFixed(2)}</h6>
       </div>
       {
-        infoUser.billetera.saldo > 0 &&
+        infoUser.billetera.saldo !== 0 &&
           <div className="totalesAPagar" >
             <h6 className="tituloCampo">Billetera</h6>
-            <h6 className="datoCampo">- S/ {parseFloat(infoUser.billetera.saldo).toFixed(2)}</h6>
+            {infoUser.billetera.saldo > 0 && 
+              <h6 className="datoCampo">- S/ {parseFloat(infoUser.billetera.saldo).toFixed(2)}</h6>
+            }
+            {infoUser.billetera.saldo < 0 && 
+              <h6 className="datoCampo">+ S/ {parseFloat(infoUser.billetera.saldo*(-1)).toFixed(2)}</h6>
+            }
           </div>
       }
       {
