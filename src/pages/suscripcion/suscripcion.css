@@ -1,3 +1,22 @@
 .listaDeProductosSuscripcion{
     max-width: 520px;
 }
+
+
+.beneficiosSuscripcion{
+ text-decoration: none;
+ display: grid;
+ grid-template-columns: repeat(auto-fit, 46%);
+ gap: 1rem;
+ margin-bottom: 1rem;
+}
+
+.beneficioSuscripcion{
+text-decoration: none;
+display: flex;
+flex-flow: row;
+}
+
+.imgBeneficio{
+    margin: 0.5rem;
+}
