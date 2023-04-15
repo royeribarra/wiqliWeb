@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Radio } from 'antd';
+import { Form, Input, Button, Radio, Select } from 'antd';
 import subDays from "date-fns/subDays";
 import DatePicker from "react-datepicker";
 import { toastr } from "react-redux-toastr";
@@ -19,17 +19,22 @@ import {
   clearCart,
   applyCoupon,
   clearCoupon,
-  clearCartExtra
+  clearCartExtra,
+  asingDeliveryCost
 } from "../../redux/actions/carritoActions";
 import { showLoader } from "../../redux/actions/loaderActions";
+import { DistritoService } from "../../servicios/distritoService";
+import DistritoComponente from "./distritoComponente";
 
 const { TextArea } = Input;
 
 function FormDatos()
 {
   let history = useNavigate();
+  const distritoService = new DistritoService();
+
   const state = useSelector((state) => state);
-  const { descuentoCupon, costoDelivery, totalProductos, cart, xtraCart } = state.cart;
+  const { descuentoCupon, costoDelivery, totalProductos, cart, xtraCart, distrito } = state.cart;
   const { isLoged, infoUser, codigoUser, descuentoReferidos } = state.user;
   const { montoDescuento, montoMinimoCompraReferido, montoMinimoEnvioCodigo, tipoDescuento } = state.configuracion;
   const dispatch = useDispatch();
@@ -44,9 +49,11 @@ function FormDatos()
   const [startDate, setStartDate] = useState(new Date());
   const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
   const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
+  const [distritos, setDistritos] = useState([]);
+
   const [cliente, setCliente] = useState({
     apellidos: '', correo: '', direccion: '', fecha_recojo: '', nombres: '',
-    observacion: '', referencia: '', telefono: ''
+    observacion: '', referencia: '', telefono: '', distrito: ''
   });
 
   const onFinish = (values) => {
@@ -58,6 +65,11 @@ function FormDatos()
       cupon: aplicaCupon,
       codigoCupon: values.codigoCupon,
       descuento: descuentoCupon,
+      costoDelivery: costoDelivery,
+      distrito: {
+        nombre: distrito.nombre,
+        valor: distrito.value,
+      },
       total: totalProductos + costoDelivery - descuentoCupon,
       saldoBilletera: infoUser.billetera.saldo,
       datosTarjeta: {
@@ -152,7 +164,6 @@ function FormDatos()
   }
 
   const guardarFormInStorage = (changedValues, allValues) => {
-    
     if(changedValues.cvv || changedValues.fechaVencimiento || changedValues.nombreTarjeta || changedValues.numeroTarjeta){
 
     }else{
@@ -183,6 +194,12 @@ function FormDatos()
   const onChangeTipoPago = (e) => {
     setTipoPago(Number(e.target.value));
   };
+
+  const asignarDistrito = (valor) => {
+    form.setFieldsValue({
+      distrito: valor
+    });
+  }
 
   useEffect(() => {
     if(!(cart.length > 0))
@@ -235,7 +252,8 @@ function FormDatos()
           observacion: '',
           referencia: infoUser.referencia,
           telefono: infoUser.phone,
-          tipoPago: tipoPago
+          tipoPago: tipoPago,
+          distrito: isLoged? infoUser.distrito : 99
         }
       }
     >
@@ -293,6 +311,28 @@ function FormDatos()
             rules={[{ required: true, message: 'Por favor ingresa tu Dirección' }]}
           >
             <Input className="form-control" placeholder="Avenida/Calle" />
+          </Form.Item>
+        </div>
+        <div className="itemForm">
+          <Form.Item
+            className="labelProductoAdicional"
+            name="distrito"
+            label="Distrito" 
+            rules={[{ required: true, message: 'Por favor seleccione su distrito' }]}
+          >
+            <DistritoComponente asignarDistrito={asignarDistrito} />
+            {/* <Select onChange={changueDistrito}>
+              <Select.Option value={99} tarifa={10.00}>
+                Otro distrito
+              </Select.Option>
+              {
+                distritos.map((distrito)=>
+                  <Select.Option value={distrito.id} tarifa={distrito.tarifa}>
+                    {distrito.nombre}
+                  </Select.Option>
+                )
+              }
+            </Select> */}
           </Form.Item>
         </div>
         <div className="itemForm">

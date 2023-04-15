@@ -1,3 +1,4 @@
+import { act } from "react-dom/test-utils";
 import {
   ADD_TO_CART,
   ADD_ONE_PRODUCT,
@@ -10,7 +11,8 @@ import {
   ADD_TO_CART_EXTRA,
   DEL_FROM_CART_EXTRA,
   CLEAR_CART_EXTRA,
-  FILL_CART_EXTRA
+  FILL_CART_EXTRA,
+  ASIGN_DELIVERY_COST
 } from "../../types";
 
 export const carritoInitialState = {
@@ -23,6 +25,10 @@ export const carritoInitialState = {
   cart: [],
   total: 0.00,
   costoDelivery: 10.00,
+  distrito: {
+    nombre: '',
+    value: ''
+  },
   totalProductos: 0.00,
   descuentoCupon: 0.00
 };
@@ -163,6 +169,18 @@ export function cartReducer(state = carritoInitialState, action){
         ...state,
         xtraSubCart: action.payload
       };
+
+    case  ASIGN_DELIVERY_COST:
+      console.log(action.payload)
+      return {
+        ...state,
+        distrito: {
+          nombre :action.payload.distrito.nombre,
+          value: action.payload.distrito.value
+        },
+        costoDelivery: action.payload.tarifa
+      };
+
     default:
       return state;
   }
