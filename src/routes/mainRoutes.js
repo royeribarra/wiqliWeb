@@ -44,6 +44,7 @@ function MainRoutes()
       if(tknData.status){
         const userService = new UsuarioService();
         userService.getInfoUser().then(({data})=> {
+          console.log(data)
           dispatch(setInfoCliente(data));
         });
         userService.getProductosSuscripcion().then(({data})=> {

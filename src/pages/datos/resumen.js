@@ -9,7 +9,6 @@ function Resumen({
   const state = useSelector((state) => state);
   const { total, costoDelivery, totalProductos, descuentoCupon } = state.cart;
   const { infoUser } = state.user;
-  console.log(infoUser)
   return(
     <div className="desgloseTotal">
       <div className="totalesAPagar">

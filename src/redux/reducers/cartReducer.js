@@ -25,17 +25,12 @@ export const carritoInitialState = {
   cart: [],
   total: 0.00,
   costoDelivery: 10.00,
-  distrito: {
-    nombre: '',
-    value: ''
-  },
   totalProductos: 0.00,
   descuentoCupon: 0.00
 };
 
 export function cartReducer(state = carritoInitialState, action){ 
   function getTotal (carrito = []){
-    console.log(carrito)
     let total = carrito.reduce((accumulator, currentValue) => 
       accumulator + (currentValue.precio_unitario * currentValue.cantidad_minima * currentValue.cantidad), 0
     );
@@ -148,7 +143,6 @@ export function cartReducer(state = carritoInitialState, action){
       };
     
     case DEL_FROM_CART_EXTRA:
-      console.log(action.payload)
       let tmpRemoveCartE = state.xtraCart.filter((item) => item.id !== action.payload);
       localStorage.setItem("xtraCart", JSON.stringify(tmpRemoveCartE));
       return {
@@ -171,13 +165,8 @@ export function cartReducer(state = carritoInitialState, action){
       };
 
     case  ASIGN_DELIVERY_COST:
-      console.log(action.payload)
       return {
         ...state,
-        distrito: {
-          nombre :action.payload.distrito.nombre,
-          value: action.payload.distrito.value
-        },
         costoDelivery: action.payload.tarifa
       };
 

@@ -15,7 +15,12 @@ export const userInitialState = {
         email: '',
         address: '',
         referencia: '',
-        distrito: '',
+        distritoId: 99,
+        distrito: {
+            id: 99,
+            nombre: '',
+            tarifa: 10.00
+        },
         isSuscrito: false,
         billetera: {
             saldo: 0.00

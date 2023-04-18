@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import Cleave from 'cleave.js/react';
 
 import { UsuarioService } from "../../servicios/usuarioService";
-import StorageService from "../../servicios/storageService";
 
 import Resumen from "./resumen";
 import TarjetaBancoComponente from "../../components/tarjetaBancoComponente/tarjetaBancoComponente";
@@ -19,11 +18,9 @@ import {
   clearCart,
   applyCoupon,
   clearCoupon,
-  clearCartExtra,
-  asingDeliveryCost
+  clearCartExtra
 } from "../../redux/actions/carritoActions";
 import { showLoader } from "../../redux/actions/loaderActions";
-import { DistritoService } from "../../servicios/distritoService";
 import DistritoComponente from "./distritoComponente";
 
 const { TextArea } = Input;
@@ -31,7 +28,6 @@ const { TextArea } = Input;
 function FormDatos()
 {
   let history = useNavigate();
-  const distritoService = new DistritoService();
 
   const state = useSelector((state) => state);
   const { descuentoCupon, costoDelivery, totalProductos, cart, xtraCart, distrito } = state.cart;
@@ -49,7 +45,6 @@ function FormDatos()
   const [startDate, setStartDate] = useState(new Date());
   const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
   const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
-  const [distritos, setDistritos] = useState([]);
 
   const [cliente, setCliente] = useState({
     apellidos: '', correo: '', direccion: '', fecha_recojo: '', nombres: '',
@@ -66,10 +61,6 @@ function FormDatos()
       codigoCupon: values.codigoCupon,
       descuento: descuentoCupon,
       costoDelivery: costoDelivery,
-      distrito: {
-        nombre: distrito.nombre,
-        valor: distrito.value,
-      },
       total: totalProductos + costoDelivery - descuentoCupon,
       saldoBilletera: infoUser.billetera.saldo,
       datosTarjeta: {
@@ -167,6 +158,7 @@ function FormDatos()
     if(changedValues.cvv || changedValues.fechaVencimiento || changedValues.nombreTarjeta || changedValues.numeroTarjeta){
 
     }else{
+      
       if(changedValues.correo){
         setAplicaCupon(false);
         form.setFieldsValue({
@@ -196,6 +188,17 @@ function FormDatos()
   };
 
   const asignarDistrito = (valor) => {
+    if(localStorage.getItem('cliente')){
+      let clienteStorage = JSON.parse(localStorage.getItem('cliente'));
+      setCliente(
+        {...clienteStorage,
+          distrito: valor
+        }
+      );
+      localStorage.setItem('cliente', JSON.stringify({...clienteStorage,
+        distrito: valor
+      }));
+    }
     form.setFieldsValue({
       distrito: valor
     });
