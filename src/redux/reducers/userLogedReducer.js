@@ -19,7 +19,7 @@ export const userInitialState = {
         distrito: {
             id: 99,
             nombre: '',
-            tarifa: 10.00
+            tarifa: 15.00
         },
         isSuscrito: false,
         billetera: {

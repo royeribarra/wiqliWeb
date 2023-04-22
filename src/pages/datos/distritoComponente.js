@@ -38,7 +38,7 @@ function DistritoComponente({asignarDistrito})
 
   return(
     <Select onChange={changueDistrito} placeholder="Seleccionar" value={distritoSelected}>
-      <Select.Option value={99} tarifa={10.00}>
+      <Select.Option value={99} tarifa={15.00}>
         Otro distrito
       </Select.Option>
       {
