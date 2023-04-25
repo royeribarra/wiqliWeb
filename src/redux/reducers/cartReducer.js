@@ -24,7 +24,7 @@ export const carritoInitialState = {
   xtraCart: [],
   cart: [],
   total: 0.00,
-  costoDelivery: 15.00,
+  costoDelivery: 0.00,
   totalProductos: 0.00,
   descuentoCupon: 0.00
 };

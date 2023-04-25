@@ -18,17 +18,19 @@ import {
   clearCart,
   applyCoupon,
   clearCoupon,
-  clearCartExtra
+  clearCartExtra,
+  asingDeliveryCost
 } from "../../redux/actions/carritoActions";
 import { showLoader } from "../../redux/actions/loaderActions";
 import DistritoComponente from "./distritoComponente";
+import { DistritoService } from "../../servicios/distritoService";
 
 const { TextArea } = Input;
 
 function FormDatos()
 {
   let history = useNavigate();
-
+  const distritoService = new DistritoService();
   const state = useSelector((state) => state);
   const { descuentoCupon, costoDelivery, totalProductos, cart, xtraCart, distrito } = state.cart;
   const { isLoged, infoUser, codigoUser, descuentoReferidos } = state.user;
@@ -45,6 +47,7 @@ function FormDatos()
   const [startDate, setStartDate] = useState(new Date());
   const [fechaVencimientoTarjeta, setFechaVencimientoTarjeta] = useState(new Date());
   const [dateOfWeekSelected, setDateOfWeekSelected] = useState();
+  const [distritos, setDistritos] = useState([]);
 
   const [cliente, setCliente] = useState({
     apellidos: '', correo: '', direccion: '', fecha_recojo: '', nombres: '',
@@ -204,6 +207,21 @@ function FormDatos()
     });
   }
 
+  const changueDistrito = (value, values) => {
+    console.log(value)
+    console.log(values)
+    dispatch(asingDeliveryCost({
+      distrito: value,
+      tarifa: values.tarifa*1
+    }));
+  };
+
+  useEffect(()=> {
+    distritoService.getDistritos().then(({data})=> {
+      setDistritos(data)
+    });
+  }, []);
+
   useEffect(() => {
     if(!(cart.length > 0))
     {
@@ -256,7 +274,6 @@ function FormDatos()
           referencia: infoUser.referencia,
           telefono: infoUser.phone,
           tipoPago: tipoPago,
-          distrito: isLoged? infoUser.distrito : 99
         }
       }
     >
@@ -323,19 +340,19 @@ function FormDatos()
             label="Distrito" 
             rules={[{ required: true, message: 'Por favor seleccione su distrito' }]}
           >
-            <DistritoComponente asignarDistrito={asignarDistrito} />
-            {/* <Select onChange={changueDistrito}>
-              <Select.Option value={99} tarifa={10.00}>
+            {/* <DistritoComponente asignarDistrito={asignarDistrito} /> */}
+            <Select onChange={changueDistrito} placeholder="Seleccionar">
+              <Select.Option value={99} tarifa={15.00}>
                 Otro distrito
               </Select.Option>
               {
-                distritos.map((distrito)=>
+                distritos.map((distrito) =>
                   <Select.Option value={distrito.id} tarifa={distrito.tarifa}>
                     {distrito.nombre}
                   </Select.Option>
                 )
               }
-            </Select> */}
+            </Select>
           </Form.Item>
         </div>
         <div className="itemForm">
