@@ -149,7 +149,7 @@ function FormDatos()
   }
 
   const filterDate = (date) => {
-    return date.getDay() !== 0 && date.getDay() !== 1 && date.getDay() !== 4 && date.getDay() !== 5 && date.getDay() !== 6;
+    return date.getDay() !== 0 && date.getDay() !== 3 && date.getDay() !== 4 && date.getDay() !== 5 && date.getDay() !== 6;
   }
 
   const onChangeDate = (date) => {
@@ -377,8 +377,8 @@ function FormDatos()
               filterDate={filterDate}
               onChange={onChangeDate}
               minDate={
-                (day === 1 && hour > 20) ? subDays(new Date(), -4) : 
-                (day === 2  || day === 3? subDays(new Date(), -2) : subDays(new Date(), -1))
+                (day === 0 && hour > 20) ? subDays(new Date(), -4) : 
+                (day === 1  || day === 2 ? subDays(new Date(), -2) : subDays(new Date(), -1))
               }
               dateFormat='dd-MM-yyyy'
             />
