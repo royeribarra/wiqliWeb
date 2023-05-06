@@ -126,8 +126,10 @@ function SeleccionPeriodo({suscripcion})
       <div style={{ margin: "10px 0px", paddingTop: "5px"}}>
       
         <Radio.Group onChange={onChangeDiaRecojo} defaultValue={diaRecojo}>
-          <Radio value={2}>Martes</Radio>
-          <Radio value={3}>Miércoles</Radio>
+          <Radio value={1}>Lunes</Radio>
+          <Radio value={2}>Miércoles</Radio>
+          {/* <Radio value={2}>Martes</Radio>
+          <Radio value={3}>Miércoles</Radio> */}
         </Radio.Group>
       </div>
       {
