@@ -33,8 +33,8 @@ function FormDatos()
   const distritoService = new DistritoService();
   const state = useSelector((state) => state);
   const { descuentoCupon, costoDelivery, totalProductos, cart, xtraCart, distrito } = state.cart;
-  const { isLoged, infoUser, codigoUser, descuentoReferidos } = state.user;
-  const { montoDescuento, montoMinimoCompraReferido, montoMinimoEnvioCodigo, tipoDescuento } = state.configuracion;
+  const { isLoged, infoUser } = state.user;
+  const { montoMinimoCompraReferido } = state.configuracion;
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -342,12 +342,12 @@ function FormDatos()
           >
             {/* <DistritoComponente asignarDistrito={asignarDistrito} /> */}
             <Select onChange={changueDistrito} placeholder="Seleccionar">
-              <Select.Option value={99} tarifa={15.00}>
+              <Select.Option key={99} value={99} tarifa={15.00}>
                 Otro distrito
               </Select.Option>
               {
                 distritos.map((distrito) =>
-                  <Select.Option value={distrito.id} tarifa={distrito.tarifa}>
+                  <Select.Option key={distrito.id} value={distrito.id} tarifa={distrito.tarifa}>
                     {distrito.nombre}
                   </Select.Option>
                 )
