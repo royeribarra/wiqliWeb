@@ -117,7 +117,7 @@ function Home()
             />
             <h2 className="tituloPrincipal">¡Haz tus compras semanales sin moverte de casa con Wiqli!</h2>
             <h5 className="tituloEnunciativo">¡Te ofrecemos la mejor calidad a un súper precio!</h5>
-            <h5 className="textoDisclaimer">Realiza tu pedido semanal hasta el domingo a las 8:00pm y paga cuando lo recibas.</h5>
+            <h5 className="textoDisclaimer">Realiza tu pedido semanal hasta el domingo a las 9:00pm y paga cuando lo recibas.</h5>
             <div className='disclaimerPago'>
             <h5 className="textoDisclaimer">Aceptamos todos los medios de pago</h5>
             <div className='mediosDePago'>
