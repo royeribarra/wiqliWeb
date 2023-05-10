@@ -38,8 +38,23 @@ function Home()
       toastr.error("Debes agregar al menos un producto para pasar a la siguiente sección.");
       
     }else{
-      localStorage.setItem('productos', JSON.stringify(cart));
-      history(`/datos`);
+      const expiration = localStorage.getItem("expiration");
+
+      if(expiration)
+      {
+        const exp2 = new Date(expiration)
+        const now = new Date();
+        if ((now.getTime() - exp2.getTime()) > (12 * 60 * 60 * 1000)) 
+        {
+          localStorage.removeItem("expiration");
+          dispatch(fillCart([]));
+        }
+        else{
+          history(`/datos`);
+        }
+      }
+      
+      
     }
   }
 

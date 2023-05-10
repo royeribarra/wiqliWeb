@@ -44,11 +44,11 @@ function MainRoutes()
       if(tknData.status){
         const userService = new UsuarioService();
         userService.getInfoUser().then(({data})=> {
-          console.log(data)
+          
           dispatch(setInfoCliente(data));
         });
         userService.getProductosSuscripcion().then(({data})=> {
-          console.log(data)
+          
           dispatch(SinfoSuscription({
             suscripcionId: data.id,
             subCart: data.productos.filter((item) => item.productoId !== 999),
@@ -64,9 +64,26 @@ function MainRoutes()
 
   useEffect(()=> {
     const productos = JSON.parse(localStorage.getItem("productos"));
-    dispatch(fillCart(productos ? productos : []));
+    const expiration = localStorage.getItem("expiration");
     const xtraCart = JSON.parse(localStorage.getItem("xtraCart"));
     dispatch(fillCartExtra(xtraCart ? xtraCart : []));
+
+    if(expiration)
+    {
+      const exp2 = new Date(expiration)
+      const now = new Date();
+      if ((now.getTime() - exp2.getTime()) > (12 * 60 * 60 * 1000)) 
+      {
+        console.log("hola2")
+        localStorage.removeItem("expiration");
+        dispatch(fillCart([]));
+      } else {
+        console.log("hola3")
+        dispatch(fillCart(productos ? productos : []));
+        
+      }
+    }
+    
   }, []);
 
   useEffect(()=> {

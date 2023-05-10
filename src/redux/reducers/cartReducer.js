@@ -37,6 +37,29 @@ export function cartReducer(state = carritoInitialState, action){
     return total;
   };
 
+  function setExpiration()
+  {
+    const expiration = new Date();
+    localStorage.setItem("expiration", expiration);
+  }
+
+  function evaluateExpiration()
+  {
+    const expiration = JSON.parse(localStorage.getItem("expiration"));
+    if(expiration)
+    {
+      const now = new Date();
+      if (now - expiration > (12 * 60 * 60 * 1000)) 
+      {
+        localStorage.removeItem("expiration");
+        return null;
+      } else {
+       return true;
+      }
+    }
+    return null;
+  }
+
   switch (action.type) {
     case ADD_TO_CART:
 
@@ -46,6 +69,8 @@ export function cartReducer(state = carritoInitialState, action){
 
       !inItem ? localStorage.setItem("productos", JSON.stringify(cartTempAddProduct)) 
               : console.log("el producto ya existe");
+
+      setExpiration();
 
       return {
         ...state,
@@ -57,6 +82,9 @@ export function cartReducer(state = carritoInitialState, action){
 
       let tempRemoveCart = state.cart.filter((item) => item.id !== action.payload);
       localStorage.setItem("productos", JSON.stringify(tempRemoveCart));
+
+      setExpiration();
+
       return {
         ...state,
         cart: tempRemoveCart,
@@ -65,6 +93,7 @@ export function cartReducer(state = carritoInitialState, action){
 
     case CLEAR_CART:
       localStorage.setItem("productos", JSON.stringify([]));
+
       return {
         ...state,
         cart: []
@@ -76,7 +105,9 @@ export function cartReducer(state = carritoInitialState, action){
                             item.id === action.payload
                               ? { ...item, cantidad: item.cantidad + 1 }
                               : item);
-      localStorage.setItem("productos", JSON.stringify(cartTempAddOne));    
+      localStorage.setItem("productos", JSON.stringify(cartTempAddOne));
+      
+      setExpiration();
 
       return {
         ...state,
@@ -95,6 +126,8 @@ export function cartReducer(state = carritoInitialState, action){
       : state.cart;
       localStorage.setItem("productos", JSON.stringify(cartTempRemove));
 
+      setExpiration();
+
       return itemToDelete.cantidad > 1 
               ?{
                 ...state,
@@ -108,6 +141,7 @@ export function cartReducer(state = carritoInitialState, action){
 
     case FILL_CART:
       localStorage.setItem("productos", JSON.stringify(action.payload));
+
       return {
         ...state,
         cart: action.payload,
@@ -145,6 +179,7 @@ export function cartReducer(state = carritoInitialState, action){
     case DEL_FROM_CART_EXTRA:
       let tmpRemoveCartE = state.xtraCart.filter((item) => item.id !== action.payload);
       localStorage.setItem("xtraCart", JSON.stringify(tmpRemoveCartE));
+
       return {
         ...state,
         xtraCart: tmpRemoveCartE
