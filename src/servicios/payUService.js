@@ -10,6 +10,11 @@ export class PayUService
         axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'; // Define los métodos permitidos
         axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'; // Define los encabezados permitidos
         
+        const headers = {
+            'Content-Type': 'application/json', // Ejemplo de encabezado Content-Type
+            'Accept': 'application/json', // Ejemplo de encabezado de autorización
+          };
+          
         const data = {
             "language": "es",
             "command": "SUBMIT_TRANSACTION",
@@ -93,7 +98,9 @@ export class PayUService
             "test": true
         
         }
-        return axios.post(`/payments-api/4.0/service.cgi`, data);
+        return axios.post(`/payments-api/4.0/service.cgi`, data, {
+            headers: headers
+        });
     }
 
     verMetodosDePago() {
