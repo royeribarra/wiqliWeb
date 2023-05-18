@@ -4,6 +4,12 @@ export class PayUService
 {
     realizarPago()
     {
+        axios.defaults.baseURL = 'https://sandbox.api.payulatam.com'; // Establece la URL base del API de PayU Latam
+
+        axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'; // Permite solicitudes desde cualquier origen
+        axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'; // Define los métodos permitidos
+        axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'; // Define los encabezados permitidos
+        
         const data = {
             "language": "es",
             "command": "SUBMIT_TRANSACTION",
@@ -87,9 +93,9 @@ export class PayUService
             "test": true
         
         }
-        return axios.post(`https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi`, data);
+        return axios.post(`/payments-api/4.0/service.cgi`, data);
     }
-    
+
     verMetodosDePago() {
         
         return axios.get('https://api.payulatam.com/payments-api/4.0/service.cgi/paymethods');
