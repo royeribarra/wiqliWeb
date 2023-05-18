@@ -29,6 +29,7 @@ import MetodoPago from "../pages/suscripcion/metodoPago";
 import { SfillCart, SfillExtra, SinfoSuscription } from "../redux/actions/suscripcionActions";
 import ConfirmacionSuscripcion from "../pages/suscripcion/confirmacionSuscripcion";
 import { setConfiguration } from "../redux/actions/configuracionActions";
+import PayU from "../components/PayU/payU";
 
 function MainRoutes()
 {
@@ -74,13 +75,10 @@ function MainRoutes()
       const now = new Date();
       if ((now.getTime() - exp2.getTime()) > (12 * 60 * 60 * 1000)) 
       {
-        console.log("hola2")
         localStorage.removeItem("expiration");
         dispatch(fillCart([]));
       } else {
-        console.log("hola3")
         dispatch(fillCart(productos ? productos : []));
-        
       }
     }
     
@@ -125,6 +123,7 @@ function MainRoutes()
         <Loader></Loader>
       </div>
       <Routes>
+        <Route exact path="/payu-metodos-pago" element={<PayU />} />
         <Route exact path="/" element={<Home />} />
         <Route exact path="/datos" element={<Datos />} />
         <Route exact path="/confirmacion" element={<Confirmacion />} />

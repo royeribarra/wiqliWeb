@@ -24,6 +24,7 @@ import {
 import { showLoader } from "../../redux/actions/loaderActions";
 import DistritoComponente from "./distritoComponente";
 import { DistritoService } from "../../servicios/distritoService";
+import { ExpiracionService } from "../../servicios/expiracionService";
 
 const { TextArea } = Input;
 
@@ -31,6 +32,7 @@ function FormDatos()
 {
   let history = useNavigate();
   const distritoService = new DistritoService();
+  const expiracionService = new ExpiracionService();
   const state = useSelector((state) => state);
   const { descuentoCupon, costoDelivery, totalProductos, cart, xtraCart, distrito } = state.cart;
   const { isLoged, infoUser } = state.user;
@@ -55,6 +57,7 @@ function FormDatos()
   });
 
   const onFinish = (values) => {
+    expiracionService.comprobarExpiracion();
     dispatch(showLoader());
     let data = {
       productos: cart,
