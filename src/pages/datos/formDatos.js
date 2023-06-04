@@ -57,60 +57,61 @@ function FormDatos()
   });
 
   const onFinish = (values) => {
-    expiracionService.comprobarExpiracion();
-    dispatch(showLoader());
-    let data = {
-      productos: cart,
-      productosExtra: xtraCart,
-      cliente: cliente,
-      cupon: aplicaCupon,
-      codigoCupon: values.codigoCupon,
-      descuento: descuentoCupon,
-      costoDelivery: costoDelivery,
-      total: totalProductos + costoDelivery - descuentoCupon,
-      saldoBilletera: infoUser.billetera.saldo,
-      datosTarjeta: {
-        numeroTarjeta: values.numeroTarjeta,
-        fechaVencimiento: values.fechaVencimiento,
-        cvv: values.cvv,
-        nombreTarjeta: values.nombreTarjeta,
-        tipoBanco: values.tipoBanco
-      }
-    }
-    if(isLoged){
-      const userService = new UsuarioService("usuario");
-      userService.realizarPedido(data)
-      .then(({ data }) => {
-        if(data.state){
-          dispatch(showLoader(false));
-          dispatch(clearCart());
-          dispatch(clearCartExtra());
-          history(`/confirmacion`);
-        }else if(!data.state){
-          dispatch(showLoader(false));
-          setMessageError(data.message);
-        }
-      }).catch(error => {
-        dispatch(showLoader(false));
-        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
-      });
-     }else if(!isLoged){
-      axios
-      .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
-      .then(({ data }) => {
-        if(data.state){
-          dispatch(showLoader(false));
-          localStorage.clear();
-          history(`/confirmacion`);
-        }else if(!data.state){
-          dispatch(showLoader(false));
-          setMessageError(data.message);
-        }
-      }).catch(error => {
-        dispatch(showLoader(false));
-        setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
-      });
-    }
+    toastr.info("Por el momento no podemos recibir pedidos.")
+    // expiracionService.comprobarExpiracion();
+    // dispatch(showLoader());
+    // let data = {
+    //   productos: cart,
+    //   productosExtra: xtraCart,
+    //   cliente: cliente,
+    //   cupon: aplicaCupon,
+    //   codigoCupon: values.codigoCupon,
+    //   descuento: descuentoCupon,
+    //   costoDelivery: costoDelivery,
+    //   total: totalProductos + costoDelivery - descuentoCupon,
+    //   saldoBilletera: infoUser.billetera.saldo,
+    //   datosTarjeta: {
+    //     numeroTarjeta: values.numeroTarjeta,
+    //     fechaVencimiento: values.fechaVencimiento,
+    //     cvv: values.cvv,
+    //     nombreTarjeta: values.nombreTarjeta,
+    //     tipoBanco: values.tipoBanco
+    //   }
+    // }
+    // if(isLoged){
+    //   const userService = new UsuarioService("usuario");
+    //   userService.realizarPedido(data)
+    //   .then(({ data }) => {
+    //     if(data.state){
+    //       dispatch(showLoader(false));
+    //       dispatch(clearCart());
+    //       dispatch(clearCartExtra());
+    //       history(`/confirmacion`);
+    //     }else if(!data.state){
+    //       dispatch(showLoader(false));
+    //       setMessageError(data.message);
+    //     }
+    //   }).catch(error => {
+    //     dispatch(showLoader(false));
+    //     setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
+    //   });
+    //  }else if(!isLoged){
+    //   axios
+    //   .post(`${process.env.REACT_APP_BASE_PATH}/wiqli/crear-pedido`, data)
+    //   .then(({ data }) => {
+    //     if(data.state){
+    //       dispatch(showLoader(false));
+    //       localStorage.clear();
+    //       history(`/confirmacion`);
+    //     }else if(!data.state){
+    //       dispatch(showLoader(false));
+    //       setMessageError(data.message);
+    //     }
+    //   }).catch(error => {
+    //     dispatch(showLoader(false));
+    //     setMessageError("Ocurrió un error en el servidor, por favor comunícate con Wiqli.");
+    //   });
+    // }
   }
 
   const validarCupon = () => {
